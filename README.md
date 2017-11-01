@@ -49,5 +49,5 @@ Online multiplayer checkers game with an integrated chat system.
 
 #### GitHUB Repository
 
-[GitHUB Repository](https://github.com/NiftiyevHasan/checkers667)
+[GitHUB Repository](https://github.com/sfsu-csc-667-fall-2017/term-project-fall-2017-teamD-checkers)
 

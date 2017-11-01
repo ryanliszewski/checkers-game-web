@@ -1,0 +1,19 @@
+body {
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+a {
+  color: #00B7FF;
+}
+
+.form-control {
+  border-radius: 0px;
+}
+
+.btn {
+  border-radius: 0px;
+}
+.login {
+	width: 30%; 
+	margin: 25px auto;
+}

@@ -20,5 +20,7 @@ a {
 }
 
 form div p {
-	color: gray;
+	color: #767676;
+	font-weight: 400;
+	font-size: 12px;
 }

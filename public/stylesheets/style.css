@@ -6,14 +6,10 @@ a {
   color: #00B7FF;
 }
 
-.form-control {
+.form-control, .btn {
   border-radius: 0px;
 }
 
-.btn {
-  border-radius: 0px;
-
-}
 .login {
 	width: 30%; 
 	margin: 25px auto;

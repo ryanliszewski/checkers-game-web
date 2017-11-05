@@ -20,7 +20,14 @@ form div p {
 	font-weight: 400;
 	font-size: 12px;
 	text-align: center;
-	border-top: 1px solid #e7e7e7;
-	top: 50%;
-	position: absolute;
+	position: relative;
+  	border-bottom: 1px solid #e7e7e7;
+ 	line-height: 0.2em;
+ 	margin-top: 30px;
+
+}
+
+form div p span {
+    background:#fff;
+    padding: 0 10px;
 }

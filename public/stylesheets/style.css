@@ -1,5 +1,7 @@
 body {
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  background-image: url("https://www.xmple.com/wallpaper/graph-paper-white-grid-15360x8640-c2-faf0e6-ffffff-l2-15-540-a-0-f-20.svg");
+  background-size: 100%;
 }
 
 a {
@@ -23,7 +25,7 @@ form div p {
 	position: relative;
   	border-bottom: 1px solid #e7e7e7;
  	line-height: 0.2em;
- 	margin-top: 30px;
+ 	margin-top: 50px;
 
 }
 

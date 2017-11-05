@@ -12,8 +12,13 @@ a {
 
 .btn {
   border-radius: 0px;
+
 }
 .login {
 	width: 30%; 
 	margin: 25px auto;
+}
+
+form div p {
+	color: gray;
 }

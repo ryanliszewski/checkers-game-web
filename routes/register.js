@@ -1,11 +1,6 @@
 var express = require('express');
 var router = express.Router();
 
-/* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render("home");
-});
-
 /* GET Sign Up page. */
 router.get('/register', function(req, res, next) {
   res.render("register");
@@ -15,5 +10,7 @@ router.get('/register', function(req, res, next) {
 router.post('/register', function(req, res, next) {
   res.send('This page will be replaced by LOBBY !');
 });
+
+
 
 module.exports = router;

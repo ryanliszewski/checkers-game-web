@@ -5,19 +5,12 @@ const logger                = require('morgan');
 const cookieParser          = require('cookie-parser');
 const bodyParser            = require('body-parser');
 const passport              = require('passport');
-const LocalStrategy         = require('passport-local');
-// const passportLocalMongoose = require('passport-local-mongoose');
+const LocalStrategy         = require('passport-local').Strategy;
+const session               = require('express-session');
+const expressValidator      = require('express-validator');
 const User                  = require('./models/user');
-
-
-
-// Will delete these after testing out my auth with mongoose
-// Will later be  integrated to Postgres. 
-// TEMPORARY CODE
-// const mongoose = require ('mongoose')
-// mongoose.connect(mongodb://localhost/auth_demo);
-
-
+const bcrypt                = require('bcryptjs');
+const flash                 = require('connect-flash'); 
 
 if(process.env.NODE_ENV === 'development') {
   require('dotenv').config();
@@ -27,9 +20,21 @@ if(process.env.NODE_ENV === 'development') {
 const index = require('./routes/index');
 const users = require('./routes/users');
 const tests = require('./routes/tests');
-const register = require('./routes/register');
+// const register = require('./routes/register');
 
 const app = express();
+
+
+//Configuration- Passport initialization
+
+
+app.use(express.static('public'));
+app.use(session({ secret: 'CSC667', resave: false,
+saveUninitialized: false }));
+
+app.use(passport.initialize());
+app.use(passport.session());
+
 
 
 // view engine setup
@@ -44,24 +49,63 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(passport.initialize());
-app.use(passport.session());
+
 
 app.use('/', index);
 app.use('/users', users);
 app.use('/tests', tests);
-app.use('/register', index);
+// app.use('/register', index);
 
 
-//secret code to encode and decode
-// app.use(require("express-session")({
-//   secret: "667 final project",
-//   resave: false,
-//   saveUninitialized: false
-// }));
+app.use(expressValidator({
+    errorFormatter: function(param, msg, value) {
+        var namespace = param.split('.')
+            , root    = namespace.shift()
+            , formParam = root;
 
-// passport.serializeUser(User.serializeUser());
-// passport.deserializeUser(User.deserializeUser());
+        while(namespace.length) {
+            formParam += '[' + namespace.shift() + ']';
+        }
+        return {
+            param : formParam,
+            msg   : msg,
+            value : value
+        };
+    }
+}));
+
+
+passport.use(new LocalStrategy(
+  function(username, password, done) {
+    User.findOne({ username: username }, function (err, user) {
+      if (err) { return done(err); }
+      if (!user) {
+        return done(null, false, { message: 'Incorrect username.' });
+      }
+      if (!user.validPassword(password)) {
+        return done(null, false, { message: 'Incorrect password.' });
+      }
+      return done(null, user);
+    });
+  }
+));
+
+
+//Sessions
+
+passport.serializeUser(function(user, done) {
+  done(null, user.id);
+});
+
+passport.deserializeUser(function(id, done) {
+  User.findById(id, function(err, user) {
+    done(err, user);
+  });
+});
+
+
+
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

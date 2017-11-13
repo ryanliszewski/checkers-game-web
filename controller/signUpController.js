@@ -1,68 +1,70 @@
 const passport = require('passport');
 const bcrypt = require('bcryptjs');
-const User = require('../models/user');
+const models = require('../models');
 
 
-module.exports.create = function (req, res) {
-    let firstName = req.body.firstName;
-    let lastName = req.body.lastName;
-    let email = req.body.email;
-    let password = req.body.password;
+module.exports.create = function (request, response) {
+    let User;
+    let firstName = request.body.firstName;
+    let lastName = request.body.lastName;
+    let email = request.body.email;
+    let username = request.body.username;
+    let password = request.body.password;
 
-    req.checkBody('firstName', 'first name is required').notEmpty();
-    req.checkBody('lastName', ' last Name is required').notEmpty();
-    req.checkBody('email', 'email is required').notEmpty();
-    req.checkBody('email', 'email is not valid').isEmail();
-    req.checkBody('password', 'password length must be minimum 8 characters').isLength(8, 20);
-    req.checkBody('password', 'password is required').notEmpty();
-    req.checkBody('passwordMatch', 'Password do not match').equals(req.body.password);
+    request.checkBody('firstName', 'first name is required').notEmpty();
+    request.checkBody('lastName', ' last Name is required').notEmpty();
+    request.checkBody('email', 'email is required').notEmpty();
+    request.checkBody('email', 'email is not valid').isEmail();
+    request.checkBody('password', 'password length must be minimum 8 characters').isLength(8, 20);
+    request.checkBody('password', 'password is required').notEmpty();
+    request.checkBody('passwordMatch', 'Password do not match').equals(request.body.password);
 
-    let errors = req.validationErrors();
+    let errors = request.validationErrors();
 
     if (errors) {
-        res.render('/register', {
+        response.render('/register', {
             errors: errors
         });
     } else {
-        let user = new User({
+        User = new models.User({
             firstName: firstName,
             lastName: lastName,
+            username: username,
             email: email,
             password: password
         });
 
         bcrypt.genSalt(10, function (err, salt) {
-            bcrypt.hash(user.password, salt, function (err, hash) {
+            bcrypt.hash(User.password, salt, function (err, hash) {
                 if (err) {
-                    return res.send(err);
+                    return response.send(err);
                 }
-                user.password = hash;
-                req.flash('success_msg', 'You are registered and now can login');
-                user.save((err) => {
+                User.password = hash;
+                // request.flash('success_msg', 'You are registered and now can login');
+                User.save((err) => {
                     if (err) {
-                        return res.send(err);
+                        return response.send(err);
                     } else {
 
                     }
                 });
-                return res.redirect('/');
+                return response.redirect('/');
             });
         });
     }
 };
 
-module.exports.login = function(req, res, next){
+module.exports.login = function (request, response, next) {
     passport.authenticate('local', {
-        successRedirect:'/lobby',
-        failureRedirect:'/',
-        failureFlash: true
-    })(req, res, next);
+        successRedirect: '/lobby',
+        failureRedirect: '/'
+        // failureFlash: true
+    })(request, response, next);
 };
 
-module.exports.logout = function(req, res, next){
-    req.session.destroy( function(err) {
-        req.flash('success_msg', 'You are logged out');
-        res.redirect('/');
-    })
+module.exports.logout = function (request, response, next) {
+    request.logout();
+    request.flash('success_msg', 'You are logged out');
+    request.redirect('/login');
 };
 

@@ -1,16 +1,13 @@
-const express               = require('express');
-const path                  = require('path');
-const favicon               = require('serve-favicon');
-const logger                = require('morgan');
-const cookieParser          = require('cookie-parser');
-const bodyParser            = require('body-parser');
-const passport              = require('passport');
-const LocalStrategy         = require('passport-local').Strategy;
-const session               = require('express-session');
-const expressValidator      = require('express-validator');
-const User                  = require('./models/user');
-const bcrypt                = require('bcryptjs');
-const flash                 = require('connect-flash'); 
+const express = require('express');
+const path = require('path');
+const favicon = require('serve-favicon');
+const logger = require('morgan');
+const cookieParser = require('cookie-parser');
+const bodyParser = require('body-parser');
+const passport = require('passport');
+const session = require('express-session');
+const expressValidator = require('express-validator');
+const flash = require('connect-flash');
 
 if(process.env.NODE_ENV === 'development') {
   require('dotenv').config();
@@ -24,18 +21,6 @@ const tests = require('./routes/tests');
 // const register = require('./routes/register');
 
 const app = express();
-
-
-//Configuration- Passport initialization
-
-
-app.use(express.static('public'));
-app.use(session({ secret: 'CSC667', resave: false,
-saveUninitialized: false }));
-
-app.use(passport.initialize());
-app.use(passport.session());
-
 
 
 // view engine setup
@@ -73,40 +58,25 @@ app.use(expressValidator({
     }
 }));
 
+//Configuration- Passport initialization
+
+// app.use(express.static('public'));
+app.use(session({
+  secret: 'CSC667',
+  resave: false,
+  saveUninitialized: false
+}));
+
+require('./config/passport')(passport);
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+
 app.use('/', index);
 app.use('/users', users);
 app.use('/tests', tests);
 app.use('/lobby', index)
-passport.use(new LocalStrategy(
-  function(username, password, done) {
-    User.findOne({ username: username }, function (err, user) {
-      if (err) { return done(err); }
-      if (!user) {
-        return done(null, false, { message: 'Incorrect username.' });
-      }
-      if (!user.validPassword(password)) {
-        return done(null, false, { message: 'Incorrect password.' });
-      }
-      return done(null, user);
-    });
-  }
-));
-
-
-//Sessions
-
-passport.serializeUser(function(user, done) {
-  done(null, user.id);
-});
-
-passport.deserializeUser(function(id, done) {
-  User.findById(id, function(err, user) {
-    done(err, user);
-  });
-});
-
-
-
 
 
 // catch 404 and forward to error handler

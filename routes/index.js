@@ -18,14 +18,11 @@ router.get('/register', function(req, res, next) {
   res.render("register", {title: 'Registration'});
 });
 
-/* POST Sign Up page. */
-router.post('/', 
-	passport.authenticate('local', { successRedirect: '/lobby',
-                                   failureRedirect: '/register'
-                               	})
-);
+/* POST Sign In page. */
+router.post('/lobby', signUpController.login);
+
 /* POST Register page. */
-router.post('register', signUpController.create);
+router.post('/register', signUpController.create);
 
 
 

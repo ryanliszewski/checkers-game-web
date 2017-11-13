@@ -20,6 +20,7 @@ if(process.env.NODE_ENV === 'development') {
 const index = require('./routes/index');
 const users = require('./routes/users');
 const tests = require('./routes/tests');
+
 // const register = require('./routes/register');
 
 const app = express();
@@ -51,9 +52,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 
-app.use('/', index);
-app.use('/users', users);
-app.use('/tests', tests);
+
 // app.use('/register', index);
 
 
@@ -74,7 +73,10 @@ app.use(expressValidator({
     }
 }));
 
-
+app.use('/', index);
+app.use('/users', users);
+app.use('/tests', tests);
+app.use('/lobby', index)
 passport.use(new LocalStrategy(
   function(username, password, done) {
     User.findOne({ username: username }, function (err, user) {

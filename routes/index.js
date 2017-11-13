@@ -25,7 +25,7 @@ router.post('/',
                                	})
 );
 /* POST Register page. */
-router.post('/register', signUpController.create);
+router.post('register', signUpController.create);
 
 
 

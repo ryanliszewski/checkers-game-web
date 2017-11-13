@@ -15,7 +15,7 @@ module.exports.create = function (req, res) {
     req.checkBody('email', 'email is not valid').isEmail();
     req.checkBody('password', 'password length must be minimum 8 characters').isLength(8, 20);
     req.checkBody('password', 'password is required').notEmpty();
-    req.checkBody('password2', 'Password do not match').equals(req.body.password);
+    req.checkBody('passwordMatch', 'Password do not match').equals(req.body.password);
 
     let errors = req.validationErrors();
 

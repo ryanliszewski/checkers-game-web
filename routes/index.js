@@ -1,9 +1,31 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
+const passport = require('passport');
+const AuthController = require('../controller/AuthController');
+//const models = require('../models');
+
 
 /* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render("home");
+router.get('/', function(request, response, next) {
+  response.render("home", {title: 'Checkers667'});
 });
+
+/* GET Lobby page. */
+router.get('/lobby', AuthController.isAuthenticated, function(request, response, next) {
+  response.render("lobby", {title: 'Lobby', user: request.user});
+});
+
+/* GET Sign Up page. */
+router.get('/register', function(request, response, next) {
+  response.render("register", {title: 'Registration'});
+});
+
+/* POST Sign In page. */
+router.post('/lobby', AuthController.login);
+
+/* POST Register page. */
+router.post('/register', AuthController.create);
+
+
 
 module.exports = router;

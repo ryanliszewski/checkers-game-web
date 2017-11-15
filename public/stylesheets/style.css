@@ -6,14 +6,45 @@ a {
   color: #00B7FF;
 }
 
-.form-control {
+.form-control, .btn {
   border-radius: 0px;
+
 }
 
-.btn {
-  border-radius: 0px;
+h4 {
+	text-align: center;
+	font-weight: bold;
+	font-size: 2.2em;
 }
-.login {
+
+.login, .signup {
 	width: 30%; 
 	margin: 25px auto;
+}
+
+form div p {
+	color: #767676;
+	font-weight: 400;
+	font-size: 13px;
+	text-align: center;
+	position: relative;
+  	border-bottom: 1px solid #e7e7e7;
+ 	line-height: 0.2em;
+ 	margin-top: 50px;
+
+}
+
+form div p span {
+    background:#fff;
+    padding: 0 10px;
+}
+
+#fname {
+	float: left;
+	width: 48%;
+}
+
+#lname {
+	float: right;
+	width: 48%;
 }

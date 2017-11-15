@@ -1,9 +1,13 @@
-const express       = require('express');
-const path          = require('path');
-const favicon       = require('serve-favicon');
-const logger        = require('morgan');
-const cookieParser  = require('cookie-parser');
-const bodyParser    = require('body-parser');
+const express = require('express');
+const path = require('path');
+const favicon = require('serve-favicon');
+const logger = require('morgan');
+const cookieParser = require('cookie-parser');
+const bodyParser = require('body-parser');
+const passport = require('passport');
+const session = require('express-session');
+const expressValidator = require('express-validator');
+const flash = require('connect-flash');
 
 if(process.env.NODE_ENV === 'development') {
   require('dotenv').config();
@@ -13,6 +17,8 @@ if(process.env.NODE_ENV === 'development') {
 const index = require('./routes/index');
 const users = require('./routes/users');
 const tests = require('./routes/tests');
+
+// const register = require('./routes/register');
 
 const app = express();
 
@@ -30,9 +36,52 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+//middleware to show and hide logged in user
+// app.use(function(request, response, next){
+//   response.locals.currentUser = request.User;
+//   next();
+// });
+
+// app.use('/register', index);
+
+
+app.use(expressValidator({
+    errorFormatter: function(param, msg, value) {
+        var namespace = param.split('.')
+            , root    = namespace.shift()
+            , formParam = root;
+
+        while(namespace.length) {
+            formParam += '[' + namespace.shift() + ']';
+        }
+        return {
+            param : formParam,
+            msg   : msg,
+            value : value
+        };
+    }
+}));
+
+//Configuration- Passport initialization
+
+// app.use(express.static('public'));
+app.use(session({
+  secret: 'CSC667',
+  resave: false,
+  saveUninitialized: false
+}));
+
+require('./config/passport')(passport);
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+
 app.use('/', index);
 app.use('/users', users);
 app.use('/tests', tests);
+app.use('/lobby', index)
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

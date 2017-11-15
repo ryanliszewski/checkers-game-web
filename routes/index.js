@@ -4,18 +4,18 @@ const passport = require('passport');
 const AuthController = require('../controller/AuthController');
 
 /* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render("home", {title: 'Checkers667'});
+router.get('/', function(request, response, next) {
+  response.render("home", {title: 'Checkers667'});
 });
 
 /* GET Lobby page. */
-router.get('/lobby', AuthController.isAuthenticated, function(req, res, next) {
-  res.render("lobby", {title: 'Lobby'});
+router.get('/lobby', AuthController.isAuthenticated, function(request, response, next) {
+  response.render("lobby", {title: 'Lobby'});
 });
 
 /* GET Sign Up page. */
-router.get('/register', function(req, res, next) {
-  res.render("register", {title: 'Registration'});
+router.get('/register', function(request, response, next) {
+  response.render("register", {title: 'Registration'});
 });
 
 /* POST Sign In page. */

@@ -69,7 +69,7 @@ module.exports.logout = function (request, response, next) {
 };
 
 module.exports.isAuthenticated = function (request, response, next) {
-  if (req.isAuthenticated())
+  if (request.isAuthenticated())
     return next();
   response.redirect('/');
 }

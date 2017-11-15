@@ -37,10 +37,10 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 //middleware to show and hide logged in user
-app.use(function(request, response, next){
-  response.locals.currentUser = request.User;
-  next();
-});
+// app.use(function(request, response, next){
+//   response.locals.currentUser = request.User;
+//   next();
+// });
 
 // app.use('/register', index);
 

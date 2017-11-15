@@ -2,10 +2,12 @@ const express = require('express');
 const router = express.Router();
 const passport = require('passport');
 const AuthController = require('../controller/AuthController');
+//const models = require('../models');
+
 
 /* GET home page. */
 router.get('/', function(request, response, next) {
-  response.render("home", {title: 'Checkers667' User: request.User});
+  response.render("home", {title: 'Checkers667'});
 });
 
 /* GET Lobby page. */

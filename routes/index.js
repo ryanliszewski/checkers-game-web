@@ -5,7 +5,7 @@ const AuthController = require('../controller/AuthController');
 
 /* GET home page. */
 router.get('/', function(request, response, next) {
-  response.render("home", {title: 'Checkers667'});
+  response.render("home", {title: 'Checkers667' currentUser: request.User});
 });
 
 /* GET Lobby page. */

@@ -48,3 +48,11 @@ form div p span {
 	float: right;
 	width: 48%;
 }
+
+.fa-delicious {
+	float: left;
+	font-size: 2.5em;
+	padding-top: 7px;
+	margin-right: 4px;
+
+}

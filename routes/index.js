@@ -12,7 +12,7 @@ router.get('/', function(request, response, next) {
 
 /* GET Lobby page. */
 router.get('/lobby', AuthController.isAuthenticated, function(request, response, next) {
-  response.render("lobby", {title: 'Lobby'});
+  response.render("lobby", {title: 'Lobby', user: request.user});
 });
 
 /* GET Sign Up page. */

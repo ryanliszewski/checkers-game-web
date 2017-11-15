@@ -68,3 +68,9 @@ module.exports.logout = function (request, response, next) {
     request.redirect('/login');
 };
 
+module.exports.isAuthenticated = function (request, response, next) {
+  if (req.isAuthenticated())
+    return next();
+  response.redirect('/');
+}
+

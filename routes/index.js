@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const passport = require('passport');
-const signUpController = require('../controller/signUpController');
+const AuthController = require('../controller/AuthController');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -9,7 +9,7 @@ router.get('/', function(req, res, next) {
 });
 
 /* GET Lobby page. */
-router.get('/lobby', function(req, res, next) {
+router.get('/lobby', AuthController.isAuthenticated, function(req, res, next) {
   res.render("lobby", {title: 'Lobby'});
 });
 
@@ -19,10 +19,10 @@ router.get('/register', function(req, res, next) {
 });
 
 /* POST Sign In page. */
-router.post('/lobby', signUpController.login);
+router.post('/lobby', AuthController.login);
 
 /* POST Register page. */
-router.post('/register', signUpController.create);
+router.post('/register', AuthController.create);
 
 
 

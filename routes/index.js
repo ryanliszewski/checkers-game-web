@@ -26,6 +26,8 @@ router.post('/lobby', AuthController.login);
 /* POST Register page. */
 router.post('/register', AuthController.create);
 
+/* GET Logout page. */
+router.get('/logout', AuthController.logout);
 
 
 module.exports = router;

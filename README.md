@@ -23,7 +23,7 @@ Online multiplayer checkers game with an integrated chat system.
 | Hasan | Initiate Documentations, Authentication, Chat Functionality, Logistics and Design, Database Initiation, Deployment, Game Logic and Data Sturctures | Universal Role |
 | Rodolfo | Database Maintanence, Game Logic and Data Sturctures | Back End Wizard |
 | Ryan | UI design, Animations (if we have time) | Front End Beast |
-| Sukjhit | Database, Back End , Deployment | Back End Wizard 2.0 |
+| Sukhjit | Database, Back End , Deployment | Back End Wizard 2.0 |
 
 ### Tasks and Issues
 
@@ -33,9 +33,9 @@ Online multiplayer checkers game with an integrated chat system.
 - [x] Deployment and hosting to production environment (Heroku)
 - [x] Integration with Postgres (local and prod)
 - [x] Finish database API
-- [ ] Create user sessions based on login credentials
-- [ ] Create signup flow
-- [ ] Add chat functionality
+- [x] Create user sessions based on login credentials
+- [x] Create signup flow
+- [x] Add chat functionality
 - [ ] Save/Load previous conversations
 - [ ] Test Chat system
 - [ ] Asset compilation and page speed

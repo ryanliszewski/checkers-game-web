@@ -36,13 +36,10 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-//middleware to show and hide logged in user
-// app.use(function(request, response, next){
-//   response.locals.currentUser = request.User;
-//   next();
-// });
+//CHAT
 
-// app.use('/register', index);
+
+
 
 
 app.use(expressValidator({
@@ -80,7 +77,8 @@ app.use(passport.session());
 app.use('/', index);
 app.use('/users', users);
 app.use('/tests', tests);
-app.use('/lobby', index)
+app.use('/lobby', index);
+app.use('/chat', index);
 
 
 // catch 404 and forward to error handler
@@ -100,5 +98,7 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+
+
 
 module.exports = app;

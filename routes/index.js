@@ -2,8 +2,6 @@ const express = require('express');
 const router = express.Router();
 const passport = require('passport');
 const AuthController = require('../controller/AuthController');
-//const models = require('../models');
-
 
 /* GET home page. */
 router.get('/', function(request, response, next) {
@@ -20,6 +18,12 @@ router.get('/register', function(request, response, next) {
   response.render("register", {title: 'Registration'});
 });
 
+/* GET Chat page. */
+router.get('/chat', function(request, response, next) {
+response.sendFile(__dirname + '/chat.html');
+});
+
+
 /* POST Sign In page. */
 router.post('/lobby', AuthController.login);
 
@@ -31,3 +35,5 @@ router.get('/logout', AuthController.logout);
 
 
 module.exports = router;
+
+

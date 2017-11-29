@@ -8,6 +8,7 @@ var app = require('../app');
 var debug = require('debug')('m2:server');
 var http = require('http');
 
+
 /**
  * Get port from environment and store in Express.
  */
@@ -20,7 +21,23 @@ app.set('port', port);
  */
 
 var server = http.createServer(app);
+var io = require('socket.io')(server);
 
+/**
+ * Chat console message.
+ */
+io.on('connection', function(socket){
+  socket.on('chat message', function(msg){
+    io.emit('chat message', msg);
+  });
+});
+
+io.on('connection', function(socket){
+  console.log('a user connected');
+  socket.on('disconnect', function(){
+    console.log('user disconnected');
+  });
+});
 /**
  * Listen on provided port, on all network interfaces.
  */

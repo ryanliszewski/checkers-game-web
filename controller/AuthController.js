@@ -64,8 +64,8 @@ module.exports.login = function (request, response, next) {
 
 module.exports.logout = function (request, response, next) {
     request.logout();
-    request.flash('success_msg', 'You are logged out');
-    request.redirect('/login');
+//     request.flash('success_msg', 'You are logged out');
+    response.redirect('/login');
 };
 
 module.exports.isAuthenticated = function (request, response, next) {

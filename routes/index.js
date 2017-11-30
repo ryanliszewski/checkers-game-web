@@ -18,12 +18,6 @@ router.get('/register', function(request, response, next) {
   response.render("register", {title: 'Registration'});
 });
 
-/* GET Chat page. */
-router.get('/chat', function(request, response, next) {
-response.sendFile(__dirname + '/chat.html');
-});
-
-
 /* POST Sign In page. */
 router.post('/lobby', AuthController.login);
 

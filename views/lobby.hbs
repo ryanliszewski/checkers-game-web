@@ -35,7 +35,7 @@
       $(function () {
         var socket = io();
         $('form').submit(function(){
-          socket.emit('chat message', $('#input-box').val());
+          socket.emit('chat message', '{{user.username}}: ' + $('#input-box').val());
           $('#input-box').val('');
           return false;
         });

@@ -35,11 +35,11 @@
       $(function () {
         var socket = io();
         $('form').submit(function(){
-          socket.emit('chat message', '{{user.username}}: ' + $('#input-box').val());
+          socket.emit('lobbyChat', '{{user.username}}: ' + $('#input-box').val());
           $('#input-box').val('');
           return false;
         });
-        socket.on('chat message', function(msg){
+        socket.on('lobbyChat', function(msg){
           $('#messages').append($('<li>').text(msg));
           window.scrollTo(0, document.body.scrollHeight);
         });

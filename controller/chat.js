@@ -16,6 +16,8 @@ module.exports = function (io) {
 //   });
 // });
 
+  var gameArray = ['cat', 'dog'];
+
   io.on('connection', function(socket) {
     console.log('User Connected (Server Side - Lobby Chat): ', socket.id);
     socket.on('lobbyChat', function(msg){

@@ -1,0 +1,31 @@
+body {
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+a {
+  color: #00B7FF;
+}
+.navbar {
+  z-index:1;
+}
+.form-chat {position: fixed; bottom: 0;}
+.form-chat input { border: 0; padding: 10px; margin-right: .5%; }
+.form-chat button { background: rgb(130, 224, 255); border: none; padding: 10px; }
+#messages { list-style-type: none; margin: 0; padding: 0; }
+#messages li { padding: 5px 10px; width: 800px;}
+#messages li:nth-child(odd) { background: #eee; }
+#messages {
+  margin-bottom: 40px;
+  bottom: 0;
+  position: fixed;
+  width: 100%;
+}
+#input-box {width: 800px;}
+
+.fa-delicious {
+	float: left;
+	font-size: 2.5em;
+	padding-top: 7px;
+	margin-right: 4px;
+
+}

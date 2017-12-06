@@ -1,0 +1,89 @@
+
+const gameList = require('../models').gameList;
+
+module.exports = function (io) {
+
+  /**
+   * Chat console message.
+   */
+  // io.on('connection', function(socket){
+  //   socket.on('game chat', function(msg){
+  //     io.emit('game chat', msg);
+  //   });
+  // });
+
+  // io.on('connection', function(socket){
+  //   socket.on('chat message', function(msg){
+  //     io.emit('chat message', msg);
+  //   });
+  // });
+
+  var gameArray = ['cat', 'dog'];
+
+  io.on('connection', function (socket) {
+    console.log('User Connected (Server Side - Lobby Chat): ', socket.id);
+    socket.on('lobbyChat', function (msg) {
+      io.emit('lobbyChat', msg);
+    });
+
+    socket.on('disconnect', function () {
+      console.log('User Disconnected (Server Side - Lobby Chat)');
+    });
+
+  });
+
+  var nsp = io.of('/game');
+
+  nsp.on('connection', function (socket) {
+    console.log('User Connected (Server Side - Game Room): ', socket.id);
+
+    // socket.on('gameChat', function(msg){
+    //   nsp.emit('gameChat', msg);
+    // });
+
+
+    socket.on('join', (params, callback) => {
+      console.log('Game Player Name: ', params.name);
+      console.log('Game ID: ', params.gameID);
+      console.log('Game Socket ID: ', socket.id);
+
+      socket.join(params.gameID, () => {
+
+        gameList.create({ gameId: params.gameID })
+          .then(results => {
+            console.log('TESTING FOR GAME LIST IDs', JSON.stringify(results))
+          })
+          .catch(err => {
+            console.log(err)
+          })
+      });
+
+
+      socket.on(params.gameID, function (msg) {
+        console.log('TEST: ', params.gameID);
+        console.log('TEST MESSAGE: ', msg);
+        nsp.emit(params.gameID, msg);
+      });
+
+
+      /*
+            socket.leave(params.gameID, () => {
+              gameList.destroy({ where: { gameId: params.gameID } })
+                .then(results => {
+                  console.log('UDATED GAME LIST AFTER LEAVING ROOM:', JSON.stringify(results))
+                })
+                .catch(err => {
+                  console.log(err)
+                })
+            })
+      */
+      callback();
+    });
+
+    socket.on('disconnect', function () {
+      console.log('User Disconnected (Server Side - Game Room)');
+    });
+
+  });
+
+};

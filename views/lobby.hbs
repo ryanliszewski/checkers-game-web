@@ -10,8 +10,9 @@
     <div class="container">
       <div class="row">
         <div class="col-lg-12">
+          <div class="game-list"></div>
           <div class="chat-room">
-            <a href="/game" class="pull-right btn btn-default" data-original-title="" title="">+ Create Game</a>
+            <div id="gameGenerate"></div>
 
             
 
@@ -44,6 +45,21 @@
     <script type="text/javascript" src="/js/socket.io.js"></script>
     <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.1.js"></script>
     <script>
+
+
+    function guid() {
+      function s4() {
+        return Math.floor((1 + Math.random()) * 0x10000)
+          .toString(16)
+          .substring(1);
+      }
+      return s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4();
+    }
+
+    console.log();
+document.getElementById("gameGenerate").innerHTML = ' <a href="/game?gameID=' +
+guid() + '" class="pull-right btn btn-default" data-original-title="" title="">+ Create Game</a>';
+
       $(function () {
         var socket = io();
         $('form').submit(function(){

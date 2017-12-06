@@ -1,4 +1,6 @@
 
+var db = require('../models');
+
 module.exports = function (io) {
 
 /**
@@ -15,6 +17,8 @@ module.exports = function (io) {
 //     io.emit('chat message', msg);
 //   });
 // });
+
+  var gameArray = ['cat', 'dog'];
 
   io.on('connection', function(socket) {
     console.log('User Connected (Server Side - Lobby Chat): ', socket.id);
@@ -40,15 +44,36 @@ module.exports = function (io) {
 
     socket.on('join', (params, callback) => {
       console.log('Game Player Name: ' , params.name);
-      console.log('Room Name: ', params.room);
+      console.log('Game ID: ', params.gameID);
       console.log('Game Socket ID: ', socket.id);
 
-      socket.join(params.room);
+      socket.join(params.gameID);
 
-      socket.on(params.room, function(msg){
-        console.log('TEST: ', params.room);
+      newGameList = new db.gameList({
+          gameId: params.gameID
+      });
+
+      newGameList.save((err) => {
+          if (err) {
+              return response.send(err);
+          } else {
+
+          }
+      });
+      // db.gameLists.create({ gameId: params.gameID})
+      // .catch(error => {
+      //   console.log(error);
+      // })
+      // db.gameLists.any(`INSERT INTO gameLists ("gameId") VALUES ('${params.room}')`)
+      //     .catch( error => {
+      //         console.log( error );
+      //         response.json({ error })
+      //     })
+
+      socket.on(params.gameID, function(msg){
+        console.log('TEST: ', params.gameID);
         console.log('TEST MESSAGE: ', msg);
-        nsp.emit(params.room, msg);
+        nsp.emit(params.gameID, msg);
       });
 
       callback();

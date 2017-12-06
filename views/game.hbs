@@ -11,7 +11,7 @@
       <div class="row">
         <div class="col-lg-12">
           <div class="chat-room">
-            <a href="#" class="pull-right btn btn-default" data-original-title="" title="">+ Leave Game</a>
+            <a href="#" class="pull-right btn btn-default" data-original-title="" title="">- Leave Game</a>
 
             <div class="message-box">
                 <ul id="messages"></ul>
@@ -32,13 +32,38 @@
     <script type="text/javascript" src="/js/socket.io.js"></script>
     <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.1.js"></script>
     <script>
+
+    function guid() {
+      function s4() {
+        return Math.floor((1 + Math.random()) * 0x10000)
+          .toString(16)
+          .substring(1);
+      }
+      return s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4();
+    }
+
+    function getQueryVariable(variable) {
+       var query = window.location.search.substring(1);
+       var vars = query.split("&");
+       for (var i=0;i<vars.length;i++) {
+               var pair = vars[i].split("=");
+               if(pair[0] == variable){return pair[1];}
+       }
+       return(false);
+    }
+
       $(function () {
         var socket = io('/game');
-        var obj = { name: '{{user.username}}', room: 'game' };
-
+        var gameCode = getQueryVariable('gameID');
+        if(!gameCode) {
+          gameCode = guid();
+        }
+        var obj = { name: '{{user.username}}', gameID: gameCode };
+        console.log('Game Object: ', obj);
         socket.on('connect', function() {
           console.log("Connected to server!");
           console.log("Socket ID: ", socket.id);
+          console.log("Game ID", obj.gameID)
           socket.emit('join', obj, function (err) {
             if (err) {
               alert(err);
@@ -49,13 +74,13 @@
         });
 
         $('form').submit(function(){
-          socket.emit(obj.room, '{{user.username}}: ' + $('#input-box').val());
+          socket.emit(obj.gameID, '{{user.username}}: ' + $('#input-box').val());
           $('#input-box').val('');
-          console.log("Room : ", obj.room);
+          console.log("Room : ", obj.gameID);
           return false;
         });
 
-        socket.on(obj.room, function(msg){
+        socket.on(obj.gameID, function(msg){
           $('#messages').append($('<li>').text(msg));
           window.scrollTo(0, document.body.scrollHeight);
         });

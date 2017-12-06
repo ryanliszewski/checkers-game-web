@@ -44,9 +44,9 @@ module.exports = function (io) {
 
     socket.on('join', (params, callback) => {
       console.log('Game Player Name: ' , params.name);
-      console.log('Game Room ID: ', params.gameID);
+      console.log('Game ID: ', params.gameID);
       console.log('Game Socket ID: ', socket.id);
-      
+
       socket.join(params.gameID);
 
       newGameList = new db.gameList({
@@ -70,10 +70,10 @@ module.exports = function (io) {
       //         response.json({ error })
       //     })
 
-      socket.on(params.room, function(msg){
-        console.log('TEST: ', params.room);
+      socket.on(params.gameID, function(msg){
+        console.log('TEST: ', params.gameID);
         console.log('TEST MESSAGE: ', msg);
-        nsp.emit(params.room, msg);
+        nsp.emit(params.gameID, msg);
       });
 
       callback();

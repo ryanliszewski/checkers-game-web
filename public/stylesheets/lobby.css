@@ -8,16 +8,74 @@ a {
 .navbar {
   z-index:1;
 }
-.form-chat {position: fixed; bottom: 0;}
-.form-chat input { border: 0; padding: 10px; margin-right: .5%; }
-.form-chat button { background: rgb(130, 224, 255); border: none; padding: 10px; }
-#messages { list-style-type: none; margin: 0; padding: 0; }
-#messages li { padding: 5px 10px; width: 800px;}
-#messages li:nth-child(odd) { background: #eee; }
+.form-chat {
+  position: fixed; 
+  bottom: 0;
+  margin: auto;  
+  width: 100%; 
+}
+.form-chat input { 
+  border: 0; 
+  padding: 10px; 
+}
+
+  .form-chat button { 
+  background: rgb(130, 224, 255); 
+  border: none; 
+  padding: 10px; 
+}
+
+#messages li { 
+  padding: 5px 10px; 
+}
+#messages li:nth-child(odd) { 
+  background: #eee; 
+}
+
 #messages {
+  list-style-type: 
+  none; 
   margin-bottom: 40px;
   bottom: 0;
   position: fixed;
+  width: 50%; 
+  padding: 0;
+}
+
+#input-box {
   width: 100%;
 }
-#input-box {width: 800px;}
+
+.game-list {
+  position: fixed;
+  left: 0; 
+  top: 0; 
+  width: 200px; 
+  margin-left: 10px; 
+  margin-top: 3.5%; 
+}
+
+.game-list ul {
+  list-style-type: none; 
+  margin: 0;
+  padding: 0; 
+  border-style: solid; 
+  border-width: 2px; 
+  border-color: #000; 
+}
+
+#games li {
+  background: #767676; 
+  height: 40px; 
+  line-height: 40px; 
+}
+
+#games li:nth-child(2n){
+  background: #fff
+}
+
+.game-list p{
+  position: fixed; 
+  left: 0;
+  top: 0 
+}

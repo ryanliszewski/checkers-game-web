@@ -1,4 +1,6 @@
 
+var db = require('../models');
+
 module.exports = function (io) {
 
 /**
@@ -42,10 +44,31 @@ module.exports = function (io) {
 
     socket.on('join', (params, callback) => {
       console.log('Game Player Name: ' , params.name);
-      console.log('Room Name: ', params.room);
+      console.log('Game Room ID: ', params.gameID);
       console.log('Game Socket ID: ', socket.id);
+      
+      socket.join(params.gameID);
 
-      socket.join(params.room);
+      newGameList = new db.gameList({
+          gameId: params.gameID
+      });
+
+      newGameList.save((err) => {
+          if (err) {
+              return response.send(err);
+          } else {
+
+          }
+      });
+      // db.gameLists.create({ gameId: params.gameID})
+      // .catch(error => {
+      //   console.log(error);
+      // })
+      // db.gameLists.any(`INSERT INTO gameLists ("gameId") VALUES ('${params.room}')`)
+      //     .catch( error => {
+      //         console.log( error );
+      //         response.json({ error })
+      //     })
 
       socket.on(params.room, function(msg){
         console.log('TEST: ', params.room);

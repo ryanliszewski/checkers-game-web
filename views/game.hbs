@@ -60,7 +60,7 @@
         if(!gameCode) {
           gameCode = guid();
         }
-        var obj = { name: '{{user.username}}', room: gameCode };
+        var obj = { name: '{{user.username}}', gameID: gameCode };
         console.log('Game Object: ', obj);
         socket.on('connect', function() {
           console.log("Connected to server!");

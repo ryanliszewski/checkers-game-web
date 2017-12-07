@@ -18,13 +18,29 @@ module.exports = function (io) {
   //   });
   // });
 
-  var gameArray = ['cat', 'dog'];
+  var gameArray;
 
   io.on('connection', function (socket) {
     console.log('User Connected (Server Side - Lobby Chat): ', socket.id);
     socket.on('lobbyChat', function (msg) {
       io.emit('lobbyChat', msg);
     });
+
+    gameList.findAll({attributes: ['gameId']})
+      .then(results => {
+        // console.log('Game IDs: ', JSON.stringify(results))
+        gameArray = JSON.stringify(results);
+      })
+      .catch(err => {
+        console.log(err)
+      });
+
+      socket.emit('gameListActive', JSON.stringify(gameArray));
+      // io.emit('', JSON.stringify(gameArray));
+    // socket.on('gameListActive', function (gameArray) {
+    //   console.log("Sending data to gameListActive channel");
+    //
+    // });
 
     socket.on('disconnect', function () {
       console.log('User Disconnected (Server Side - Lobby Chat)');

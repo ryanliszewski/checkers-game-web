@@ -67,14 +67,18 @@ module.exports = function (io) {
 
         gameList.create({ gameId: params.gameID })
           .then(results => {
-            console.log('TESTING FOR GAME LIST IDs', JSON.stringify(results))
+            // console.log('TESTING FOR GAME LIST IDs', JSON.stringify(results))
           })
           .catch(err => {
             console.log(err)
           })
       });
 
+      // console.log("=====");
+      // console.log("Users List: ", nsp.connected);
+      // console.log("=====");
 
+      socket.broadcast.to(params.gameID).emit(params.gameID, `Player ${params.name} has joined.`);
       socket.on(params.gameID, function (msg) {
         console.log('TEST: ', params.gameID);
         console.log('TEST MESSAGE: ', msg);

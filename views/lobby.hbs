@@ -63,15 +63,29 @@ guid() + '" class="pull-right btn btn-default" data-original-title="" title="">+
           var temp = JSON.parse(gameList);
           var gameListArray = JSON.parse("[" + temp + "]");
           // console.log(gameListArray[0][4]['gameId']);
+          var uniqueGameList = [];
           for (var i = 0; i < gameListArray[0].length; i++) {
               if(gameListArray[0][i]['gameId'] != null) {
                 console.log(gameListArray[0][i]['gameId']);
-
-              $('#games').append($('<li><a href="/game?gameID=' +
-                    gameListArray[0][i]['gameId'] +
-                    '" class="btn btn-default">+ Join Game </a>'));
+                uniqueGameList.push(gameListArray[0][i]['gameId']);
               }
           }
+
+          var uniqueGames = [];
+
+          $.each(uniqueGameList, function(i, el){
+              if($.inArray(el, uniqueGames) === -1) uniqueGames.push(el);
+          });
+
+          // console.log("length:", uniqueGames.length);
+
+          for (var i = 0; i < uniqueGames.length; i++) {
+            console.log(uniqueGames[i]);
+            $('#games').append($('<li><a href="/game?gameID=' +
+                  uniqueGames[i]+
+                  '" class="btn btn-default">+ Join Game </a>'));
+          }
+
           // var obj = JSON.parse(gameList);
           // console.log("test", obj.gameId);
 

@@ -62,13 +62,12 @@ guid() +'&isGameFull=false' +'" class="pull-right btn btn-default" data-original
           // console.log("GameList Object ", gameList);
           var temp = JSON.parse(gameList);
           var gameListArray = JSON.parse("[" + temp + "]");
-          // console.log(gameListArray[0][4]['gameId']);
+          console.log(gameListArray);
           var uniqueGameList = [];
-          for (var i = 0; i < gameListArray[0].length; i++) {
-              if(gameListArray[0][i]['gameId'] != null) {
-                console.log(gameListArray[0][i]['gameId']);
-                uniqueGameList.push(gameListArray[0][i]['gameId']);
-              }
+          for (var i = 0; i < gameListArray[0].length &&
+            gameListArray[0][i]['isGameFull'] == false; i++) {
+            console.log(gameListArray[0][i]['isGameFull']);
+              uniqueGameList.push(gameListArray[0][i]['gameId']);
           }
 
           var uniqueGames = [];

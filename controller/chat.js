@@ -64,7 +64,7 @@ module.exports = function (io) {
 
       socket.join(params.gameID, () => {
 
-        gameList.create({ gameId: params.gameID })
+        gameList.findOrCreate({where : { gameId: params.gameID }})
           .then(results => {
             // console.log('TESTING FOR GAME LIST IDs', JSON.stringify(results))
           })

@@ -58,39 +58,41 @@
         if(!gameCode) {
           gameCode = guid();
         }
-        var obj = { name: '{{user.username}}', gameID: gameCode };
+        var obj = { name: '{{user.username}}', gameID: gameCode, isGameFull: getQueryVariable('isGameFull') };
         console.log('Game Object: ', obj);
         socket.on('connect', function() {
           console.log("Connected to server!");
           console.log("Socket ID: ", socket.id);
-          console.log(localStorage.getItem("localgameID"));
-          const localGame = localStorage.getItem("localgameID");
-          console.log("WTF: ",localGame);
-          if(localGame == null) {
-            localStorage.setItem("localgameID", obj.gameID);
-            console.log("Game ID: ", obj.gameID)
-              socket.emit('join', obj, function (err) {
-                if (err) {
-                  alert(err);
-                } else {
-                  console.log('No error');
-                }
-              });
-          } else if ( localGame.length == 23 && localGame != obj.gameID) {
-            localStorage.setItem("localgameID", obj.gameID);
-            console.log("Game ID: ", obj.gameID)
-              socket.emit('join', obj, function (err) {
-                if (err) {
-                  alert(err);
-                } else {
-                  console.log('No error');
-                }
-              });
+        //   console.log(localStorage.getItem("localgameID"));
+      //  const localGame = localStorage.getItem("localgameID");
+        //  console.log("WTF: ",localGame);
+
+        socket.emit('join', obj, function (err) {
+          if (err) {
+            alert(err);
+          } else {
+            console.log('No error');
           }
+        });
+        // if(localGame == null) {
+        //   localStorage.setItem("localgameID", obj.gameID);
+        //   console.log("Game ID: ", obj.gameID)
+        // } else if (localGame.length == 23 && localGame != obj.gameID) {
+        //   localStorage.setItem("localgameID", obj.gameID);
+        //   console.log("Game ID: ", obj.gameID)
+        //     socket.emit('join', obj, function (err) {
+        //       if (err) {
+        //         alert(err);
+        //       } else {
+        //         console.log('No error');
+        //       }
+        //     });
+        // }
+
         });
 
         socket.on('disconnect', function() {
-          localStorage.setItem("localgameID", null);
+          // localStorage.setItem("localgameID", null);
           // socket.emit('join', obj, function (err) {
           //   if (err) {
           //     alert(err);
@@ -99,6 +101,7 @@
           //   }
           // });
         });
+
         $('form').submit(function(){
           socket.emit(obj.gameID, '{{user.username}}: ' + $('#input-box').val());
           $('#input-box').val('');

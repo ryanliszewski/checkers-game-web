@@ -51,7 +51,7 @@
     }
 
 document.getElementById("gameGenerate").innerHTML = ' <a href="/game?gameID=' +
-guid() + '" class="pull-right btn btn-default" data-original-title="" title="">+ Create Game</a>';
+guid() +'&isGameFull=false' +'" class="pull-right btn btn-default" data-original-title="" title="">+ Create Game</a>';
 
       $(function () {
         var socket = io();
@@ -82,7 +82,7 @@ guid() + '" class="pull-right btn btn-default" data-original-title="" title="">+
           for (var i = 0; i < uniqueGames.length; i++) {
             console.log(uniqueGames[i]);
             $('#games').append($('<li><a href="/game?gameID=' +
-                  uniqueGames[i]+
+                  uniqueGames[i]+ '&isGameFull=true' +
                   '" class="btn btn-default">+ Join Game </a>'));
           }
 

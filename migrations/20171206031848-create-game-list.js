@@ -11,6 +11,12 @@ module.exports = {
       gameId: {
         type: Sequelize.STRING
       },
+      isGameFull: {
+        type: Sequelize.BOOLEAN
+      },
+      gameCreator: {
+        type: Sequelize.STRING
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

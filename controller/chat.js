@@ -63,14 +63,34 @@ module.exports = function (io) {
       console.log('Game Socket ID: ', socket.id);
 
       socket.join(params.gameID, () => {
+        if(params.isGameFull == 'false') {
+          gameList.findOrCreate({where : { gameId: params.gameID,
+            gameCreator: params.name, isGameFull: params.isGameFull}})
+            .then(results => {
+              // console.log('TESTING FOR GAME LIST IDs', JSON.stringify(results))
+            })
+            .catch(err => {
+              console.log(err)
+            })
+        } else {
+          gameList.destroy({ where: { gameId: params.gameID } })
+            .then(results => {
+            console.log('UDATED GAME LIST AFTER LEAVING ROOM:', JSON.stringify(results))
+            })
+            .catch(err => {
+              console.log(err)
+            })
 
-        gameList.findOrCreate({where : { gameId: params.gameID }})
-          .then(results => {
-            // console.log('TESTING FOR GAME LIST IDs', JSON.stringify(results))
-          })
-          .catch(err => {
-            console.log(err)
-          })
+          gameList.findOrCreate({where : { gameId: params.gameID,
+            gameCreator: params.name, isGameFull: params.isGameFull}})
+            .then(results => {
+              console.log('ADDING SECOND TIME', JSON.stringify(results))
+            })
+            .catch(err => {
+              console.log(err)
+            })
+
+        }
       });
 
       // nsp.connected( {

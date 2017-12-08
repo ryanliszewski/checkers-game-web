@@ -76,6 +76,16 @@
                   console.log('No error');
                 }
               });
+          } else if ( localGame.length == 23 && localGame != obj.gameID) {
+            localStorage.setItem("localgameID", obj.gameID);
+            console.log("Game ID: ", obj.gameID)
+              socket.emit('join', obj, function (err) {
+                if (err) {
+                  alert(err);
+                } else {
+                  console.log('No error');
+                }
+              });
           }
         });
 

@@ -49,7 +49,6 @@ module.exports = function (io) {
   });
 
   var nsp = io.of('/game');
-
   nsp.on('connection', function (socket) {
     console.log('User Connected (Server Side - Game Room): ', socket.id);
 
@@ -74,6 +73,11 @@ module.exports = function (io) {
           })
       });
 
+      // nsp.connected( {
+      //   (clients) => {
+      //     console.log(clients[0]);
+      //   }
+      // });
       // console.log("=====");
       // console.log("Users List: ", nsp.connected);
       // console.log("=====");
@@ -101,9 +105,12 @@ module.exports = function (io) {
     });
 
     socket.on('disconnect', function () {
-      console.log('User Disconnected (Server Side - Game Room)');
-    });
+      // socket.on('leave', (params, callback) => {
+      //   socket.broadcast.to(params.gameID).emit(params.gameID, `Player ${params.name} has left game.`);
+      //   console.log('User LEFT Game (Server Side)');
+      // });
+    }); // NSP Disconnected
 
-  });
+  }); // NSP Connection
 
-};
+}; // Export

@@ -73,6 +73,15 @@
           });
         });
 
+        // socket.on('disconnect', obj, function(params) {
+        //   socket.emit('join', obj, function (err) {
+        //     if (err) {
+        //       alert(err);
+        //     } else {
+        //       console.log('No error');
+        //     }
+        //   });
+        // });
         $('form').submit(function(){
           socket.emit(obj.gameID, '{{user.username}}: ' + $('#input-box').val());
           $('#input-box').val('');

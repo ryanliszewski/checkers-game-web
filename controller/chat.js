@@ -26,7 +26,7 @@ module.exports = function (io) {
       io.emit('lobbyChat', msg);
     });
 
-    gameList.findAll({attributes: ['gameId', 'isGameFull']})
+    gameList.findAll({attributes: ['gameId', 'isGameFull', 'gameCreator']})
       .then(results => {
         // console.log('Game IDs: ', JSON.stringify(results))
         gameArray = JSON.stringify(results);

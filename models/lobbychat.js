@@ -1,9 +1,8 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
-  var gameList = sequelize.define('gameList', {
-    gameId: DataTypes.STRING,
-    isGameFull: DataTypes.BOOLEAN,
-    gameCreator: DataTypes.STRING
+  var lobbyChat = sequelize.define('lobbyChat', {
+    username: DataTypes.STRING,
+    messages: DataTypes.STRING
   }, {
     classMethods: {
       associate: function(models) {
@@ -11,5 +10,5 @@ module.exports = (sequelize, DataTypes) => {
       }
     }
   });
-  return gameList;
+  return lobbyChat;
 };

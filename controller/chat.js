@@ -1,88 +1,99 @@
+const gameList = require('../models').gameList;
 
-var db = require('../models');
+function dbCreateGame(params) {
+  gameList.findOrCreate({
+      where: {
+        gameId: params.gameID,
+        gameCreator: params.name,
+        isGameFull: params.isGameFull
+      }
+    })
+    .then(results => {})
+    .catch(err => {
+      console.log(err)
+    })
+}
 
-module.exports = function (io) {
+function dbDestroyGame(params) {
+  gameList.destroy({
+      where: {
+        gameId: params.gameID
+      }
+    })
+    .then(results => {})
+    .catch(err => {
+      console.log(err)
+    })
+}
 
-/**
- * Chat console message.
- */
- // io.on('connection', function(socket){
- //   socket.on('game chat', function(msg){
- //     io.emit('game chat', msg);
- //   });
- // });
+module.exports = function(io) {
 
-// io.on('connection', function(socket){
-//   socket.on('chat message', function(msg){
-//     io.emit('chat message', msg);
-//   });
-// });
-
-  var gameArray = ['cat', 'dog'];
+  var gameArray;
 
   io.on('connection', function(socket) {
     console.log('User Connected (Server Side - Lobby Chat): ', socket.id);
-    socket.on('lobbyChat', function(msg){
+    socket.on('lobbyChat', function(msg) {
       io.emit('lobbyChat', msg);
     });
 
-    socket.on('disconnect', function(){
+    gameList.findAll({
+        attributes: ['gameId', 'isGameFull', 'gameCreator']
+      })
+      .then(results => {
+        gameArray = JSON.stringify(results);
+      })
+      .catch(err => {
+        console.log(err)
+      });
+
+    socket.emit('gameListActive', JSON.stringify(gameArray));
+
+    socket.on('disconnect', function() {
       console.log('User Disconnected (Server Side - Lobby Chat)');
     });
 
   });
 
   var nsp = io.of('/game');
-
   nsp.on('connection', function(socket) {
-    console.log('User Connected (Server Side - Game Room): ', socket.id);
-
-    // socket.on('gameChat', function(msg){
-    //   nsp.emit('gameChat', msg);
-    // });
-
-
+    console.log('User Connected to Game Room (Server Side): ', socket.id);
     socket.on('join', (params, callback) => {
-      console.log('Game Player Name: ' , params.name);
-      console.log('Game ID: ', params.gameID);
-      console.log('Game Socket ID: ', socket.id);
 
-      socket.join(params.gameID);
-
-      newGameList = new db.gameList({
-          gameId: params.gameID
+      socket.join(params.gameID, () => {
+        if (params.isGameFull == 'false') {
+          dbCreateGame(params);
+        } else {
+          dbDestroyGame(params);
+          dbCreateGame(params);
+        }
       });
 
-      newGameList.save((err) => {
-          if (err) {
-              return response.send(err);
-          } else {
-
-          }
-      });
-      // db.gameLists.create({ gameId: params.gameID})
-      // .catch(error => {
-      //   console.log(error);
-      // })
-      // db.gameLists.any(`INSERT INTO gameLists ("gameId") VALUES ('${params.room}')`)
-      //     .catch( error => {
-      //         console.log( error );
-      //         response.json({ error })
-      //     })
-
-      socket.on(params.gameID, function(msg){
-        console.log('TEST: ', params.gameID);
-        console.log('TEST MESSAGE: ', msg);
+      socket.broadcast.to(params.gameID).emit(params.gameID, `Player ${params.name} has joined.`);
+      socket.on(params.gameID, function(msg) {
         nsp.emit(params.gameID, msg);
       });
 
+      /*
+            socket.leave(params.gameID, () => {
+              gameList.destroy({ where: { gameId: params.gameID } })
+                .then(results => {
+                  console.log('UDATED GAME LIST AFTER LEAVING ROOM:', JSON.stringify(results))
+                })
+                .catch(err => {
+                  console.log(err)
+                })
+            })
+      */
       callback();
     });
 
-    socket.on('disconnect', function(){
-      console.log('User Disconnected (Server Side - Game Room)');
-    });
+    socket.on('disconnect', function() {
+      // socket.on('leave', (params, callback) => {
+      //   socket.broadcast.to(params.gameID).emit(params.gameID, `Player ${params.name} has left game.`);
+      //   console.log('User LEFT Game (Server Side)');
+      // });
+    }); // NSP Disconnected
 
-  });
+  }); // NSP Connection
 
-};
+}; // Export

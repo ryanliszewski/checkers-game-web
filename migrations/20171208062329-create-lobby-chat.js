@@ -1,20 +1,17 @@
 'use strict';
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('gameLists', {
+    return queryInterface.createTable('lobbyChats', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      gameId: {
+      username: {
         type: Sequelize.STRING
       },
-      isGameFull: {
-        type: Sequelize.BOOLEAN
-      },
-      gameCreator: {
+      messages: {
         type: Sequelize.STRING
       },
       createdAt: {
@@ -28,6 +25,6 @@ module.exports = {
     });
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('gameLists');
+    return queryInterface.dropTable('lobbyChats');
   }
 };

@@ -57,6 +57,10 @@
       var socket = io();
       socket.on('gameListActive', function(gameList) {
         var temp = JSON.parse(gameList);
+        console.log("Temp:", temp);
+        if (temp == null){
+          temp = 0;
+        }
         var gameListArray = JSON.parse("[" + temp + "]");
         for (var i = 0; i < gameListArray[0].length &&
           gameListArray[0][i]['isGameFull'] == false; i++) {

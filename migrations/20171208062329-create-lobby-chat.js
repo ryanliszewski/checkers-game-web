@@ -11,7 +11,7 @@ module.exports = {
       username: {
         type: Sequelize.STRING
       },
-      messages: {
+      message: {
         type: Sequelize.STRING
       },
       createdAt: {

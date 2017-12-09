@@ -1,4 +1,21 @@
 const gameList = require('../models').gameList;
+const lobbyChat = require('../models').lobbyChat;
+
+function dbCreateMessage(msgObj) {
+  lobbyChat.create({
+        username: msgObj.username,
+        message: msgObj.message
+    })
+    .then(results => {})
+    .catch(err => {
+      console.log("WHAT MY ERROF:", err);
+    })
+}
+
+lobbyChat.findAll({limit:10}).then(results => {
+  let mess = {results}
+  console.log("TESTING FOR MESSAGES FORM DB:", mess.lobbyChat)
+})
 
 function dbCreateGame(params) {
   gameList.findOrCreate({
@@ -32,8 +49,9 @@ module.exports = function(io) {
 
   io.on('connection', function(socket) {
     console.log('User Connected (Server Side - Lobby Chat): ', socket.id);
-    socket.on('lobbyChat', function(msg) {
-      io.emit('lobbyChat', msg);
+    socket.on('lobbyChat', function(msgObj) {
+      dbCreateMessage(msgObj);
+      io.emit('lobbyChat', msgObj.username + ": " + msgObj.message);
     });
 
     gameList.findAll({

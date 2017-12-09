@@ -68,7 +68,11 @@
       });
 
       $('form').submit(function() {
-        socket.emit('lobbyChat', '{{user.username}}: ' + $('#input-box').val());
+        var msgObj = {
+          username: '{{user.username}}',
+          message: $('#input-box').val()
+        };
+        socket.emit('lobbyChat', msgObj );
         $('#input-box').val('');
         return false;
       });

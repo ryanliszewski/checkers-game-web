@@ -1,6 +1,6 @@
 const gameList = require('../models').gameList;
 const lobbyChat = require('../models').lobbyChat;
-
+const sequelize = require('sequelize');
 function dbCreateMessage(msgObj) {
   lobbyChat.create({
         username: msgObj.username,
@@ -11,11 +11,6 @@ function dbCreateMessage(msgObj) {
       console.log("WHAT MY ERROF:", err);
     })
 }
-
-lobbyChat.findAll({limit:10}).then(results => {
-  let mess = {results}
-  console.log("TESTING FOR MESSAGES FORM DB:", mess.lobbyChat)
-})
 
 function dbCreateGame(params) {
   gameList.findOrCreate({
@@ -49,6 +44,13 @@ module.exports = function(io) {
 
   io.on('connection', function(socket) {
     console.log('User Connected (Server Side - Lobby Chat): ', socket.id);
+
+    lobbyChat.findAll({ order: [['id', 'DESC']], limit:10}).then(results => {
+      for(let i = results.length - 1; i >= 0; i--) {
+        io.to(socket.id).emit('lobbyChat', results[i]['dataValues']['username'] + ": " + results[i]['dataValues']['message']);
+      }
+    })
+
     socket.on('lobbyChat', function(msgObj) {
       dbCreateMessage(msgObj);
       io.emit('lobbyChat', msgObj.username + ": " + msgObj.message);

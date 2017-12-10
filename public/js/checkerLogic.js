@@ -1,4 +1,3 @@
-var socket = io('/game');
 //global variables for one square
 var width = 44;
 var border = 2;
@@ -67,8 +66,28 @@ function getCoords(top, left) {
   };
 }
 
+//This function will return true of false
+//Some game logic in here
 function legalMove(from, to) {
-  //TODO
+  if (current_move == black) {
+    board[from.x][from.y] = 0;
+    board[to.x][to.y] = -1;
+    console.log(board);
+  } else {
+    board[from.x][from.y] = 0;
+    board[from.x][from.x] = 1;
+  }
+}
+
+function jump(){
+
+}
+
+function king(){
+
+}
+
+function gameOver(){
 }
 
 //utility function for returning
@@ -142,7 +161,7 @@ $('document').ready(function() {
 
     //YOUR CODE
     //actually moving the piece to its initial position
-    movePieceTo($(piece), pixelPosition.top, pixelPosition.left, socket);
+    movePieceTo($(piece), pixelPosition.top, pixelPosition.left);
   });
 
   //this loop moves all the dark pieces to their initial positions
@@ -156,9 +175,8 @@ $('document').ready(function() {
     //turning the x,y coordinate into a pixel position
     var pixelPosition = getPixels(x, y);
 
-    //YOUR CODE
     //moving the piece to its initial position
-    movePieceTo($(piece), pixelPosition.top, pixelPosition.left, socket);
+    movePieceTo($(piece), pixelPosition.top, pixelPosition.left);
   });
 
   //set up initial squares
@@ -199,15 +217,6 @@ $('document').ready(function() {
       //get the piece with the class 'selected'
 
       var $selectedPiece = $('div.piece.selected');
-
-      var $test = $selectedPiece.each(function(index, piece) {
-        var position = $(piece).position();
-        var coords = getCoords(position.top, position.left);
-        var squareIndex = coords.y * 8 + coords.x;
-        return $selectedPiece;
-
-      });
-
       //we only move if there is exactly one selected piece
       if ($selectedPiece.length == 1) {
         //get the index of the square
@@ -215,16 +224,18 @@ $('document').ready(function() {
         var index = $this.prevAll().length;
         var x = index % 8;
         var y = Math.floor(index / 8);
-        squareToMoveCords = getCoords(x, y);
         var pixels = getPixels(x, y);
 
-        //actually do the moving
+        squareToMoveCords.x = x;
+        squareToMoveCords.y = y;
 
+        //actually do the moving
         if ($selectedPiece.hasClass('piece dark')) {
           if (y < selectedPieceCords.y) {
             if (Math.abs(y - selectedPieceCords.y) <= 2) {
+              legalMove(selectedPieceCords,squareToMoveCords);
               current_move = red;
-              movePieceTo($selectedPiece, pixels.top, pixels.left, socket);
+              movePieceTo($selectedPiece, pixels.top, pixels.left);
             }
 
           }
@@ -232,7 +243,7 @@ $('document').ready(function() {
           if (y > selectedPieceCords.y) {
             if (Math.abs(y - selectedPieceCords.y) <= 2) {
               current_move = black;
-              movePieceTo($selectedPiece, pixels.top, pixels.left, socket);
+              movePieceTo($selectedPiece, pixels.top, pixels.left);
             }
           }
         }

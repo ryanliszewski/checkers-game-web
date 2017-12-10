@@ -15,41 +15,10 @@ function setUpPieces() {
     }
 }
 
-function movePieceTo($piece,newTop,newLeft,socket) {
+function movePieceTo($piece,newTop,newLeft) {
     //set the css 'top' and 'left'
     //attributes of the passed piece
     //to the arguments newTop and newLeft
-    let gameStatus;
-    socket.on('gameListActive', function(gameList) {
-      var temp = JSON.parse(gameList);
-      if (temp == null){
-        temp = 0;
-      }
-      var gameListArray = JSON.parse("[" + temp + "]");
-      // console.log(gameListArray);
-      // console.log(gameCode);
-      for (var i = 0; i < gameListArray[0].length; i++) {
-          // console.log(gameListArray[0][i]);
-          if(gameListArray[0][i]['gameId'] == gameCode &&
-            gameListArray[0][i]['isGameFull'] == true) {
-              gameStatus = true;
-              console.log("success!!!: ", gameStatus);
-          }
-      }
-
-    }); // End of GameListActive
-
-    console.log("gameStatus: ", gameStatus);
-
-    if(gameStatus == true) {
-      console.log("MOVE SENT");
-      socket.emit("gameMove", socket);
-    }
-
-    socket.on("gameMove", function(move){
-      $piece.css('top', move.newTop);
-      $piece.css('left', move.newLeft);
-    });
 
     $piece.css('top', newTop);
     $piece.css('left', newLeft);

@@ -62,7 +62,7 @@
     }
 
       $(function () {
-
+        var socket = io('/game');
         gameCode = getQueryVariable('gameID');
         if(!gameCode) {
           gameCode = guid();

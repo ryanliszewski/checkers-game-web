@@ -3,6 +3,41 @@
 var width = 44;
 var border = 2;
 
+var selectedPieceCords = getCoords();
+var squareToMoveCords = getCoords();
+
+//Moves 
+var black = -1; 
+var red = 1; 
+
+//Black always moves first 
+var current_move = -1; 
+
+var board;
+Board(1,0,1,0,1,0,1,0,
+      0,1,0,1,0,1,0,1,
+      1,0,1,0,1,0,1,0,
+      0,0,0,0,0,0,0,0,
+      0,0,0,0,0,0,0,0,
+      0,-1,0,-1,0,-1,0,-1,
+      -1,0,-1,0,-1,0,-1,0,
+      0,-1,0,-1,0,-1,0,-1);
+
+
+//Initializes a 2d Array of the checker board 
+function Board(){   
+    board = new Array();
+          for (var i=0;i<8; i++) {
+               board[i] = new Array();
+               for (var j=0;j<8;j++)
+                  board[i][j] = Board.arguments[8*j+i];
+          }
+    board[-2] = new Array(); // prevents errors
+    board[-1] = new Array();
+    board[8] = new Array();
+    board[9] = new Array();
+}
+
 //utility function for translating an x,y coordinate
 //to a pixel position
 //the convention is that the square in the upper left
@@ -24,10 +59,17 @@ function getPixels(x,y) {
 function getCoords(top,left) {
     //returns an x and a y
     //given a top and left pixels
+
     return {
+        
+
         'x': left / (width + border),
         'y': top / (width + border)
     };
+}
+
+function legalMove(from, to){
+    //TODO 
 }
 
 //utility function for returning
@@ -130,11 +172,21 @@ $('document').ready(function() {
         
         //turn `this` into a jQuery object
         var $this = $(this);
-        
-        //YOUR CODE
-        //toggleing the 'selected' class of this piece
-        //and possible deselecting other pieces
-        toggleSelect($this);
+
+        //Gets selected piece's coordinates
+        $this = $this.each(function(index, piece){
+            var position = $(piece).position();
+            selectedPieceCords = getCoords(position.top,position.left);
+            return $this;
+        });
+
+         //toggleing the 'selected' class of this piece
+         //Only allows to toggle current_move's pieces
+        if ($this.hasClass('piece dark') && current_move == black){
+            toggleSelect($this);
+        } else if ($this.hasClass('piece light') && current_move == red){
+            toggleSelect($this);
+        }
     });
     
     $('div.square').click(function() {
@@ -146,7 +198,16 @@ $('document').ready(function() {
         if ($this.hasClass('movable')) {
             
             //get the piece with the class 'selected'
+
             var $selectedPiece = $('div.piece.selected');
+
+            var $test = $selectedPiece.each(function(index, piece){
+                var position = $(piece).position();
+                var coords = getCoords(position.top,position.left);
+                var squareIndex = coords.y * 8 + coords.x;
+                return $selectedPiece;
+                
+            });
             
             //we only move if there is exactly one selected piece
             if ($selectedPiece.length == 1) {
@@ -155,11 +216,27 @@ $('document').ready(function() {
                 var index = $this.prevAll().length;
                 var x = index % 8;
                 var y = Math.floor(index / 8);
+                squareToMoveCords = getCoords(x, y);
                 var pixels = getPixels(x,y);
                 
                 //actually do the moving
-                movePieceTo($selectedPiece,pixels.top,pixels.left);
-                
+
+                if($selectedPiece.hasClass('piece dark')){
+                    if(y < selectedPieceCords.y){
+                        if(Math.abs(y - selectedPieceCords.y) <= 2){
+                            current_move = red;
+                            movePieceTo($selectedPiece,pixels.top,pixels.left); 
+                        }
+                    
+                    }
+                } else {
+                    if(y > selectedPieceCords.y){
+                        if(Math.abs(y - selectedPieceCords.y) <= 2){
+                            current_move = black;
+                            movePieceTo($selectedPiece,pixels.top,pixels.left);    
+                        }
+                    }
+                }
                 //increment the move counter
                 incrementMoveCount();
                 
@@ -173,5 +250,4 @@ $('document').ready(function() {
             
         }
     });
-
 });

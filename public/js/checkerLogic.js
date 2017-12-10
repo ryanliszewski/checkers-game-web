@@ -5,7 +5,7 @@ var border = 2;
 var selectedPieceCords = getCoords();
 var squareToMoveCords = getCoords();
 
-//Moves
+//Moves         
 var black = -1;
 var red = 1;
 
@@ -67,7 +67,7 @@ function getCoords(top, left) {
 }
 
 function legalMove(from, to) {
-  //TODO
+  
 }
 
 //utility function for returning
@@ -201,8 +201,9 @@ $('document').ready(function() {
 
       var $test = $selectedPiece.each(function(index, piece) {
         var position = $(piece).position();
-        var coords = getCoords(position.top, position.left);
-        var squareIndex = coords.y * 8 + coords.x;
+        squareToMoveCords = getCoords(position.top, position.left);
+        //var squareIndex = coords.y * 8 + coords.x;
+        
         return $selectedPiece;
 
       });
@@ -214,7 +215,8 @@ $('document').ready(function() {
         var index = $this.prevAll().length;
         var x = index % 8;
         var y = Math.floor(index / 8);
-        squareToMoveCords = getCoords(x, y);
+        //console.log(y);
+        //squareToMoveCords = getCoords(x, y);
         var pixels = getPixels(x, y);
 
         //actually do the moving
@@ -222,6 +224,8 @@ $('document').ready(function() {
         if ($selectedPiece.hasClass('piece dark')) {
           if (y < selectedPieceCords.y) {
             if (Math.abs(y - selectedPieceCords.y) <= 2) {
+              console.log(selectedPieceCords);
+              //console.log(squareToMoveCords);
               current_move = red;
               movePieceTo($selectedPiece, pixels.top, pixels.left);
             }

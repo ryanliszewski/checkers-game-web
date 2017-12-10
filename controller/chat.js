@@ -13,10 +13,10 @@ function dbCreateMessage(msgObj) {
 }
 
 function dbCreateGame(params) {
-  gameList.create({
+  gameList.findOrCreate({ where: {
       gameId: params.gameID,
       gameCreator: params.name
-    })
+    }})
     .then(results => {})
     .catch(err => {
       console.log(err)

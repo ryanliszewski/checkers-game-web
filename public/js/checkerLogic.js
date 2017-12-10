@@ -66,6 +66,8 @@ function getCoords(top, left) {
   };
 }
 
+//This function will return true of false
+//Some game logic in here
 function legalMove(from, to) {
   if (current_move == black) {
     board[from.x][from.y] = 0; 
@@ -75,6 +77,17 @@ function legalMove(from, to) {
     board[from.x][from.y] = 0; 
     board[from.x][from.x] = 1;
   }
+}
+
+function jump(){
+
+}
+
+function king(){ 
+
+}
+
+function gameOver(){
 }
 
 //utility function for returning

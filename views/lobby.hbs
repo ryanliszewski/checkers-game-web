@@ -57,18 +57,17 @@
       var socket = io();
       socket.on('gameListActive', function(gameList) {
         var temp = JSON.parse(gameList);
-      //   console.log("Temp:", temp);
         if (temp == null){
           temp = 0;
         }
         var gameListArray = JSON.parse("[" + temp + "]");
-        console.log(gameListArray);
-        for (var i = 0; i < gameListArray[0].length &&
-          gameListArray[0][i]['isGameFull'] == false; i++) {
-          console.log(gameListArray[0][i]['isGameFull']);
-          $('#games').append($('<li>' + gameListArray[0][i]['gameCreator'] + ' <a href="/game?gameID=' +
-            gameListArray[0][i]['gameId'] + '&isGameFull=true' +
-            '" class="btn btn-default pull-right">+ Join Game </a>'));
+        console.log("Game List Array: ",gameListArray);
+        for (var i = 0; i < gameListArray[0].length; i++) {
+            if(gameListArray[0][i]['isGameFull'] == false) {
+                $('#games').append($('<li>' + gameListArray[0][i]['gameCreator'] + ' <a href="/game?gameID=' +
+                  gameListArray[0][i]['gameId'] + '&isGameFull=true' +
+                  '" class="btn btn-default pull-right">+ Join Game </a>'));
+            }
         }
       });
 

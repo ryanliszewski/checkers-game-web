@@ -13,12 +13,9 @@ function dbCreateMessage(msgObj) {
 }
 
 function dbCreateGame(params) {
-  gameList.findOrCreate({
-      where: {
-        gameId: params.gameID,
-        gameCreator: params.name,
-        isGameFull: params.isGameFull
-      }
+  gameList.create({
+      gameId: params.gameID,
+      gameCreator: params.name
     })
     .then(results => {})
     .catch(err => {
@@ -33,6 +30,19 @@ function dbDestroyGame(params) {
       }
     })
     .then(results => {})
+    .catch(err => {
+      console.log(err)
+    })
+}
+
+function dbGameFull(params) {
+  gameList.update({
+      isGameFull: 'true'
+    }, {
+      where: {
+        gameId: params.gameID
+      }
+    })
     .catch(err => {
       console.log(err)
     })
@@ -80,12 +90,31 @@ module.exports = function(io) {
     socket.on('join', (params, callback) => {
 
       socket.join(params.gameID, () => {
-        if (params.isGameFull == 'false') {
-          dbCreateGame(params);
+        if (params.isGameFull == 'true') {
+          dbGameFull(params)
         } else {
-          dbDestroyGame(params);
+          console.log("GAME: ", params.gameID);
+          console.log("GAME STATUS:", params.isGameFull);
           dbCreateGame(params);
+          // dbDestroyGame(params);
+          // dbCreateGame(params);
         }
+      });
+
+      gameList.findAll({
+          attributes: ['gameId', 'isGameFull', 'gameCreator']
+        })
+        .then(results => {
+          gameArray = JSON.stringify(results);
+        })
+        .catch(err => {
+          console.log(err)
+        });
+
+      socket.emit('gameListActive', JSON.stringify(gameArray));
+
+      socket.on('gameMove', function(msgObj) {
+        io.emit('gameMove', msgObj);
       });
 
       socket.broadcast.to(params.gameID).emit(params.gameID, `Player ${params.name} has joined.`);

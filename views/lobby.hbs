@@ -51,17 +51,18 @@
     }
 
     document.getElementById("gameGenerate").innerHTML = ' <a href="/game?gameID=' +
-      guid() + '&isGameFull=false' + '" class="pull-right btn btn-default" data-original-title="" title="">+ Create Game</a>';
+      guid() + '" class="pull-right btn btn-default" data-original-title="" title="">+ Create Game</a>';
 
     $(function() {
       var socket = io();
       socket.on('gameListActive', function(gameList) {
         var temp = JSON.parse(gameList);
-        console.log("Temp:", temp);
+      //   console.log("Temp:", temp);
         if (temp == null){
           temp = 0;
         }
         var gameListArray = JSON.parse("[" + temp + "]");
+        console.log(gameListArray);
         for (var i = 0; i < gameListArray[0].length &&
           gameListArray[0][i]['isGameFull'] == false; i++) {
           console.log(gameListArray[0][i]['isGameFull']);

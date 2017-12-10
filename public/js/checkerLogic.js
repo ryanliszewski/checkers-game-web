@@ -1,3 +1,4 @@
+var socket = io('/game');
 //global variables for one square
 var width = 44;
 var border = 2;
@@ -141,7 +142,7 @@ $('document').ready(function() {
 
     //YOUR CODE
     //actually moving the piece to its initial position
-    movePieceTo($(piece), pixelPosition.top, pixelPosition.left);
+    movePieceTo($(piece), pixelPosition.top, pixelPosition.left, socket);
   });
 
   //this loop moves all the dark pieces to their initial positions
@@ -157,7 +158,7 @@ $('document').ready(function() {
 
     //YOUR CODE
     //moving the piece to its initial position
-    movePieceTo($(piece), pixelPosition.top, pixelPosition.left);
+    movePieceTo($(piece), pixelPosition.top, pixelPosition.left, socket);
   });
 
   //set up initial squares
@@ -223,7 +224,7 @@ $('document').ready(function() {
           if (y < selectedPieceCords.y) {
             if (Math.abs(y - selectedPieceCords.y) <= 2) {
               current_move = red;
-              movePieceTo($selectedPiece, pixels.top, pixels.left);
+              movePieceTo($selectedPiece, pixels.top, pixels.left, socket);
             }
 
           }
@@ -231,7 +232,7 @@ $('document').ready(function() {
           if (y > selectedPieceCords.y) {
             if (Math.abs(y - selectedPieceCords.y) <= 2) {
               current_move = black;
-              movePieceTo($selectedPiece, pixels.top, pixels.left);
+              movePieceTo($selectedPiece, pixels.top, pixels.left, socket);
             }
           }
         }

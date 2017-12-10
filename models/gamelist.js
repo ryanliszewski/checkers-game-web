@@ -2,7 +2,7 @@
 module.exports = (sequelize, DataTypes) => {
   var gameList = sequelize.define('gameList', {
     gameId: DataTypes.STRING,
-    isGameFull: DataTypes.BOOLEAN,
+    isGameFull: { type: DataTypes.BOOLEAN, defaultValue: false },
     gameCreator: DataTypes.STRING
   }, {
     classMethods: {

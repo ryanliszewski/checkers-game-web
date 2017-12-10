@@ -99,7 +99,7 @@ module.exports = function(io) {
     socket.on('join', (params, callback) => {
 
       socket.join(params.gameID, () => {
-        if (params.isGameFull == 'true') {
+        if (params.isGameFull == true) {
           dbGameFull(params)
         } else {
           dbCreateGame(params);

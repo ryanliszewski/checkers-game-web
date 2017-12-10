@@ -2,7 +2,7 @@
 module.exports = (sequelize, DataTypes) => {
   var lobbyChat = sequelize.define('lobbyChat', {
     username: DataTypes.STRING,
-    messages: DataTypes.STRING
+    message: DataTypes.STRING
   }, {
     classMethods: {
       associate: function(models) {

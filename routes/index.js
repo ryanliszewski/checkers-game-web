@@ -13,6 +13,11 @@ router.get('/lobby', AuthController.isAuthenticated, function(request, response,
   response.render("lobby", {title: 'Lobby', user: request.user});
 });
 
+/* GET Dashboard page. */
+router.get('/dashboard', AuthController.isAuthenticated, function(request, response, next) {
+  response.render("dashboard", {title: 'Dashboard', user: request.user});
+});
+
 /* GET Sign Up page. */
 router.get('/register', function(request, response, next) {
   response.render("register", {title: 'Registration'});

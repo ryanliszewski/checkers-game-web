@@ -57,6 +57,10 @@
       var socket = io();
       socket.on('gameListActive', function(gameList) {
         var temp = JSON.parse(gameList);
+        console.log("Temp:", temp);
+        if (temp == null){
+          temp = 0;
+        }
         var gameListArray = JSON.parse("[" + temp + "]");
         for (var i = 0; i < gameListArray[0].length &&
           gameListArray[0][i]['isGameFull'] == false; i++) {
@@ -68,7 +72,11 @@
       });
 
       $('form').submit(function() {
-        socket.emit('lobbyChat', '{{user.username}}: ' + $('#input-box').val());
+        var msgObj = {
+          username: '{{user.username}}',
+          message: $('#input-box').val()
+        };
+        socket.emit('lobbyChat', msgObj );
         $('#input-box').val('');
         return false;
       });

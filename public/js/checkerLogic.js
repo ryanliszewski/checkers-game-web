@@ -72,7 +72,7 @@ function legalMove(from, to) {
   if (current_move == black) {
     board[from.x][from.y] = 0;
     board[to.x][to.y] = -1;
-    console.log(board);
+    // console.log(board);
   } else {
     board[from.x][from.y] = 0;
     board[from.x][from.x] = 1;
@@ -117,7 +117,7 @@ function getMovableSquares() {
 
 $('document').ready(function() {
 
-  console.log("testing123");
+  //console.log("testing123");
 
   //Creating the 64 squares and adding them to the DOM
   var squareCount = 8 * 8;
@@ -235,7 +235,10 @@ $('document').ready(function() {
             if (Math.abs(y - selectedPieceCords.y) <= 2) {
               legalMove(selectedPieceCords,squareToMoveCords);
               current_move = red;
+              console.log("1. :" , pixels.top + ":" + pixels.left)
               movePieceTo($selectedPiece, pixels.top, pixels.left);
+              console.log("2. :" , pixels.top + ":" + pixels.left)
+              movePieceToAcutalMove($selectedPiece, pixels.top, pixels.left);
             }
 
           }
@@ -244,6 +247,7 @@ $('document').ready(function() {
             if (Math.abs(y - selectedPieceCords.y) <= 2) {
               current_move = black;
               movePieceTo($selectedPiece, pixels.top, pixels.left);
+              movePieceToAcutalMove($selectedPiece, pixels.top, pixels.left);
             }
           }
         }

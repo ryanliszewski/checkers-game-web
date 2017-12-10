@@ -55,6 +55,7 @@ function dbGameFull(params) {
 module.exports = function(io) {
 
   var gameArray;
+  var isFull;
 
   io.on('connection', function(socket) {
     console.log('User Connected (Server Side - Lobby Chat): ', socket.id);
@@ -99,16 +100,41 @@ module.exports = function(io) {
     socket.on('join', (params, callback) => {
 
       socket.join(params.gameID, () => {
-        if (params.isGameFull == true) {
+        if (params.isGameFull == 'true') {
           dbGameFull(params)
         } else {
           dbCreateGame(params);
         }
-      });
+      }); // End of Socket Join
 
       socket.broadcast.to(params.gameID).emit(params.gameID, `Player ${params.name} has joined.`);
       socket.on(params.gameID, function(msg) {
         nsp.emit(params.gameID, msg);
+      });
+      socket.on('gameStatus', function(gameID) {
+
+        gameList.findOne({
+            where: {
+              gameId: gameID,
+              isGameFull: true
+            }
+          }).then(results => {
+            var temp = JSON.stringify(results);
+            var data = JSON.parse("[" + temp + "]");
+            // console.log("parse data: ", data[0]['isGameFull']);
+            isFull = data[0]['isGameFull'];
+          }).catch(err => {
+            console.log(err)
+          })
+
+        console.log("gameStatus send: ", isFull);
+        nsp.emit('gameStatus', isFull);
+        // socket.broadcast.emit('gameStatus', true);
+      });
+
+      socket.on('gameMove', function(move) {
+        console.log("BACKEND MOVE: ", move);
+        socket.broadcast.emit('gameMove', move);
       });
 
       socket.on('disconnect', function() {
@@ -117,7 +143,7 @@ module.exports = function(io) {
       });
 
       callback();
-    });
+    }); // End of JOIN Channel
 
   }); // NSP Connection
 

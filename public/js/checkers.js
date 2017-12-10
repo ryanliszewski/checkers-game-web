@@ -16,12 +16,48 @@ function setUpPieces() {
 }
 
 function movePieceTo($piece,newTop,newLeft) {
+  $piece.css('top', newTop);
+  $piece.css('left', newLeft);
+}
+
+function movePieceToAcutalMove($piece,newTop,newLeft) {
     //set the css 'top' and 'left'
     //attributes of the passed piece
     //to the arguments newTop and newLeft
+    console.log("Move piece");
 
-    $piece.css('top', newTop);
-    $piece.css('left', newLeft);
+    socket.emit('gameStatus', gameCode);
+
+    socket.on('gameStatus', function(status){
+      console.log("game status: ", status);
+
+      if(status == true) {
+        let gameObj = {nT: newTop, nL: newLeft}
+        console.log("Game Object SENT:", gameObj);
+        console.log("gameMove Sent!");
+        socket.emit('gameMove', gameObj, function (err) {
+          if (err) {
+            alert(err);
+          } else {
+            console.log('No error');
+          }
+        });
+
+      }
+
+    });
+
+    socket.on('gameMove', function(move) {
+
+      console.log("RECIEVE MOVE: " ,move);
+      console.log("gameMove Recieved");
+      $piece.css('top', move.nT);
+      $piece.css('left', move.nL);
+
+    });
+
+    // $piece.css('top', newTop);
+    // $piece.css('left', newLeft);
 }
 
 function setUpBoard() {

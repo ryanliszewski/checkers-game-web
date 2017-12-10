@@ -67,7 +67,14 @@ function getCoords(top, left) {
 }
 
 function legalMove(from, to) {
-  
+  if (current_move == black) {
+    board[from.x][from.y] = 0; 
+    board[to.x][to.y] = -1; 
+    console.log(board);
+  } else {
+    board[from.x][from.y] = 0; 
+    board[from.x][from.x] = 1;
+  }
 }
 
 //utility function for returning
@@ -155,7 +162,6 @@ $('document').ready(function() {
     //turning the x,y coordinate into a pixel position
     var pixelPosition = getPixels(x, y);
 
-    //YOUR CODE
     //moving the piece to its initial position
     movePieceTo($(piece), pixelPosition.top, pixelPosition.left);
   });
@@ -198,16 +204,6 @@ $('document').ready(function() {
       //get the piece with the class 'selected'
 
       var $selectedPiece = $('div.piece.selected');
-
-      var $test = $selectedPiece.each(function(index, piece) {
-        var position = $(piece).position();
-        squareToMoveCords = getCoords(position.top, position.left);
-        //var squareIndex = coords.y * 8 + coords.x;
-        
-        return $selectedPiece;
-
-      });
-
       //we only move if there is exactly one selected piece
       if ($selectedPiece.length == 1) {
         //get the index of the square
@@ -215,17 +211,16 @@ $('document').ready(function() {
         var index = $this.prevAll().length;
         var x = index % 8;
         var y = Math.floor(index / 8);
-        //console.log(y);
-        //squareToMoveCords = getCoords(x, y);
         var pixels = getPixels(x, y);
+        
+        squareToMoveCords.x = x;
+        squareToMoveCords.y = y; 
 
         //actually do the moving
-
         if ($selectedPiece.hasClass('piece dark')) {
           if (y < selectedPieceCords.y) {
             if (Math.abs(y - selectedPieceCords.y) <= 2) {
-              console.log(selectedPieceCords);
-              //console.log(squareToMoveCords);
+              legalMove(selectedPieceCords,squareToMoveCords);
               current_move = red;
               movePieceTo($selectedPiece, pixels.top, pixels.left);
             }

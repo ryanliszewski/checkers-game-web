@@ -50,7 +50,7 @@
       return s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4();
     }
 
-    document.getElementById("gameGenerate").innerHTML = ' <a href="/game?gameID=' +
+    document.getElementById("gameGenerate").innerHTML = ' <a href="/game?player=1&gameID=' +
       guid() + '" class="pull-right btn btn-default" data-original-title="" title="">+ Create Game</a>';
 
     $(function() {
@@ -64,7 +64,7 @@
         console.log("Game List Array: ",gameListArray);
         for (var i = 0; i < gameListArray[0].length; i++) {
             if(gameListArray[0][i]['isGameFull'] == false) {
-                $('#games').append($('<li>' + gameListArray[0][i]['gameCreator'] + ' <a href="/game?gameID=' +
+                $('#games').append($('<li>' + gameListArray[0][i]['gameCreator'] + ' <a href="/game?player=2&gameID=' +
                   gameListArray[0][i]['gameId'] + '&isGameFull=true' +
                   '" class="btn btn-default pull-right">+ Join Game </a>'));
             }

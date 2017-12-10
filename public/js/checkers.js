@@ -6,8 +6,7 @@ function setUpPieces() {
     var pieceCount = 24;
 
     for(var i = 0; i<=pieceCount; i++){
-
-        if(i % 2 == 0){
+      if(i % 2 == 0 ) {
             $('div.piece').eq(i).addClass('light');
         } else {
             $('div.piece').eq(i).addClass('dark');
@@ -35,6 +34,7 @@ function movePieceToAcutalMove($piece,newTop,newLeft) {
         let gameObj = {nT: newTop, nL: newLeft}
         console.log("Game Object SENT:", gameObj);
         console.log("gameMove Sent!");
+        movePieceTo($piece,newTop,newLeft)
         socket.emit('gameMove', gameObj, function (err) {
           if (err) {
             alert(err);

@@ -149,11 +149,15 @@ $('document').ready(function() {
   setUpPieces();
 
   //this loop moves all the light pieces to their initial positions
-  $('div.piece.light').each(function(index, piece) {
+  $('div.piece.light').each(function(index, piece, player = getQueryVariable('player')) {
 
     //turning the index (from 0 - 11)
     //into a x,y square coordinate using math
-    var y = Math.floor(index / 4);
+    if(player == 1) {
+        var y = Math.floor(index / 4);
+    } else {
+        var y = Math.floor(index / 4) + 5;
+    }
     var x = (index % 4) * 2 + (1 - y % 2);
 
     //turning the x,y coordingate into a pixel position
@@ -165,11 +169,15 @@ $('document').ready(function() {
   });
 
   //this loop moves all the dark pieces to their initial positions
-  $('div.piece.dark').each(function(index, piece) {
+  $('div.piece.dark').each(function(index, piece, player = getQueryVariable('player')) {
 
     //turning the index (from 0 - 11)
     //into a x,y square coordinate using math
-    var y = Math.floor(index / 4) + 5;
+    if(player == 2) {
+        var y = Math.floor(index / 4);
+    } else {
+        var y = Math.floor(index / 4) + 5;
+    }
     var x = (index % 4) * 2 + (1 - y % 2);
 
     //turning the x,y coordinate into a pixel position

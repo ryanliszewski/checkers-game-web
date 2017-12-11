@@ -1,6 +1,6 @@
 body {
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
-  padding-top: 50px;
+  padding: 30px;
 
 }
 
@@ -19,7 +19,7 @@ a {
 .form-chat input { 
   border: 0; 
   padding: 10px;
-  border-radius: 5px;
+  border-radius: 2px;
 }
 
   .form-chat button { 
@@ -93,7 +93,7 @@ a {
   position: fixed;
   display: inline-block;
   margin : 0;
-  padding : 0;
+  padding : 50px;
   width: 66%;
   height:100vh;
 

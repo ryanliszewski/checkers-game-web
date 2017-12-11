@@ -141,6 +141,7 @@ module.exports = function(io) {
 
       socket.on('disconnect', function() {
         console.log('User Disconnected GAME (Server Side)');
+        socket.broadcast.to(params.gameID).emit(params.gameID, `Player has LEFT GAME!`);
         dbDestroyGame(params);
       });
 

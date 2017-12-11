@@ -172,8 +172,6 @@ $('document').ready(function() {
     console.log("game status: ", status);
   });
 
-
-
   socket.on('gameMove', function(move) {
     console.log("RECIEVE MOVE: " , move);
     console.log("gameMove Recieved");
@@ -183,9 +181,6 @@ $('document').ready(function() {
       moveOpponentsPiece(move); 
     }
   });
-
-
-
 
   //Creating the 64 squares and adding them to the DOM
   var squareCount = 8 * 8;
@@ -314,11 +309,11 @@ $('document').ready(function() {
         if ($selectedPiece.hasClass('piece dark')) {
           move.color = current_move;
 
-          
+          if(legalMove(move)){
             current_move = red;
             movePieceToAcutalMove($selectedPiece, pixels.top, pixels.left, move);
-          
-          
+          }
+            
           // if (y < selectedPieceCords.y) {
           //   if (Math.abs(y - selectedPieceCords.y) <= 2) {
           //     move.color = current_move;
@@ -328,13 +323,11 @@ $('document').ready(function() {
           // }
           //Move Light
         } else {
-              //TODO
-            
             move.color = current_move;
-          
-            current_move = black; 
-            movePieceToAcutalMove($selectedPiece, pixels.top, pixels.left, move);
-          
+            if(legalMove(move)){
+              current_move = black; 
+              movePieceToAcutalMove($selectedPiece, pixels.top, pixels.left, move);
+            }
         }
         //increment the move counter
         incrementMoveCount();

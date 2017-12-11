@@ -64,7 +64,7 @@ module.exports = function(io) {
       order: [
         ['id', 'DESC']
       ],
-      limit: 10
+      limit: 25
     }).then(results => {
       for (let i = results.length - 1; i >= 0; i--) {
         io.to(socket.id).emit('lobbyChat', results[i]['dataValues']['username'] + ": " + results[i]['dataValues']['message']);
@@ -109,6 +109,7 @@ module.exports = function(io) {
       }); // End of Socket Join
 
       socket.broadcast.to(params.gameID).emit(params.gameID, `Player ${params.name} has joined.`);
+      socket.broadcast.to(params.gameID).emit(params.gameID, `Player YOUR TURN!`);
       socket.on(params.gameID, function(msg) {
         nsp.emit(params.gameID, msg);
       });
@@ -136,10 +137,12 @@ module.exports = function(io) {
       socket.on('gameMove', function(move) {
         console.log("BACKEND MOVE: ", move);
         nsp.emit('gameMove', move);
+        socket.broadcast.to(params.gameID).emit(params.gameID, `Player YOUR TURN!`);
       });
 
       socket.on('disconnect', function() {
         console.log('User Disconnected GAME (Server Side)');
+        socket.broadcast.to(params.gameID).emit(params.gameID, `Player has LEFT GAME!`);
         dbDestroyGame(params);
       });
 

@@ -95,6 +95,7 @@ module.exports = function(io) {
   });
 
   var nsp = io.of('/game');
+
   nsp.on('connection', function(socket) {
     console.log('User Connected to Game Room (Server Side): ', socket.id);
     socket.on('join', (params, callback) => {
@@ -134,7 +135,7 @@ module.exports = function(io) {
 
       socket.on('gameMove', function(move) {
         console.log("BACKEND MOVE: ", move);
-        socket.broadcast.emit('gameMove', move);
+        nsp.emit('gameMove', move);
       });
 
       socket.on('disconnect', function() {

@@ -1,3 +1,5 @@
+
+
 function setUpPieces() {
     //select all the divs with class 'piece'
     //add the 'light' class to half of them

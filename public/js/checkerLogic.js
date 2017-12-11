@@ -5,7 +5,7 @@ var border = 2;
 var selectedPieceCords = getCoords();
 var squareToMoveCords = getCoords();
 
-//Moves
+//Moves         
 var black = -1;
 var red = 1;
 
@@ -83,7 +83,7 @@ function jump(){
 
 }
 
-function king(){
+function king(){ 
 
 }
 
@@ -233,9 +233,9 @@ $('document').ready(function() {
         var x = index % 8;
         var y = Math.floor(index / 8);
         var pixels = getPixels(x, y);
-
+        
         squareToMoveCords.x = x;
-        squareToMoveCords.y = y;
+        squareToMoveCords.y = y; 
 
         //actually do the moving
         if ($selectedPiece.hasClass('piece dark')) {

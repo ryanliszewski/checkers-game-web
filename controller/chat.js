@@ -135,9 +135,7 @@ module.exports = function(io) {
 
       socket.on('gameMove', function(move) {
         console.log("BACKEND MOVE: ", move);
-        //socket.broadcast.emit('gameMove', move);
-        //nsp.broadcast.emit('gameMove', move);
-        socket.broadcast.to('gameMove').emit('gameMove', move);
+        nsp.emit('gameMove', move);
       });
 
       socket.on('disconnect', function() {

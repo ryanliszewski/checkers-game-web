@@ -23,16 +23,14 @@ function movePieceToAcutalMove($piece,newTop,newLeft, moveCoordinates) {
     //set the css 'top' and 'left'
     //attributes of the passed piece
     //to the arguments newTop and newLeft
-    console.log("Move piece");
-    socket.emit('gameStatus', gameCode);
+   
 
-    socket.on('gameStatus', function(status){
-      console.log("game status: ", status);
+    
 
-      if(status == true) {
+     
         
-        console.log("Game Object SENT:", moveCoordinates);
-        console.log("gameMove Sent!");
+        //console.log("Game Object SENT:", moveCoordinates);
+        //console.log("gameMove Sent!");
         movePieceTo($piece,newTop,newLeft)
         socket.emit('gameMove', moveCoordinates, function (err) {
           if (err) {
@@ -41,8 +39,8 @@ function movePieceToAcutalMove($piece,newTop,newLeft, moveCoordinates) {
             console.log('No error');
           }
         });
-      }
-    });
+    
+   
 
     $piece.css('top', newTop);
     $piece.css('left', newLeft);
@@ -63,7 +61,6 @@ function setUpBoard() {
         var y = Math.floor(index / 8);
         var oddX = x % 2;
         var oddY = y % 2;
-        console.log(oddX ^ oddY);
         return (oddX ^ oddY);
 
     }

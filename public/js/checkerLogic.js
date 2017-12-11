@@ -16,27 +16,29 @@ var red = 2;
 var current_move = 1;
 
 var board;
-Board(1, 0, 1, 0, 1, 0, 1, 0,
-  0, 1, 0, 1, 0, 1, 0, 1,
-  1, 0, 1, 0, 1, 0, 1, 0,
-  0, 0, 0, 0, 0, 0, 0, 0,
-  0, 0, 0, 0, 0, 0, 0, 0,
-  0, -1, 0, -1, 0, -1, 0, -1, -1, 0, -1, 0, -1, 0, -1, 0,
-  0, -1, 0, -1, 0, -1, 0, -1);
-
 
 //Initializes a 2d Array of the checker board
 function Board() {
-  board = new Array();
+  board = new Array(                );
   for (var i = 0; i < 8; i++) {
     board[i] = new Array();
-    for (var j = 0; j < 8; j++)
-      board[i][j] = Board.arguments[8 * j + i];
+    for (var j = 0; j < 8; j++){
+      //top
+      if(i < 3 && j % 2 != 0){
+        board[j][i] = 2; 
+      } else if (i > 4 && j % 2 == 0){
+        board[j][i] = 1; 
+      } else {
+        board[j][i] = 0; 
+      }
+    }
   }
   board[-2] = new Array(); // prevents errors
   board[-1] = new Array();
   board[8] = new Array();
   board[9] = new Array();
+
+  console.log(board);
 }
 
 //utility function for translating an x,y coordinate
@@ -68,14 +70,19 @@ function getCoords(top, left) {
 
 //This function will return true of false
 //Some game logic in here
-function legalMove(from, to) {
-  if (current_move == black) {
-    board[from.x][from.y] = 0;
-    board[to.x][to.y] = -1;
-    // console.log(board);
+function legalMove(move) {
+  
+  if(move.to.y <= move.from.y){
+    return true; 
   } else {
-    board[from.x][from.y] = 0;
-    board[from.x][from.x] = 1;
+    return false; 
+  }
+  
+  
+  if(playerColor = black){
+
+  } else {
+
   }
 }
 
@@ -158,6 +165,15 @@ function getMovableSquares() {
 $('document').ready(function() {
 
   //Client Socket listens for opponent's move
+  console.log(gameCode);
+  socket.emit('gameStatus', gameCode);
+
+  socket.on('gameStatus', function(status){
+    console.log("game status: ", status);
+  });
+
+
+
   socket.on('gameMove', function(move) {
     console.log("RECIEVE MOVE: " , move);
     console.log("gameMove Recieved");
@@ -167,6 +183,9 @@ $('document').ready(function() {
       moveOpponentsPiece(move); 
     }
   });
+
+
+
 
   //Creating the 64 squares and adding them to the DOM
   var squareCount = 8 * 8;
@@ -181,7 +200,6 @@ $('document').ready(function() {
   //set up the board with the correct classes
   //for the light and dark squares
   setUpBoard();
-
 
   //creating the 24 pieces and adding them to the DOM
   var pieceCount = 24;
@@ -224,7 +242,6 @@ $('document').ready(function() {
 
     playerColor = player; 
 
-    console.log(player);
     //turning the index (from 0 - 11)
     //into a x,y square coordinate using math
     if(playerColor == 2) {
@@ -295,21 +312,29 @@ $('document').ready(function() {
 
         //Move Dark
         if ($selectedPiece.hasClass('piece dark')) {
-          if (y < selectedPieceCords.y) {
-            if (Math.abs(y - selectedPieceCords.y) <= 2) {
-              move.color = current_move;
-              current_move = red;
-             movePieceToAcutalMove($selectedPiece, pixels.top, pixels.left, move);
-            }
-          }
+          move.color = current_move;
+
+          
+            current_move = red;
+            movePieceToAcutalMove($selectedPiece, pixels.top, pixels.left, move);
+          
+          
+          // if (y < selectedPieceCords.y) {
+          //   if (Math.abs(y - selectedPieceCords.y) <= 2) {
+          //     move.color = current_move;
+          //     current_move = red;
+          //    movePieceToAcutalMove($selectedPiece, pixels.top, pixels.left, move);
+          //   }
+          // }
           //Move Light
         } else {
               //TODO
-              move.color = current_move; 
-              current_move = black;
-              movePieceToAcutalMove($selectedPiece, pixels.top, pixels.left, move);
-          //   }
-          // }
+            
+            move.color = current_move;
+          
+            current_move = black; 
+            movePieceToAcutalMove($selectedPiece, pixels.top, pixels.left, move);
+          
         }
         //increment the move counter
         incrementMoveCount();

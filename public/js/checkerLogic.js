@@ -5,12 +5,15 @@ var border = 2;
 var selectedPieceCords = getCoords();
 var squareToMoveCords = getCoords();
 
+var playerColor;
+
 //Moves
-var black = -1;
-var red = 1;
+//Player 1 is black and Player 2 is red
+var black = 1;
+var red = 2;
 
 //Black always moves first
-var current_move = -1;
+var current_move = 1;
 
 var board;
 Board(1, 0, 1, 0, 1, 0, 1, 0,
@@ -57,10 +60,7 @@ function getPixels(x, y) {
 function getCoords(top, left) {
   //returns an x and a y
   //given a top and left pixels
-
   return {
-
-
     'x': left / (width + border),
     'y': top / (width + border)
   };
@@ -90,6 +90,46 @@ function king(){
 function gameOver(){
 }
 
+//Move's the opponent's piece 
+function moveOpponentsPiece(move){
+
+  var $opponentPiece;
+
+  if (move.color == black) {
+    var $opponentsPieces = $('div.piece.dark').each(function(index,piece) {
+      var position = $(piece).position();
+      var coords = getCoords(position.top, position.left);
+
+      if(Math.abs(move.from.x - 7) == coords.x && Math.abs(move.from.y - 7) == coords.y){
+        $opponentPiece = $(piece);
+        current_move = red; 
+      }
+    });
+  } else {
+    var $opponentsPieces = $('div.piece.light').each(function(index,piece) {
+      var position = $(piece).position();
+      var coords = getCoords(position.top, position.left);
+
+      if(Math.abs(move.from.x - 7) == coords.x && Math.abs(move.from.y - 7) == coords.y){
+        $opponentPiece = $(piece);
+        current_move = black; 
+      }
+    });
+  } 
+
+  console.log($opponentPiece);
+  toggleSelect($opponentPiece);
+  var pixels = getPixels(Math.abs(move.to.x - 7), Math.abs(move.to.y - 7));
+      
+  movePieceTo($opponentPiece, pixels.top, pixels.left);
+  $opponentPiece.removeClass('selected');
+      
+  //set the new legal moves
+  $('div.square').removeClass('movable');
+  getMovableSquares().addClass('movable');
+  
+}
+
 //utility function for returning
 //the set of unoccupied dark squares
 //(possible places to move a checker piece)
@@ -117,7 +157,16 @@ function getMovableSquares() {
 
 $('document').ready(function() {
 
-  //console.log("testing123");
+  //Client Socket listens for opponent's move
+  socket.on('gameMove', function(move) {
+    console.log("RECIEVE MOVE: " , move);
+    console.log("gameMove Recieved");
+
+    if(move.color != playerColor){
+      console.log("test");
+      moveOpponentsPiece(move); 
+    }
+  });
 
   //Creating the 64 squares and adding them to the DOM
   var squareCount = 8 * 8;
@@ -153,7 +202,9 @@ $('document').ready(function() {
 
     //turning the index (from 0 - 11)
     //into a x,y square coordinate using math
-    if(player == 1) {
+
+    playerColor = player; 
+    if(playerColor == 1) {
         var y = Math.floor(index / 4);
     } else {
         var y = Math.floor(index / 4) + 5;
@@ -171,9 +222,12 @@ $('document').ready(function() {
   //this loop moves all the dark pieces to their initial positions
   $('div.piece.dark').each(function(index, piece, player = getQueryVariable('player')) {
 
+    playerColor = player; 
+
+    console.log(player);
     //turning the index (from 0 - 11)
     //into a x,y square coordinate using math
-    if(player == 2) {
+    if(playerColor == 2) {
         var y = Math.floor(index / 4);
     } else {
         var y = Math.floor(index / 4) + 5;
@@ -207,9 +261,10 @@ $('document').ready(function() {
 
     //toggleing the 'selected' class of this piece
     //Only allows to toggle current_move's pieces
-    if ($this.hasClass('piece dark') && current_move == black) {
+    if ($this.hasClass('piece dark') && current_move == black && playerColor == 1) {
+      console.log(current_move);
       toggleSelect($this);
-    } else if ($this.hasClass('piece light') && current_move == red) {
+    } else if ($this.hasClass('piece light') && current_move == red && playerColor == 2) {
       toggleSelect($this);
     }
   });
@@ -223,7 +278,6 @@ $('document').ready(function() {
     if ($this.hasClass('movable')) {
 
       //get the piece with the class 'selected'
-
       var $selectedPiece = $('div.piece.selected');
       //we only move if there is exactly one selected piece
       if ($selectedPiece.length == 1) {
@@ -237,27 +291,25 @@ $('document').ready(function() {
         squareToMoveCords.x = x;
         squareToMoveCords.y = y;
 
-        //actually do the moving
+        var move = {from: selectedPieceCords, to:squareToMoveCords, color: null};
+
+        //Move Dark
         if ($selectedPiece.hasClass('piece dark')) {
           if (y < selectedPieceCords.y) {
             if (Math.abs(y - selectedPieceCords.y) <= 2) {
-              legalMove(selectedPieceCords,squareToMoveCords);
+              move.color = current_move;
               current_move = red;
-              console.log("1. :" , pixels.top + ":" + pixels.left)
-              movePieceTo($selectedPiece, pixels.top, pixels.left);
-              console.log("2. :" , pixels.top + ":" + pixels.left)
-              movePieceToAcutalMove($selectedPiece, pixels.top, pixels.left);
+             movePieceToAcutalMove($selectedPiece, pixels.top, pixels.left, move);
             }
-
           }
+          //Move Light
         } else {
-          if (y > selectedPieceCords.y) {
-            if (Math.abs(y - selectedPieceCords.y) <= 2) {
+              //TODO
+              move.color = current_move; 
               current_move = black;
-              movePieceTo($selectedPiece, pixels.top, pixels.left);
-              movePieceToAcutalMove($selectedPiece, pixels.top, pixels.left);
-            }
-          }
+              movePieceToAcutalMove($selectedPiece, pixels.top, pixels.left, move);
+          //   }
+          // }
         }
         //increment the move counter
         incrementMoveCount();

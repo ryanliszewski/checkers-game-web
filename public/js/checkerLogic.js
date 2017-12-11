@@ -71,18 +71,19 @@ function getCoords(top, left) {
 //This function will return true of false
 //Some game logic in here
 function legalMove(move) {
+
+
+  if(Math.abs(move.to.x - move.to.y) == 1 )
   
-  if(move.to.y <= move.from.y){
-    return true; 
+  //Can't move backwards and straight up 
+  if(move.to.y <= move.from.y && move.to.x != move.from.x){
+    console.log("first if");
+    //Single diagonal move 
+    if(Math.abs(move.to.x - move.from.x) == 1 && Math.abs(move.to.y - move.from.y)){
+      return true; 
+    }
   } else {
     return false; 
-  }
-  
-  
-  if(playerColor = black){
-
-  } else {
-
   }
 }
 

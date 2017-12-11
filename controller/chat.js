@@ -64,7 +64,7 @@ module.exports = function(io) {
       order: [
         ['id', 'DESC']
       ],
-      limit: 10
+      limit: 25
     }).then(results => {
       for (let i = results.length - 1; i >= 0; i--) {
         io.to(socket.id).emit('lobbyChat', results[i]['dataValues']['username'] + ": " + results[i]['dataValues']['message']);

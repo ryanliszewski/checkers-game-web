@@ -20,7 +20,7 @@ a {
 .form-chat input { 
   border: 0; 
   padding: 10px;
-  border-radius: 5px;
+  border-radius: 2px;
 }
 
 .form-chat button { 

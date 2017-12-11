@@ -22,7 +22,7 @@ a {
   border-radius: 2px;
 }
 
-  .form-chat button { 
+.form-chat button { 
   border: none; 
   padding: 10px; 
   right: 0px;
@@ -68,15 +68,17 @@ a {
   list-style-type: none; 
   margin: 0;
   padding: 0; 
-  border-style: solid; 
+/*  border-style: solid; 
   border-width: 2px; 
-  border-color: #000; 
+  border-color: #000;*/ 
 }
 
 #games li {
-  background: #767676; 
+  background: #f1f1f1;
+  text-transform: capitalize;
   height: 40px; 
   line-height: 40px; 
+  padding-left: 20px;
 }
 
 #games li:nth-child(2n){

@@ -5,29 +5,65 @@ function setUpPieces() {
     //add the 'light' class to half of them
     //add the 'dark' to the other half
 
-    var pieceCount = 24; 
-    
-    for(var i = 0; i<=pieceCount; i++){
+    var pieceCount = 24;
 
-        if(i % 2 == 0){
+    for(var i = 0; i<=pieceCount; i++){
+      if(i % 2 == 0 ) {
             $('div.piece').eq(i).addClass('light');
         } else {
             $('div.piece').eq(i).addClass('dark');
         }
-    } 
+    }
 }
 
 function movePieceTo($piece,newTop,newLeft) {
+  $piece.css('top', newTop);
+  $piece.css('left', newLeft);
+}
+
+function movePieceToAcutalMove($piece,newTop,newLeft) {
     //set the css 'top' and 'left'
     //attributes of the passed piece
     //to the arguments newTop and newLeft
-    
-    $piece.css('top', newTop);
-    $piece.css('left', newLeft);
+    console.log("Move piece");
+
+    socket.emit('gameStatus', gameCode);
+
+    socket.on('gameStatus', function(status){
+      console.log("game status: ", status);
+
+      if(status == true) {
+        let gameObj = {nT: newTop, nL: newLeft}
+        console.log("Game Object SENT:", gameObj);
+        console.log("gameMove Sent!");
+        movePieceTo($piece,newTop,newLeft)
+        socket.emit('gameMove', gameObj, function (err) {
+          if (err) {
+            alert(err);
+          } else {
+            console.log('No error');
+          }
+        });
+
+      }
+
+    });
+
+    socket.on('gameMove', function(move) {
+
+      console.log("RECIEVE MOVE: " ,move);
+      console.log("gameMove Recieved");
+      $piece.css('top', move.nT);
+      $piece.css('left', move.nL);
+
+    });
+
+    // $piece.css('top', newTop);
+    // $piece.css('left', newLeft);
 }
 
 function setUpBoard() {
-    //iterate through all of the divs 
+    //iterate through all of the divs
     //with class `square`
     //figure out whether each one should be
     //light or dark, and assign the proper class
@@ -43,11 +79,11 @@ function setUpBoard() {
         var oddY = y % 2;
         console.log(oddX ^ oddY);
         return (oddX ^ oddY);
-        
+
     }
-    
+
         for (i=0;i<$squares.length;i++) {
-        
+
         if (lightOrDark(i) == 0) {
             $($squares[i]).addClass("light");
         }
@@ -60,14 +96,14 @@ function setUpBoard() {
 function toggleSelect($piece) {
     //if $piece has the class 'selected',
     //remove it
-    
+
     //if $piece does not have the class 'selected'
     //make sure no other divs with the class 'piece'
     //have that class, then set $piece to have the class
     if($piece.hasClass('selected'))
         $piece.removeClass('selected');
     else {
-        $('div.piece').each(function(index,piece) 
+        $('div.piece').each(function(index,piece)
         {
             if($(piece).hasClass('selected'))
                 $(piece).removeClass('selected');

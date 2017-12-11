@@ -70,11 +70,11 @@ function getCoords(top, left) {
 //Some game logic in here
 function legalMove(from, to) {
   if (current_move == black) {
-    board[from.x][from.y] = 0; 
-    board[to.x][to.y] = -1; 
-    console.log(board);
+    board[from.x][from.y] = 0;
+    board[to.x][to.y] = -1;
+    // console.log(board);
   } else {
-    board[from.x][from.y] = 0; 
+    board[from.x][from.y] = 0;
     board[from.x][from.x] = 1;
   }
 }
@@ -117,7 +117,7 @@ function getMovableSquares() {
 
 $('document').ready(function() {
 
-  console.log("testing123");
+  //console.log("testing123");
 
   //Creating the 64 squares and adding them to the DOM
   var squareCount = 8 * 8;
@@ -149,11 +149,15 @@ $('document').ready(function() {
   setUpPieces();
 
   //this loop moves all the light pieces to their initial positions
-  $('div.piece.light').each(function(index, piece) {
+  $('div.piece.light').each(function(index, piece, player = getQueryVariable('player')) {
 
     //turning the index (from 0 - 11)
     //into a x,y square coordinate using math
-    var y = Math.floor(index / 4);
+    if(player == 1) {
+        var y = Math.floor(index / 4);
+    } else {
+        var y = Math.floor(index / 4) + 5;
+    }
     var x = (index % 4) * 2 + (1 - y % 2);
 
     //turning the x,y coordingate into a pixel position
@@ -165,11 +169,15 @@ $('document').ready(function() {
   });
 
   //this loop moves all the dark pieces to their initial positions
-  $('div.piece.dark').each(function(index, piece) {
+  $('div.piece.dark').each(function(index, piece, player = getQueryVariable('player')) {
 
     //turning the index (from 0 - 11)
     //into a x,y square coordinate using math
-    var y = Math.floor(index / 4) + 5;
+    if(player == 2) {
+        var y = Math.floor(index / 4);
+    } else {
+        var y = Math.floor(index / 4) + 5;
+    }
     var x = (index % 4) * 2 + (1 - y % 2);
 
     //turning the x,y coordinate into a pixel position
@@ -235,7 +243,10 @@ $('document').ready(function() {
             if (Math.abs(y - selectedPieceCords.y) <= 2) {
               legalMove(selectedPieceCords,squareToMoveCords);
               current_move = red;
+              console.log("1. :" , pixels.top + ":" + pixels.left)
               movePieceTo($selectedPiece, pixels.top, pixels.left);
+              console.log("2. :" , pixels.top + ":" + pixels.left)
+              movePieceToAcutalMove($selectedPiece, pixels.top, pixels.left);
             }
 
           }
@@ -244,6 +255,7 @@ $('document').ready(function() {
             if (Math.abs(y - selectedPieceCords.y) <= 2) {
               current_move = black;
               movePieceTo($selectedPiece, pixels.top, pixels.left);
+              movePieceToAcutalMove($selectedPiece, pixels.top, pixels.left);
             }
           }
         }

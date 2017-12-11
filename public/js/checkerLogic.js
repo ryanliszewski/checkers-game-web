@@ -102,6 +102,9 @@ function jump(move){
 
   //jump to the right
   if(move.to.x - move.from.x > 0){
+
+    console.log("Jumping to the right");
+
     if(move.color == black) {
       var $piece = $('div.piece.light').each(function(index,piece) {
         var position = $(piece).position();
@@ -118,16 +121,37 @@ function jump(move){
 
       $pieceToBeJumped.removeClass('piece light');
 
-      console.log($pieceToBeJumped);
-
       $('div.square').removeClass('movable');
       getMovableSquares().addClass('movable');
 
+      move.isJump = true; 
       return true;
 
     }
   } else {
+    
+    if(move.color == black) {
+      var $piece = $('div.piece.light').each(function(index,piece) {
+        var position = $(piece).position();
+        var coords = getCoords(position.top, position.left);
+        if(coords.x == move.from.x - 1  && coords.y == move.from.y + 1){
+          console.log("found piece to be jumped");
+          $pieceToBeJumped = $(piece);
+        }
+      });
+      
+      if ($pieceToBeJumped == undefined){
+        return false; 
+      }
 
+      $pieceToBeJumped.removeClass('piece light');
+
+      $('div.square').removeClass('movable');
+      getMovableSquares().addClass('movable');
+
+      move.isJump = true; 
+      return true;
+    }
   }
 }
 
@@ -143,12 +167,18 @@ function moveOpponentsPiece(move){
 
   var $opponentPiece;
 
+  move.from.x = Math.abs(move.from.x - 7); 
+  move.from.y = Math.abs(move.from.y - 7);
+  move.to.x  = Math.abs(move.to.x - 7);
+  move.to.y = Math.abs(move.to.y - 7);
+
+
   if (move.color == black) {
     var $opponentsPieces = $('div.piece.dark').each(function(index,piece) {
       var position = $(piece).position();
       var coords = getCoords(position.top, position.left);
 
-      if(Math.abs(move.from.x - 7) == coords.x && Math.abs(move.from.y - 7) == coords.y){
+      if(move.from.x == coords.x && move.from.y == coords.y){
         $opponentPiece = $(piece);
         current_move = red; 
       }
@@ -158,17 +188,19 @@ function moveOpponentsPiece(move){
       var position = $(piece).position();
       var coords = getCoords(position.top, position.left);
 
-      if(Math.abs(move.from.x - 7) == coords.x && Math.abs(move.from.y - 7) == coords.y){
+      if(move.from.x == coords.x && move.from.y == coords.y){
         $opponentPiece = $(piece);
         current_move = black; 
       }
     });
   } 
 
-  console.log($opponentPiece);
+  if(move.isJump){
+    jump(move);     
+  }
+
   toggleSelect($opponentPiece);
-  var pixels = getPixels(Math.abs(move.to.x - 7), Math.abs(move.to.y - 7));
-      
+  var pixels = getPixels(move.to.x, move.to.y);
   movePieceTo($opponentPiece, pixels.top, pixels.left);
   $opponentPiece.removeClass('selected');
       
@@ -344,7 +376,7 @@ $('document').ready(function() {
         squareToMoveCords.x = x;
         squareToMoveCords.y = y;
 
-        var move = {from: selectedPieceCords, to:squareToMoveCords, color: null};
+        var move = {from: selectedPieceCords, to:squareToMoveCords, color: null, isJump: false};
 
         //Move Dark
         if ($selectedPiece.hasClass('piece dark')) {
@@ -352,6 +384,7 @@ $('document').ready(function() {
 
           if(legalMove(move)){
             current_move = red;
+            console.log(move);
             movePieceToAcutalMove($selectedPiece, pixels.top, pixels.left, move);
           }
             

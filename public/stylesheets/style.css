@@ -1,5 +1,6 @@
 body {
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  padding-top: 100px;
 }
 
 a {
@@ -9,6 +10,11 @@ a {
 .form-control, .btn {
   border-radius: 0px;
 
+}
+
+.dashboard {
+	float: left;
+	margin-right: 20%;
 }
 
 h4 {
@@ -51,21 +57,9 @@ form div p span {
 
 .fa-delicious {
 	float: left;
-	font-size: 2.5em;
+	font-size: 2.5em !important;
 	padding-top: 7px;
 	margin-right: 4px;
 
 }
 
-/*Chat Design goes below*/
-
-
-	/*{ margin: 0; padding: 0; box-sizing: border-box;}
-	      body { font: 13px Helvetica, Arial;  }
-	      form { padding: 3px; position: float; bottom: 0; width: 50%; float: right; padding-top: 90%}
-	      form input { border: 1px solid black; padding: 10px; width: 90%; margin-right: .5%;}
-	      form button { width: 9%; background: rgb(130, 224, 255); border: none; padding: 10px; }
-	      #messages { list-style-type: none; margin: 0; padding: 0; }
-	      #messages li { padding: 5px 10px; }
-	      #messages li:nth-child(odd) { background: #eee; }
-*/

@@ -91,9 +91,11 @@
         });
 
         socket.on(obj.gameID, function(msg){
-          if(msg = 'Player YOUR TURN!') {
+          console.log("Message Received:", msg);
+
+          if(msg == 'Player YOUR TURN!') {
             $('#messages').append($('<li class="your-turn">').text(msg));
-          } else if(msg = 'Player has LEFT GAME!') {
+          } else if(msg == 'Player has LEFT GAME!') {
             $('#messages').append($('<li class="player-exit">').text(msg));
           } else {
               $('#messages').append($('<li>').text(msg));

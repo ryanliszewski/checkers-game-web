@@ -90,7 +90,7 @@ function jump(){
 
 }
 
-function king(){
+function king(){ 
 
 }
 
@@ -304,9 +304,9 @@ $('document').ready(function() {
         var x = index % 8;
         var y = Math.floor(index / 8);
         var pixels = getPixels(x, y);
-
+        
         squareToMoveCords.x = x;
-        squareToMoveCords.y = y;
+        squareToMoveCords.y = y; 
 
         var move = {from: selectedPieceCords, to:squareToMoveCords, color: null};
 

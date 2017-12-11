@@ -1,5 +1,6 @@
 body {
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  padding: 30px;
 }
 
 a {
@@ -8,20 +9,76 @@ a {
 .navbar {
   z-index:1;
 }
-.form-chat {position: fixed; bottom: 0;}
-.form-chat input { border: 0; padding: 10px; margin-right: .5%; }
-.form-chat button { background: rgb(130, 224, 255); border: none; padding: 10px; }
-#messages { list-style-type: none; margin: 0; padding: 0; }
-#messages li { padding: 5px 10px; width: 800px;}
-#messages li:nth-child(odd) { background: #eee; }
-#messages {
+.form-chat {
+  position: fixed;
+  bottom: 0;
+  margin: auto;
+  width: 33%;
+  overflow: hidden;
+}
+
+.form-chat input { 
+  border: 0; 
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.form-chat button { 
+  border: none; 
+  padding: 10px;
+  right: 0px;
+  float: right;  
+}
+
+#messages { 
+  list-style-type: none; 
   margin-bottom: 40px;
   bottom: 0;
   position: fixed;
-  width: 100%;
+  width: 33%; 
+  padding: 0;
+  max-height: 85vh;
+  overflow-y:scroll;
 }
-#input-box {width: 800px;}
 
+#messages li {
+  text-transform: capitalize;
+  padding: 5px 10px;
+  margin-bottom: 1px;
+}
+
+#messages li:nth-child(odd) { 
+  background: #f1f1f1;
+}
+
+#input-box {
+  display: block;
+  width: 350px;
+}
+
+.col-8 {
+  position: fixed;
+  display: inline-block;
+  margin : 0;
+  padding : 50px;
+  width: 66%;
+  height:100vh;
+
+}
+
+.col-4 {
+  display: inline-block;
+  margin : 0;
+  padding : 0;
+  width: 33%;
+  height:100vh;
+  float: right;
+}
+
+.container {
+  margin: 0;
+  width: 100%; 
+}
 div#game {
   position:relative;
 }

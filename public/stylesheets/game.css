@@ -6,6 +6,15 @@ body {
 .btn {
   border-radius: 2px !important;
 }
+.your-turn {
+  background: #00960c !important;
+  color: #FFF;
+}
+
+.player-exit {
+  background: #960000 !important;
+  color: #FFF;
+}
 
 a {
   color: #00B7FF;
@@ -21,26 +30,26 @@ a {
   overflow: hidden;
 }
 
-.form-chat input { 
-  border: 0; 
+.form-chat input {
+  border: 0;
   padding: 10px;
   border-radius: 2px;
 }
 
-.form-chat button { 
+.form-chat button {
   border: none;
   border-radius: 2px;
   padding: 10px;
   right: 0px;
-  float: right;  
+  float: right;
 }
 
-#messages { 
-  list-style-type: none; 
+#messages {
+  list-style-type: none;
   margin-bottom: 40px;
   bottom: 0;
   position: fixed;
-  width: 33%; 
+  width: 33%;
   padding: 0;
   max-height: 85vh;
   overflow-y:scroll;
@@ -52,7 +61,7 @@ a {
   margin-bottom: 1px;
 }
 
-#messages li:nth-child(odd) { 
+#messages li:nth-child(odd) {
   background: #f1f1f1;
 }
 
@@ -82,7 +91,7 @@ a {
 
 .container {
   margin: 0;
-  width: 100%; 
+  width: 100%;
 }
 div#game {
   position:relative;
@@ -90,29 +99,29 @@ div#game {
 
 div#board {
   float:left;
-  
+
   height:386x;
   width:386px;
-  
+
   border-style:solid;
   border-width:9px;
   border-color:#DEB887;
 }
 
 div.square {
-  
+
   float:left;
-  
+
   position:relative;
-  
+
   width:46px;
   height:46px;
   border-width:2px;
-  
-  
+
+
   border-right-style:solid;
   border-bottom-style:solid;
-  
+
   border-color:#444;
 }
 
@@ -155,17 +164,17 @@ div.piece {
   width:32px;
   height:32px;
   margin:7px;
-  
+
   -webkit-box-shadow: 0px 0px 3px #666;
      -moz-box-shadow: 0px 0px 3px #666;
           box-shadow: 0px 0px 3px #666;
-  
+
   -webkit-border-radius:16px;
      -moz-border-radius:16px;
           border-radius:16px;
-          
+
   background-color:blue;
-          
+
 }
 
 div.piece:hover {
@@ -180,7 +189,7 @@ div.piece.selected {
      -moz-box-shadow: 0px 0px 8px #FFD700;
           box-shadow: 0px 0px 8px #FFD700;
 }
-  
+
 div.piece.light {
   background-color:red;
 }
@@ -192,4 +201,3 @@ div.piece.dark {
 div#meta {
   float:right;
 }
-

@@ -33,7 +33,7 @@
               <button class="btn-lg btn-info">Send</button>
             </form>
           </div>
-            
+
 
         </div>
       </div>
@@ -91,7 +91,13 @@
         });
 
         socket.on(obj.gameID, function(msg){
-          $('#messages').append($('<li>').text(msg));
+          if(msg = 'Player YOUR TURN!') {
+            $('#messages').append($('<li class="your-turn">').text(msg));
+          } else if(msg = 'Player has LEFT GAME!') {
+            $('#messages').append($('<li class="player-exit">').text(msg));
+          } else {
+              $('#messages').append($('<li>').text(msg));
+          }
           window.scrollTo(0, document.body.scrollHeight);
         });
 

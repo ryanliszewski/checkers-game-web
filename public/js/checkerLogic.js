@@ -129,7 +129,7 @@ function jump(move){
 
     }
   } else {
-    
+              
     if(move.color == black) {
       var $piece = $('div.piece.light').each(function(index,piece) {
         var position = $(piece).position();

@@ -24,13 +24,6 @@ function movePieceToAcutalMove($piece,newTop,newLeft, moveCoordinates) {
     //attributes of the passed piece
     //to the arguments newTop and newLeft
    
-
-    
-
-     
-        
-        //console.log("Game Object SENT:", moveCoordinates);
-        //console.log("gameMove Sent!");
         movePieceTo($piece,newTop,newLeft)
         socket.emit('gameMove', moveCoordinates, function (err) {
           if (err) {
@@ -40,8 +33,7 @@ function movePieceToAcutalMove($piece,newTop,newLeft, moveCoordinates) {
           }
         });
     
-   
-
+    
     $piece.css('top', newTop);
     $piece.css('left', newLeft);
 }

@@ -24,6 +24,7 @@ a {
 
 .form-chat button { 
   border: none; 
+  border-radius: 2px;
   padding: 10px; 
   right: 0px;
   float: right;
@@ -64,6 +65,10 @@ a {
   margin-top: 3.5%; 
 }
 
+.btn {
+  border-radius: 2px !important;
+}
+
 .game-list ul {
   list-style-type: none; 
   margin: 0;
@@ -79,6 +84,7 @@ a {
   height: 40px; 
   line-height: 40px; 
   padding-left: 20px;
+  padding-top: 3px;
 }
 
 #games li:nth-child(2n){

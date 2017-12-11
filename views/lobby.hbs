@@ -33,7 +33,7 @@
           <div class="form-group">
             <input id="input-box" class="form-control input-lg" autocomplete="off" />
           </div>
-            <button class="btn-lg btn-success">Send</button>
+            <button class="btn-lg btn-info">Send</button>
         </form>
 
         </div>
@@ -55,7 +55,7 @@
     }
 
     document.getElementById("gameGenerate").innerHTML = ' <a href="/game?player=1&gameID=' +
-      guid() + '" class="pull-right btn btn-default" data-original-title="" title="">+ Create Game</a>';
+      guid() + '" class="pull-right btn btn-info" data-original-title="" title=""><i class="fa fa-plus-square-o"></i> Create Game</a>';
 
     $(function() {
       var socket = io();
@@ -70,7 +70,7 @@
             if(gameListArray[0][i]['isGameFull'] == false) {
                 $('#games').append($('<li>' + gameListArray[0][i]['gameCreator'] + ' <a href="/game?player=2&gameID=' +
                   gameListArray[0][i]['gameId'] + '&isGameFull=true' +
-                  '" class="btn btn-default pull-right"> + Join Game </a>'));
+                  '" class="btn btn-info pull-right"> <i class="fa fa-sign-in"></i>  Join Game </a>'));
             }
         }
       });
@@ -89,6 +89,7 @@
         $('#messages').animate({scrollTop: $('#messages').prop("scrollHeight")}, 500);
       });
     });
+
   </script>
 </body>
 

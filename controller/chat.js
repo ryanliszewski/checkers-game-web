@@ -109,6 +109,7 @@ module.exports = function(io) {
       }); // End of Socket Join
 
       socket.broadcast.to(params.gameID).emit(params.gameID, `Player ${params.name} has joined.`);
+      socket.broadcast.to(params.gameID).emit(params.gameID, `Player YOUR TURN!`);
       socket.on(params.gameID, function(msg) {
         nsp.emit(params.gameID, msg);
       });
@@ -141,6 +142,7 @@ module.exports = function(io) {
 
       socket.on('disconnect', function() {
         console.log('User Disconnected GAME (Server Side)');
+        socket.broadcast.to(params.gameID).emit(params.gameID, `Player has LEFT GAME!`);
         dbDestroyGame(params);
       });
 

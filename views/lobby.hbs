@@ -1,96 +1,83 @@
-<!doctype html>
-<html>
+<div class="container">
+  <div class="row">
+    <div class="col-8">
+      <div class="game-list"></div>
+      <div class="chat-room">
+        <ul id="gameGenerate"></ul>
 
-<head>
-  <title>{{title}}</title>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"></link>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-  <link rel='stylesheet' href='/stylesheets/lobby.css' />
-</head>
-
-<body>
-  <div class="container">
-    <div class="row">
-      <div class="col-8">
-        <div class="game-list"></div>
-        <div class="chat-room">
-          <ul id="gameGenerate"></ul>
-
-          <div class="game-list">
-            <h3>Games</h3>
-            <ul id="games"></ul>
-          </div>
-
+        <div class="game-list">
+          <h3>Games</h3>
+          <ul id="games"></ul>
         </div>
-      </div>
-
-      <div class="col-4">
-        <div class="message-box">
-          <ul id="messages"></ul>
-          </div>
-
-        <form class="form-chat form-inline" action="">
-          <div class="form-group">
-            <input id="input-box" class="form-control input-lg" autocomplete="off" />
-          </div>
-            <button class="btn-lg btn-info">Send</button>
-        </form>
-
-        </div>
-          
 
       </div>
     </div>
 
-  <script type="text/javascript" src="/js/socket.io.js"></script>
-  <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.1.js"></script>
-  <script>
-    function guid() {
-      function s4() {
-        return Math.floor((1 + Math.random()) * 0x10000)
-          .toString(16)
-          .substring(1);
-      }
-      return s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4();
+    <div class="col-4">
+      <div class="message-box">
+        <ul id="messages"></ul>
+      </div>
+
+      <form class="form-chat form-inline" action="">
+        <div class="form-group">
+          <input id="input-box" class="form-control input-lg" autocomplete="off" />
+        </div>
+        <button class="btn-lg btn-info">Send</button>
+      </form>
+
+    </div>
+
+
+  </div>
+</div>
+
+<script type="text/javascript" src="/js/socket.io.js"></script>
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.11.1.js"></script>
+<script>
+  function guid() {
+    function s4() {
+      return Math.floor((1 + Math.random()) * 0x10000)
+        .toString(16)
+        .substring(1);
     }
+    return s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4();
+  }
 
-    document.getElementById("gameGenerate").innerHTML = ' <a href="/game?player=1&gameID=' +
-      guid() + '" class="pull-right btn btn-info" data-original-title="" title=""><i class="fa fa-plus-square-o"></i> Create Game</a>';
+  document.getElementById("gameGenerate").innerHTML = ' <a href="/game?player=1&gameID=' +
+    guid() + '" class="pull-right btn btn-info" data-original-title="" title=""><i class="fa fa-plus-square-o"></i> Create Game</a>';
 
-    $(function() {
-      var socket = io();
-      socket.on('gameListActive', function(gameList) {
-        var temp = JSON.parse(gameList);
-        if (temp == null){
-          temp = 0;
+  $(function() {
+    var socket = io();
+    socket.on('gameListActive', function(gameList) {
+      var temp = JSON.parse(gameList);
+      if (temp == null) {
+        temp = 0;
+      }
+      var gameListArray = JSON.parse("[" + temp + "]");
+      console.log("Game List Array: ", gameListArray);
+      for (var i = 0; i < gameListArray[0].length; i++) {
+        if (gameListArray[0][i]['isGameFull'] == false) {
+          $('#games').append($('<li>' + gameListArray[0][i]['gameCreator'] + ' <a href="/game?player=2&gameID=' +
+            gameListArray[0][i]['gameId'] + '&isGameFull=true' +
+            '" class="btn btn-outline-info pull-right"> <i class="fa fa-sign-in"></i>  Join Game </a>'));
         }
-        var gameListArray = JSON.parse("[" + temp + "]");
-        console.log("Game List Array: ",gameListArray);
-        for (var i = 0; i < gameListArray[0].length; i++) {
-            if(gameListArray[0][i]['isGameFull'] == false) {
-                $('#games').append($('<li>' + gameListArray[0][i]['gameCreator'] + ' <a href="/game?player=2&gameID=' +
-                  gameListArray[0][i]['gameId'] + '&isGameFull=true' +
-                  '" class="btn btn-outline-info pull-right"> <i class="fa fa-sign-in"></i>  Join Game </a>'));
-            }
-        }
-      });
-
-      $('form').submit(function() {
-        var msgObj = {
-          username: '{{user.username}}',
-          message: $('#input-box').val()
-        };
-        socket.emit('lobbyChat', msgObj );
-        $('#input-box').val('');
-        return false;
-      });
-      socket.on('lobbyChat', function(msg) {
-        $('#messages').append($('<li>').text(msg));
-        $('#messages').animate({scrollTop: $('#messages').prop("scrollHeight")}, 500);
-      });
+      }
     });
 
-  </script>
-</body>
-
-</html>
+    $('form').submit(function() {
+      var msgObj = {
+        username: '{{user.username}}',
+        message: $('#input-box').val()
+      };
+      socket.emit('lobbyChat', msgObj);
+      $('#input-box').val('');
+      return false;
+    });
+    socket.on('lobbyChat', function(msg) {
+      $('#messages').append($('<li>').text(msg));
+      $('#messages').animate({
+        scrollTop: $('#messages').prop("scrollHeight")
+      }, 500);
+    });
+  });
+</script>

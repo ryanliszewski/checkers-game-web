@@ -73,22 +73,62 @@ function getCoords(top, left) {
 function legalMove(move) {
 
 
-  if(Math.abs(move.to.x - move.to.y) == 1 )
+  
   
   //Can't move backwards and straight up 
   if(move.to.y <= move.from.y && move.to.x != move.from.x){
     console.log("first if");
+    
     //Single diagonal move 
-    if(Math.abs(move.to.x - move.from.x) == 1 && Math.abs(move.to.y - move.from.y)){
+    if(Math.abs(move.to.x - move.from.x) == 1 && Math.abs(move.to.y - move.from.y) == 1){
       return true; 
     }
+
+    //Jumping
+    if(Math.abs(move.to.x - move.from.x) == 2 && Math.abs(move.to.y - move.from.y) == 2){
+      return jump(move); 
+    }
+
   } else {
     return false; 
   }
 }
 
-function jump(){
+//This function will return true or false 
+//if you can jump
+function jump(move){
+  
+  var $pieceToBeJumped;
 
+  //jump to the right
+  if(move.to.x - move.from.x > 0){
+    if(move.color == black) {
+      var $piece = $('div.piece.light').each(function(index,piece) {
+        var position = $(piece).position();
+        var coords = getCoords(position.top, position.left);
+        if(coords.x == move.from.x + 1  && coords.y == move.from.y - 1){
+          console.log("found piece to be jumped");
+          $pieceToBeJumped = $(piece);
+        }
+      });
+      
+      if ($pieceToBeJumped == undefined){
+        return false; 
+      }
+
+      $pieceToBeJumped.removeClass('piece light');
+
+      console.log($pieceToBeJumped);
+
+      $('div.square').removeClass('movable');
+      getMovableSquares().addClass('movable');
+
+      return true;
+
+    }
+  } else {
+
+  }
 }
 
 function king(){

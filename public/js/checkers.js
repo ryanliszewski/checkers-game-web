@@ -1,5 +1,4 @@
 
-
 function setUpPieces() {
     //select all the divs with class 'piece'
     //add the 'light' class to half of them
@@ -17,17 +16,18 @@ function setUpPieces() {
 }
 
 function movePieceTo($piece,newTop,newLeft) {
+
   $piece.css('top', newTop);
   $piece.css('left', newLeft);
 }
 
-function movePieceToAcutalMove($piece,newTop,newLeft, moveCoordinates) {
+function movePieceToAcutalMove($piece,newTop,newLeft, move) {
     //set the css 'top' and 'left'
     //attributes of the passed piece
     //to the arguments newTop and newLeft
-   
-        movePieceTo($piece,newTop,newLeft)
-        socket.emit('gameMove', moveCoordinates, function (err) {
+        createKing($piece, move.to);
+        movePieceTo($piece,newTop,newLeft);
+        socket.emit('gameMove', move, function (err) {
           if (err) {
             alert(err);
           } else {
@@ -98,4 +98,12 @@ function incrementMoveCount() {
     //sets the html of the span with id moveCount
     //to the new move count
     $('span#moveCount').html(parseInt($('span#moveCount').html(),10)+1);
+}
+
+function createKing($piece, to){
+
+    console.log("This is the move to coordinates:" + to.y);
+    if(to.y == 0 || to.y == 7){
+        $piece.addClass('king');
+    }
 }

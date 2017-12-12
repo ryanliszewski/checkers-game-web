@@ -7,9 +7,8 @@ const dbCreateMessage = (msgObj) => {
       username: msgObj.username,
       message: msgObj.message
     })
-    .then(results => {})
     .catch(err => {
-      console.log("WHAT MY ERROF:", err);
+      console.log(err);
     })
 }
 
@@ -33,7 +32,6 @@ const dbDestroyGame = (params) => {
         gameId: params.gameID
       }
     })
-    .then(results => {})
     .catch(err => {
       console.log(err)
     })
@@ -52,9 +50,46 @@ const dbGameFull = (params) => {
     })
 }
 
+const dbGameList = () => {
+    return gameList.findAll({
+    attributes: ['gameId', 'isGameFull', 'gameCreator']
+  })
+  .catch(err => {
+    console.log(err)
+  });
+}
+
+const dbGetMessages = () => {
+  return lobbyChat.findAll({
+    order: [ ['id', 'DESC']],
+    limit: 25
+  }).then(data => {
+    return data;
+  })
+  .catch(err => {
+    console.log(err)
+  });
+}
+
+const dbGameStatus = (gameID) => {
+  return gameList.findOne({
+    where: {
+      gameId: gameID,
+      isGameFull: true
+    }
+  }).then(rawData => {
+    return rawData;
+  }).catch(err => {
+    console.log(err)
+  })
+}
+
 module.exports = {
   dbCreateGame,
   dbCreateMessage,
   dbDestroyGame,
-  dbGameFull
+  dbGameFull,
+  dbGameList,
+  dbGameStatus,
+  dbGetMessages
 }

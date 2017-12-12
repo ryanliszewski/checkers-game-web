@@ -21,39 +21,54 @@ const queries = require('../db/queries');
 
 module.exports = function(io) {
 
-  var gameArray;
-  var isFull;
+  // var gameArray;
+  // var isFull;
 
   io.on('connection', function(socket) {
     console.log('User Connected (Server Side - Lobby Chat): ', socket.id);
 
-    lobbyChat.findAll({
-      order: [
-        ['id', 'DESC']
-      ],
-      limit: 25
-    }).then(results => {
-      for (let i = results.length - 1; i >= 0; i--) {
-        io.to(socket.id).emit('lobbyChat', results[i]['dataValues']['username'] + ": " + results[i]['dataValues']['message']);
+    queriesController.GetMessages().then( data => {
+      for (let i = data.length - 1; i >= 0; i--) {
+        io.to(socket.id).emit('lobbyChat', data[i]['dataValues']['username'] + ": " + data[i]['dataValues']['message']);
       }
     })
+    // lobbyChat.findAll({
+    //   order: [
+    //     ['id', 'DESC']
+    //   ],
+    //   limit: 25
+    // }).then(results => {
+    //   for (let i = results.length - 1; i >= 0; i--) {
+    //     io.to(socket.id).emit('lobbyChat', results[i]['dataValues']['username'] + ": " + results[i]['dataValues']['message']);
+    //   }
+    // })
 
     socket.on('lobbyChat', function(msgObj) {
       queries.dbCreateMessage(msgObj);
       io.emit('lobbyChat', msgObj.username + ": " + msgObj.message);
     });
 
-    gameList.findAll({
-        attributes: ['gameId', 'isGameFull', 'gameCreator']
-      })
-      .then(results => {
-        gameArray = JSON.stringify(results);
-      })
-      .catch(err => {
-        console.log(err)
-      });
+    queriesController.ActiveGameList().then(results => {
+      console.log("dbGameList: ", results )
+      socket.emit('gameListActive', JSON.stringify(results));
+    })
+    // console.log("dbGameStatus: ", dbGameStatus )
+    // dbGameStatus.then(results => {
+    //   console.log("dbGameStatus: ", results )
+      
+    // })
+    
+    // gameList.findAll({
+    //     attributes: ['gameId', 'isGameFull', 'gameCreator']
+    //   })
+    //   .then(results => {
+    //     gameArray = JSON.stringify(results);
+    //   })
+    //   .catch(err => {
+    //     console.log(err)
+    //   });
 
-    socket.emit('gameListActive', JSON.stringify(gameArray));
+    // socket.emit('gameListActive', JSON.stringify(gameArray));
 
     socket.on('disconnect', function() {
       console.log('User Disconnected (Server Side - Lobby Chat)');
@@ -82,22 +97,30 @@ module.exports = function(io) {
       });
       socket.on('gameStatus', function(gameID) {
 
-        gameList.findOne({
-            where: {
-              gameId: gameID,
-              isGameFull: true
-            }
-          }).then(results => {
-            var temp = JSON.stringify(results);
-            var data = JSON.parse("[" + temp + "]");
-            // console.log("parse data: ", data[0]['isGameFull']);
-            isFull = data[0]['isGameFull'];
-          }).catch(err => {
-            console.log(err)
-          })
+        // gameList.findOne({
+        //     where: {
+        //       gameId: gameID,
+        //       isGameFull: true
+        //     }
+        //   }).then(results => {
+        //     var temp = JSON.stringify(results);
+        //     var data = JSON.parse("[" + temp + "]");
+        //     // console.log("parse data: ", data[0]['isGameFull']);
+        //     isFull = data[0]['isGameFull'];
+        //   }).catch(err => {
+        //     console.log(err)
+        //   })
 
-        console.log("gameStatus send: ", isFull);
-        nsp.emit('gameStatus', isFull);
+        queriesController.GetGameStatus(gameID).then( isFull => {
+          console.log("gameStatus send: ", isFull);
+          nsp.emit('gameStatus', isFull);
+        })
+        .catch(err => {
+          console.log(err)
+        })
+
+        // console.log("gameStatus send: ", isFull);
+        // nsp.emit('gameStatus', isFull);
         // socket.broadcast.emit('gameStatus', true);
       });
 

@@ -89,6 +89,17 @@ function legalMove(move) {
     if(Math.abs(move.to.x - move.from.x) == 1 && Math.abs(move.to.y - move.from.y) == 1){
       return true; 
     }
+
+    if(move.to.y - move.from.y > 0 && Math.abs(move.to.x - move.from.x) == 2 && 
+      Math.abs(move.to.y - move.from.y) == 2 ){
+        return opponentJump(move);
+    } 
+
+    if(move.to.y - move.from.y < 0 && Math.abs(move.to.x - move.from.x) == 1 && 
+      Math.abs(move.to.y - move.from.y) == 1 ) {
+        return jump(move);
+    }
+
   } else {
     return false 
   }

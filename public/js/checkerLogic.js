@@ -1,3 +1,4 @@
+
 //global variables for one square
 var width = 44;
 var border = 2;
@@ -19,7 +20,7 @@ var board;
 
 //Initializes a 2d Array of the checker board
 function Board() {
-  board = new Array(                );
+  board = new Array();
   for (var i = 0; i < 8; i++) {
     board[i] = new Array();
     for (var j = 0; j < 8; j++){
@@ -306,7 +307,8 @@ function moveOpponentsPiece(move){
 
   toggleSelect($opponentPiece);
   var pixels = getPixels(move.to.x, move.to.y);
-  movePieceTo($opponentPiece, pixels.top, pixels.left);
+  movePieceTo($opponentPiece, pixels.top, pixels.left, move);
+  createKing($opponentPiece, move.to);
   $opponentPiece.removeClass('selected');
       
   //set the new legal moves
@@ -407,7 +409,7 @@ $('document').ready(function() {
 
     //YOUR CODE
     //actually moving the piece to its initial position
-    movePieceTo($(piece), pixelPosition.top, pixelPosition.left);    
+    movePieceTo($(piece), pixelPosition.top, pixelPosition.left, null);    
   });
 
   //this loop moves all the dark pieces to their initial positions
@@ -428,7 +430,7 @@ $('document').ready(function() {
     var pixelPosition = getPixels(x, y);
 
     //moving the piece to its initial position
-    movePieceTo($(piece), pixelPosition.top, pixelPosition.left);
+    movePieceTo($(piece), pixelPosition.top, pixelPosition.left, null);
   });
 
   //set up initial squares
@@ -505,7 +507,7 @@ $('document').ready(function() {
             move.color = current_move;
             if(legalMove(move)){
               current_move = black; 
-              movePieceToAcutalMove($selectedPiece, pixels.top, pixels.left, move);
+              movePieceToAcutalMove($selectedPiece, pixels.top, pixels.left,move);
             }
         }
 

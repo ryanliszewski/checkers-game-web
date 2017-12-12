@@ -3,9 +3,9 @@ const queries = require('../db/queries');
 
 module.exports.ActiveGameList = () => {
   return queries.dbGameList()
-  .then(data => { 
-    // console.log("IM HERE: ", data)
-    return JSON.stringify(data)
+  .then(queryData => { 
+    // console.log("IM HERE: ", queryData)
+    return queryData
   })  
   .catch( err => {
     console.log(err)

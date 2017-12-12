@@ -50,6 +50,7 @@ module.exports = function(io) {
 
     queriesController.ActiveGameList().then(results => {
       console.log("dbGameList: ", results )
+      console.log("Username Creator:", results.gameCreator)
       socket.emit('gameListActive', JSON.stringify(results));
     })
     // console.log("dbGameStatus: ", dbGameStatus )

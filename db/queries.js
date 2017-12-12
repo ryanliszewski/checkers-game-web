@@ -52,7 +52,12 @@ const dbGameFull = (params) => {
 
 const dbGameList = () => {
     return gameList.findAll({
-    attributes: ['gameId', 'isGameFull', 'gameCreator']
+      where: {isGameFull: 'false'},
+      attributes: ['gameId', 'isGameFull', 'gameCreator']
+  }).spread( rawData => {
+    return rawData.get({
+      plain: true
+    })
   })
   .catch(err => {
     console.log(err)

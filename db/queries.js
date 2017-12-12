@@ -54,10 +54,8 @@ const dbGameList = () => {
     return gameList.findAll({
       where: {isGameFull: 'false'},
       attributes: ['gameId', 'isGameFull', 'gameCreator']
-  }).spread( rawData => {
-    return rawData.get({
-      plain: true
-    })
+  }).then( rawData => {
+    return rawData;
   })
   .catch(err => {
     console.log(err)
@@ -69,6 +67,7 @@ const dbGetMessages = () => {
     order: [ ['id', 'DESC']],
     limit: 25
   }).then(data => {
+    // console.log("RAW QUERY: ", data)
     return data;
   })
   .catch(err => {
@@ -83,6 +82,7 @@ const dbGameStatus = (gameID) => {
       isGameFull: true
     }
   }).then(rawData => {
+    console.log("RAW QUERY: ", rawData)    
     return rawData;
   }).catch(err => {
     console.log(err)

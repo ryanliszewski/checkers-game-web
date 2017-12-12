@@ -21,9 +21,6 @@ const queries = require('../db/queries');
 
 module.exports = function(io) {
 
-  // var gameArray;
-  // var isFull;
-
   io.on('connection', function(socket) {
     console.log('User Connected (Server Side - Lobby Chat): ', socket.id);
 
@@ -32,16 +29,6 @@ module.exports = function(io) {
         io.to(socket.id).emit('lobbyChat', data[i]['dataValues']['username'] + ": " + data[i]['dataValues']['message']);
       }
     })
-    // lobbyChat.findAll({
-    //   order: [
-    //     ['id', 'DESC']
-    //   ],
-    //   limit: 25
-    // }).then(results => {
-    //   for (let i = results.length - 1; i >= 0; i--) {
-    //     io.to(socket.id).emit('lobbyChat', results[i]['dataValues']['username'] + ": " + results[i]['dataValues']['message']);
-    //   }
-    // })
 
     socket.on('lobbyChat', function(msgObj) {
       queries.dbCreateMessage(msgObj);
@@ -49,26 +36,17 @@ module.exports = function(io) {
     });
 
     queriesController.ActiveGameList().then(results => {
-      console.log("dbGameList: ", results )
-      console.log("Username Creator:", results.gameCreator)
+      // console.log("dbGameList: ", results )
+      // console.log("Username Creator:", results.gameCreator)
       socket.emit('gameListActive', JSON.stringify(results));
     })
+
     // console.log("dbGameStatus: ", dbGameStatus )
     // dbGameStatus.then(results => {
     //   console.log("dbGameStatus: ", results )
       
     // })
     
-    // gameList.findAll({
-    //     attributes: ['gameId', 'isGameFull', 'gameCreator']
-    //   })
-    //   .then(results => {
-    //     gameArray = JSON.stringify(results);
-    //   })
-    //   .catch(err => {
-    //     console.log(err)
-    //   });
-
     // socket.emit('gameListActive', JSON.stringify(gameArray));
 
     socket.on('disconnect', function() {
@@ -97,21 +75,8 @@ module.exports = function(io) {
         nsp.emit(params.gameID, msg);
       });
       socket.on('gameStatus', function(gameID) {
-
-        // gameList.findOne({
-        //     where: {
-        //       gameId: gameID,
-        //       isGameFull: true
-        //     }
-        //   }).then(results => {
-        //     var temp = JSON.stringify(results);
-        //     var data = JSON.parse("[" + temp + "]");
-        //     // console.log("parse data: ", data[0]['isGameFull']);
-        //     isFull = data[0]['isGameFull'];
-        //   }).catch(err => {
-        //     console.log(err)
-        //   })
-
+        console.log("gameStatus gameID: ", gameID); // FIX THIS NOT GETTING GAME ID SO THEREFORE GAMESTATUS IS NULL
+        
         queriesController.GetGameStatus(gameID).then( isFull => {
           console.log("gameStatus send: ", isFull);
           nsp.emit('gameStatus', isFull);

@@ -5,7 +5,7 @@ module.exports.ActiveGameList = () => {
   return queries.dbGameList()
   .then(queryData => { 
     // console.log("IM HERE: ", queryData)
-    return queryData
+    return JSON.stringify(queryData)
   })  
   .catch( err => {
     console.log(err)

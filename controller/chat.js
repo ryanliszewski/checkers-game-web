@@ -1,56 +1,23 @@
 const gameList = require('../models').gameList;
 const lobbyChat = require('../models').lobbyChat;
 const sequelize = require('sequelize');
+const queriesController = require('../controller/queriesController')
 
-function dbCreateMessage(msgObj) {
-  lobbyChat.create({
-      username: msgObj.username,
-      message: msgObj.message
-    })
-    .then(results => {})
-    .catch(err => {
-      console.log("WHAT MY ERROF:", err);
-    })
-}
+const queries = require('../db/queries');
 
-function dbCreateGame(params) {
-  gameList.findOrCreate({
-      where: {
-        gameId: params.gameID,
-        gameCreator: params.name
-      }
-    })
-    .then(results => {})
-    .catch(err => {
-      console.log(err)
-    })
-}
+// function dbCreateGame(params) {
+//   gameList.findOrCreate({
+//       where: {
+//         gameId: params.gameID,
+//         gameCreator: params.name
+//       }
+//     })
+//     .then(results => {})
+//     .catch(err => {
+//       console.log(err)
+//     })
+// }
 
-function dbDestroyGame(params) {
-  gameList.destroy({
-      where: {
-        isGameFull: 'false',
-        gameId: params.gameID
-      }
-    })
-    .then(results => {})
-    .catch(err => {
-      console.log(err)
-    })
-}
-
-function dbGameFull(params) {
-  gameList.update({
-      isGameFull: 'true'
-    }, {
-      where: {
-        gameId: params.gameID
-      }
-    })
-    .catch(err => {
-      console.log(err)
-    })
-}
 
 module.exports = function(io) {
 
@@ -72,7 +39,7 @@ module.exports = function(io) {
     })
 
     socket.on('lobbyChat', function(msgObj) {
-      dbCreateMessage(msgObj);
+      queries.dbCreateMessage(msgObj);
       io.emit('lobbyChat', msgObj.username + ": " + msgObj.message);
     });
 
@@ -102,9 +69,9 @@ module.exports = function(io) {
 
       socket.join(params.gameID, () => {
         if (params.isGameFull == 'true') {
-          dbGameFull(params)
+          queries.dbGameFull(params)
         } else {
-          dbCreateGame(params);
+          queries.dbCreateGame(params);
         }
       }); // End of Socket Join
 
@@ -143,7 +110,7 @@ module.exports = function(io) {
       socket.on('disconnect', function() {
         console.log('User Disconnected GAME (Server Side)');
         socket.broadcast.to(params.gameID).emit(params.gameID, `Player has LEFT GAME!`);
-        dbDestroyGame(params);
+        queries.dbDestroyGame(params);
       });
 
       callback();

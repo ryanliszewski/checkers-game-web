@@ -99,61 +99,152 @@ function legalMove(move) {
 function jump(move){
   
   var $pieceToBeJumped;
+  var pieceColorClassName = '';
+  var removePieceColorClassName = ''
 
   //jump to the right
   if(move.to.x - move.from.x > 0){
 
-    console.log("Jumping to the right");
-
     if(move.color == black) {
-      var $piece = $('div.piece.light').each(function(index,piece) {
-        var position = $(piece).position();
-        var coords = getCoords(position.top, position.left);
-        if(coords.x == move.from.x + 1  && coords.y == move.from.y - 1){
-          console.log("found piece to be jumped");
-          $pieceToBeJumped = $(piece);
-        }
-      });
-      
-      if ($pieceToBeJumped == undefined){
-        return false; 
-      }
-
-      $pieceToBeJumped.removeClass('piece light');
-
-      $('div.square').removeClass('movable');
-      getMovableSquares().addClass('movable');
-
-      move.isJump = true; 
-      return true;
-
+      pieceColorClassName = 'div.piece.light';
+      removePieceColorClassName = 'piece light';
+    } else {
+      pieceColorClassName = 'div.piece.dark';
+      removePieceColorClassName = 'piece dark'
     }
+    
+    var $piece = $(pieceColorClassName).each(function(index,piece) {
+      var position = $(piece).position();
+      var coords = getCoords(position.top, position.left);
+      if(coords.x == move.from.x + 1  && coords.y == move.from.y - 1){
+        console.log("found piece to be jumped");
+        $pieceToBeJumped = $(piece);
+      }
+    });
+
+    if ($pieceToBeJumped == undefined){
+      return false; 
+    }
+
+    $pieceToBeJumped.removeClass('piece light');
+
+    $('div.square').removeClass('movable');
+    getMovableSquares().addClass('movable');
+
+    move.isJump = true; 
+    return true;
+
+
   } else {
-              
     if(move.color == black) {
-      var $piece = $('div.piece.light').each(function(index,piece) {
-        var position = $(piece).position();
-        var coords = getCoords(position.top, position.left);
-        if(coords.x == move.from.x - 1  && coords.y == move.from.y + 1){
-          console.log("found piece to be jumped");
-          $pieceToBeJumped = $(piece);
-        }
-      });
-      
-      if ($pieceToBeJumped == undefined){
-        return false; 
-      }
-
-      $pieceToBeJumped.removeClass('piece light');
-
-      $('div.square').removeClass('movable');
-      getMovableSquares().addClass('movable');
-
-      move.isJump = true; 
-      return true;
+      pieceColorClassName = 'div.piece.light';
+      removePieceColorClassName = 'piece light';
+    } else {
+      pieceColorClassName = 'div.piece.dark';
+      removePieceColorClassName = 'piece dark'
     }
+    
+    var $piece = $(pieceColorClassName).each(function(index,piece) {
+      var position = $(piece).position();
+      var coords = getCoords(position.top, position.left);
+      if(coords.x == move.from.x - 1  && coords.y == move.from.y - 1){
+        console.log("found piece to be jumped");
+        $pieceToBeJumped = $(piece);
+      }
+    });
+      
+    if ($pieceToBeJumped == undefined){
+      return false; 
+    }
+
+    $pieceToBeJumped.removeClass(removePieceColorClassName);
+
+    $('div.square').removeClass('movable');
+    getMovableSquares().addClass('movable');
+
+    move.isJump = true; 
+    return true;
+    
   }
 }
+
+function opponentJump(move){
+  
+  var $pieceToBeJumped;
+  var pieceColorClassName = '';
+  var removePieceColorClassName = ''
+
+  //jump to the right
+  if(move.to.x - move.from.x > 0){
+
+    if(move.color == black) {
+      pieceColorClassName = 'div.piece.light';
+      removePieceColorClassName = 'piece light';
+    } else {
+      pieceColorClassName = 'div.piece.dark';
+      removePieceColorClassName = 'piece dark'
+    }
+    
+    var $piece = $(pieceColorClassName).each(function(index,piece) {
+      var position = $(piece).position();
+      var coords = getCoords(position.top, position.left);
+      if(coords.x == move.from.x + 1  && coords.y == move.from.y + 1){
+        console.log("found piece to be jumped");
+        $pieceToBeJumped = $(piece);
+      }
+    });
+
+    if ($pieceToBeJumped == undefined){
+      return false; 
+    }
+
+    $pieceToBeJumped.removeClass('piece light');
+
+    $('div.square').removeClass('movable');
+    getMovableSquares().addClass('movable');
+
+    move.isJump = true; 
+    return true;
+
+
+  } else {
+    if(move.color == black) {
+      pieceColorClassName = 'div.piece.light';
+      removePieceColorClassName = 'piece light';
+    } else {
+      pieceColorClassName = 'div.piece.dark';
+      removePieceColorClassName = 'piece dark'
+    }
+    
+    var $piece = $(pieceColorClassName).each(function(index,piece) {
+      var position = $(piece).position();
+      var coords = getCoords(position.top, position.left);
+      if(coords.x == move.from.x - 1  && coords.y == move.from.y + 1){
+        console.log("found piece to be jumped");
+        $pieceToBeJumped = $(piece);
+      }
+    });
+      
+    if ($pieceToBeJumped == undefined){
+      return false; 
+    }
+
+    $pieceToBeJumped.removeClass(removePieceColorClassName);
+
+    $('div.square').removeClass('movable');
+    getMovableSquares().addClass('movable');
+
+    move.isJump = true; 
+    return true;
+    
+  }
+}
+
+
+
+
+
+
 
 function king(){ 
 
@@ -196,7 +287,7 @@ function moveOpponentsPiece(move){
   } 
 
   if(move.isJump){
-    jump(move);     
+    opponentJump(move);     
   }
 
   toggleSelect($opponentPiece);

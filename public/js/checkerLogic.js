@@ -72,9 +72,6 @@ function getCoords(top, left) {
 //Some game logic in here
 function legalMove(move) {
 
-
-  
-  
   //Can't move backwards and straight up 
   if(move.to.y <= move.from.y && move.to.x != move.from.x){
     console.log("first if");
@@ -133,7 +130,6 @@ function jump(move){
 
     move.isJump = true; 
     return true;
-
 
   } else {
     if(move.color == black) {
@@ -241,16 +237,34 @@ function opponentJump(move){
 }
 
 
-
-
-
-
-
 function king(){ 
 
 }
 
 function gameOver(){
+
+  var opponentPieceColorClass = '';
+
+  var $checkIfPiecesExist = undefined; 
+
+  if (playerColor == red){
+    opponentPieceColorClass = 'div.piece.dark';
+  } else {
+    opponentPieceColorClass = 'div.piece.light';
+  }
+
+  var $opponentPiece = $(opponentPieceColorClass).each(function(index,piece) {
+    $checkIfPiecesExist == $(piece); 
+    return $checkIfPiecesExist; 
+  });
+
+  //console.log("opponent piece (game over test): " + $opponentPiece);
+
+  if ($checkIfPiecesExist != undefined) {
+    return false 
+  } else {
+    return true; 
+  }
 }
 
 //Move's the opponent's piece 
@@ -393,7 +407,7 @@ $('document').ready(function() {
 
     //YOUR CODE
     //actually moving the piece to its initial position
-    movePieceTo($(piece), pixelPosition.top, pixelPosition.left);
+    movePieceTo($(piece), pixelPosition.top, pixelPosition.left);    
   });
 
   //this loop moves all the dark pieces to their initial positions
@@ -494,6 +508,12 @@ $('document').ready(function() {
               movePieceToAcutalMove($selectedPiece, pixels.top, pixels.left, move);
             }
         }
+
+        //Check if game is over
+        let isGameOver = gameOver();
+
+        console.log("Game is over: " + isGameOver);
+
         //increment the move counter
         incrementMoveCount();
 

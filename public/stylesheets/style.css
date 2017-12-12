@@ -299,6 +299,12 @@ div.piece.light {
   background-color: red;
 }
 
+div.piece.king {
+  background-image:url('http://i.imgur.com/HYQkl.png');
+  background-repeat:no-repeat;
+  background-position:center;
+}
+
 div.piece.dark {
   background-color: black;
 }
@@ -306,3 +312,4 @@ div.piece.dark {
 div#meta {
   float: right;
 }
+

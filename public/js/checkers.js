@@ -17,8 +17,6 @@ function setUpPieces() {
 
 function movePieceTo($piece,newTop,newLeft) {
 
-  var to = getCoords(newTop, newLeft);
-  createKing($piece, to);
   $piece.css('top', newTop);
   $piece.css('left', newLeft);
 }

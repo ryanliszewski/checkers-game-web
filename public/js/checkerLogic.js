@@ -1,4 +1,3 @@
-
 //global variables for one square
 var width = 44;
 var border = 2;
@@ -75,7 +74,6 @@ function legalMove(move) {
 
   //Can't move backwards and straight up 
   if(move.to.y <= move.from.y && move.to.x != move.from.x){
-    console.log("first if");
     
     //Single diagonal move 
     if(Math.abs(move.to.x - move.from.x) == 1 && Math.abs(move.to.y - move.from.y) == 1){
@@ -86,9 +84,13 @@ function legalMove(move) {
     if(Math.abs(move.to.x - move.from.x) == 2 && Math.abs(move.to.y - move.from.y) == 2){
       return jump(move); 
     }
-
+  //King
+  } else if (move.isKing){
+    if(Math.abs(move.to.x - move.from.x) == 1 && Math.abs(move.to.y - move.from.y) == 1){
+      return true; 
+    }
   } else {
-    return false; 
+    return false 
   }
 }
 
@@ -237,11 +239,6 @@ function opponentJump(move){
   }
 }
 
-
-function king(){ 
-
-}
-
 function gameOver(){
 
   var opponentPieceColorClass = '';
@@ -255,7 +252,7 @@ function gameOver(){
   }
 
   var $opponentPiece = $(opponentPieceColorClass).each(function(index,piece) {
-    $checkIfPiecesExist == $(piece); 
+    $checkIfPiecesExist = $(piece); 
     return $checkIfPiecesExist; 
   });
 
@@ -483,7 +480,11 @@ $('document').ready(function() {
         squareToMoveCords.x = x;
         squareToMoveCords.y = y; 
 
-        var move = {from: selectedPieceCords, to:squareToMoveCords, color: null, isJump: false};
+        var move = {from: selectedPieceCords, to:squareToMoveCords, color: null, isJump: false, isKing: false};
+
+        if($selectedPiece.hasClass('king')){
+          move.isKing = true; 
+        }
 
         //Move Dark
         if ($selectedPiece.hasClass('piece dark')) {
@@ -494,15 +495,6 @@ $('document').ready(function() {
             console.log(move);
             movePieceToAcutalMove($selectedPiece, pixels.top, pixels.left, move);
           }
-            
-          // if (y < selectedPieceCords.y) {
-          //   if (Math.abs(y - selectedPieceCords.y) <= 2) {
-          //     move.color = current_move;
-          //     current_move = red;
-          //    movePieceToAcutalMove($selectedPiece, pixels.top, pixels.left, move);
-          //   }
-          // }
-          //Move Light
         } else {
             move.color = current_move;
             if(legalMove(move)){

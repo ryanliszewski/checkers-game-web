@@ -15,38 +15,9 @@ var red = 2;
 //Black always moves first
 var current_move = 1;
 
-var board;
-
-//Initializes a 2d Array of the checker board
-function Board() {
-  board = new Array();
-  for (var i = 0; i < 8; i++) {
-    board[i] = new Array();
-    for (var j = 0; j < 8; j++){
-      //top
-      if(i < 3 && j % 2 != 0){
-        board[j][i] = 2; 
-      } else if (i > 4 && j % 2 == 0){
-        board[j][i] = 1; 
-      } else {
-        board[j][i] = 0; 
-      }
-    }
-  }
-  board[-2] = new Array(); // prevents errors
-  board[-1] = new Array();
-  board[8] = new Array();
-  board[9] = new Array();
-
-  console.log(board);
-}
-
 //utility function for translating an x,y coordinate
 //to a pixel position
-//the convention is that the square in the upper left
-//corner is at position 0,0
-//the square in the upper right, at 7,0 and the lower
-//right at 7,7
+
 function getPixels(x, y) {
   //ok... so takes an x,y position, returns
   //pixels from the left, right
@@ -58,7 +29,6 @@ function getPixels(x, y) {
 
 //utility function for turning a pixel position
 //into the x,y coordinate of a square on the board
-//it follows the same coordinate convention as getPixels
 function getCoords(top, left) {
   //returns an x and a y
   //given a top and left pixels
@@ -351,12 +321,9 @@ function getMovableSquares() {
   return $out;
 }
 
-$('document').ready(function() {
-
-  //Client Socket listens for opponent's move
-  console.log(gameCode);
+function initSockets(){
   socket.emit('gameStatus', gameCode);
-
+  
   socket.on('gameStatus', function(status){
     console.log("game status: ", status);
   });
@@ -364,12 +331,24 @@ $('document').ready(function() {
   socket.on('gameMove', function(move) {
     console.log("RECIEVE MOVE: " , move);
     console.log("gameMove Recieved");
-
-    if(move.color != playerColor){
+    
+    if(move.color != playerColor && !move.gameOver){
       console.log("test");
       moveOpponentsPiece(move); 
     }
+
+    if(move.gameOver && move.color != playerColor){
+      document.getElementById("modalBodyText").innerHTML = "Better luck next time " + obj.name + ". You lost!"
+      $('#myModal').modal('show');
+    }
   });
+}
+
+
+$('document').ready(function() {
+
+  //Client Socket listens for opponent's move
+  initSockets();
 
   //Creating the 64 squares and adding them to the DOM
   var squareCount = 8 * 8;
@@ -492,7 +471,7 @@ $('document').ready(function() {
         squareToMoveCords.x = x;
         squareToMoveCords.y = y; 
 
-        var move = {from: selectedPieceCords, to:squareToMoveCords, color: null, isJump: false, isKing: false};
+        var move = {from: selectedPieceCords, to:squareToMoveCords, color: null, isJump: false, isKing: false, gameOver: false};
 
         if($selectedPiece.hasClass('king')){
           move.isKing = true; 
@@ -518,7 +497,12 @@ $('document').ready(function() {
         //Check if game is over
         let isGameOver = gameOver();
 
-        console.log("Game is over: " + isGameOver);
+        if(isGameOver) {
+          move.gameOver = true;
+          socket.emit('gameMove', move);
+          document.getElementById("modalBodyText").innerHTML = "Congratulations " + obj.name + "You won";
+          $('#myModal').modal('show');
+        }
 
         //increment the move counter
         incrementMoveCount();

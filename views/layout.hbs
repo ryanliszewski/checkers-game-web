@@ -9,7 +9,6 @@
   <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.1.js"></script>
   <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery.bootstrapvalidator/0.5.3/js/bootstrapValidator.min.js"></script>
 
-
   <link rel='stylesheet' href='/stylesheets/style.css' />
 </head>
 
@@ -21,6 +20,7 @@
         <a class="navbar-brand" href="/">checkers667</a>
 
       </div>
+      <div id="username-hidden" style="display: none;">{{user.firstName}}</div>
       <div class="collapse navbar-collapse">
         <ul class="nav navbar-nav navbar-right">
           {{#if user}}

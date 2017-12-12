@@ -2,38 +2,45 @@
   <div class="row">
     <h4>Sign Up</h4>
     <div class="signup">
-      <form action="/register" method="POST">
-        <div class="form-group">
-          <input id="fname" class="form-control" type="text" name="firstName" placeholder="First Name"></input>
 
+      <div class="form-group">
+
+        <div class="col-md-9 col-md-offset-3">
+          <div id="messages"></div>
         </div>
-        <div id="lname" class="form-group">
+
+      </div>
+
+      <form id="contactForm" action="/register" method="POST">
+
+        <div class="form-group">
+          <input class="form-control" type="text" name="firstName" placeholder="First Name"></input>
+        </div>
+
+        <div class="form-group">
           <input class="form-control" type="text" name="lastName" placeholder="Last Name"></input>
-
         </div>
 
         <div class="form-group">
-          <input class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" type="email" name="email" placeholder="Email - john.doe@example.com"></input>
-
+          <input class="form-control" aria-describedby="emailHelp" type="email" name="email" placeholder="Email - john.doe@example.com"></input>
         </div>
 
         <div class="form-group">
           <input class="form-control" type="text" name="username" placeholder="Username"></input>
-
         </div>
+
         <div class="form-group">
           <input class="form-control" type="password" name="password" placeholder="Password"></input>
-
         </div>
+
         <div class="form-group">
           <input class="form-control" type="password" name="passwordMatch" placeholder="Re-Enter Password"></input>
 
         </div>
+
         <div class="form-group">
-          <button class="btn btn-lg btn-default btn-primary btn-block" formaction="/register">Create an Account</button>
-
+          <button class="btn btn-lg btn-default btn-info btn-block" type="submit" formaction="/register">Create an Account</button>
         </div>
-
 
       </form>
 
@@ -42,3 +49,90 @@
   </div>
 
 </div>
+
+<script type="text/javascript">
+  $(document).ready(function() {
+    $('#contactForm').bootstrapValidator({
+      container: '#messages',
+      feedbackIcons: {
+        valid: 'glyphicon glyphicon-ok',
+        invalid: 'glyphicon glyphicon-remove',
+        validating: 'glyphicon glyphicon-refresh'
+      },
+      fields: {
+        fullName: {
+          validators: {
+            notEmpty: {
+              message: 'The full name is required and cannot be empty'
+            }
+          }
+        },
+        firstName: {
+          validators: {
+            notEmpty: {
+              message: 'First Name is required and cannot be empty'
+            },
+            stringLength: {
+              min: 3,
+              message: 'First Name must be more than 3 characters long'
+            }
+          }
+        },
+        lastName: {
+          validators: {
+            notEmpty: {
+              message: 'Last Name is required and cannot be empty'
+            },
+            stringLength: {
+              min: 3,
+              message: 'Last Name must be more than 3 characters long'
+            }
+          }
+        },
+        email: {
+          validators: {
+            notEmpty: {
+              message: 'The email address is required and cannot be empty'
+            },
+            emailAddress: {
+              message: 'The email address is not valid'
+            }
+          }
+        },
+        username: {
+          validators: {
+            notEmpty: {
+              message: 'Username is required and cannot be empty'
+            },
+            stringLength: {
+              min: 8,
+              message: 'Username must be greater than 8 characters long'
+            }
+          }
+        },
+        password: {
+          validators: {
+            notEmpty: {
+              message: 'Password is required and cannot be empty'
+            },
+            stringLength: {
+              min: 8,
+              message: 'Password must be greater than 8 characters long'
+            }
+          }
+        },
+        passwordMatch: {
+          validators: {
+            notEmpty: {
+              message: 'Password is required and cannot be empty'
+            },
+            stringLength: {
+              min: 8,
+              message: 'Password must be greater than 8 characters long'
+            }
+          }
+        }
+      }
+    });
+  });
+</script>

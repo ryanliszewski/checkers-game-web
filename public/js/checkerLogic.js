@@ -19,7 +19,7 @@ var board;
 
 //Initializes a 2d Array of the checker board
 function Board() {
-  board = new Array(                );
+  board = new Array();
   for (var i = 0; i < 8; i++) {
     board[i] = new Array();
     for (var j = 0; j < 8; j++){
@@ -72,12 +72,8 @@ function getCoords(top, left) {
 //Some game logic in here
 function legalMove(move) {
 
-
-  
-  
   //Can't move backwards and straight up 
   if(move.to.y <= move.from.y && move.to.x != move.from.x){
-    console.log("first if");
     
     //Single diagonal move 
     if(Math.abs(move.to.x - move.from.x) == 1 && Math.abs(move.to.y - move.from.y) == 1){
@@ -88,9 +84,24 @@ function legalMove(move) {
     if(Math.abs(move.to.x - move.from.x) == 2 && Math.abs(move.to.y - move.from.y) == 2){
       return jump(move); 
     }
+  //King
+  } else if (move.isKing){
+    if(Math.abs(move.to.x - move.from.x) == 1 && Math.abs(move.to.y - move.from.y) == 1){
+      return true; 
+    }
+
+    if(move.to.y - move.from.y > 0 && Math.abs(move.to.x - move.from.x) == 2 && 
+      Math.abs(move.to.y - move.from.y) == 2 ){
+        return opponentJump(move);
+    } 
+
+    if(move.to.y - move.from.y < 0 && Math.abs(move.to.x - move.from.x) == 1 && 
+      Math.abs(move.to.y - move.from.y) == 1 ) {
+        return jump(move);
+    }
 
   } else {
-    return false; 
+    return false 
   }
 }
 
@@ -99,67 +110,171 @@ function legalMove(move) {
 function jump(move){
   
   var $pieceToBeJumped;
+  var pieceColorClassName = '';
+  var removePieceColorClassName = ''
 
   //jump to the right
   if(move.to.x - move.from.x > 0){
 
-    console.log("Jumping to the right");
-
     if(move.color == black) {
-      var $piece = $('div.piece.light').each(function(index,piece) {
-        var position = $(piece).position();
-        var coords = getCoords(position.top, position.left);
-        if(coords.x == move.from.x + 1  && coords.y == move.from.y - 1){
-          console.log("found piece to be jumped");
-          $pieceToBeJumped = $(piece);
-        }
-      });
-      
-      if ($pieceToBeJumped == undefined){
-        return false; 
-      }
-
-      $pieceToBeJumped.removeClass('piece light');
-
-      $('div.square').removeClass('movable');
-      getMovableSquares().addClass('movable');
-
-      move.isJump = true; 
-      return true;
-
+      pieceColorClassName = 'div.piece.light';
+      removePieceColorClassName = 'piece light';
+    } else {
+      pieceColorClassName = 'div.piece.dark';
+      removePieceColorClassName = 'piece dark'
     }
+    
+    var $piece = $(pieceColorClassName).each(function(index,piece) {
+      var position = $(piece).position();
+      var coords = getCoords(position.top, position.left);
+      if(coords.x == move.from.x + 1  && coords.y == move.from.y - 1){
+        console.log("found piece to be jumped");
+        $pieceToBeJumped = $(piece);
+      }
+    });
+
+    if ($pieceToBeJumped == undefined){
+      return false; 
+    }
+
+    $pieceToBeJumped.removeClass('piece light');
+
+    $('div.square').removeClass('movable');
+    getMovableSquares().addClass('movable');
+
+    move.isJump = true; 
+    return true;
+
   } else {
-              
     if(move.color == black) {
-      var $piece = $('div.piece.light').each(function(index,piece) {
-        var position = $(piece).position();
-        var coords = getCoords(position.top, position.left);
-        if(coords.x == move.from.x - 1  && coords.y == move.from.y + 1){
-          console.log("found piece to be jumped");
-          $pieceToBeJumped = $(piece);
-        }
-      });
-      
-      if ($pieceToBeJumped == undefined){
-        return false; 
-      }
-
-      $pieceToBeJumped.removeClass('piece light');
-
-      $('div.square').removeClass('movable');
-      getMovableSquares().addClass('movable');
-
-      move.isJump = true; 
-      return true;
+      pieceColorClassName = 'div.piece.light';
+      removePieceColorClassName = 'piece light';
+    } else {
+      pieceColorClassName = 'div.piece.dark';
+      removePieceColorClassName = 'piece dark'
     }
+    
+    var $piece = $(pieceColorClassName).each(function(index,piece) {
+      var position = $(piece).position();
+      var coords = getCoords(position.top, position.left);
+      if(coords.x == move.from.x - 1  && coords.y == move.from.y - 1){
+        console.log("found piece to be jumped");
+        $pieceToBeJumped = $(piece);
+      }
+    });
+      
+    if ($pieceToBeJumped == undefined){
+      return false; 
+    }
+
+    $pieceToBeJumped.removeClass(removePieceColorClassName);
+
+    $('div.square').removeClass('movable');
+    getMovableSquares().addClass('movable');
+
+    move.isJump = true; 
+    return true;
+    
   }
 }
 
-function king(){ 
+function opponentJump(move){
+  
+  var $pieceToBeJumped;
+  var pieceColorClassName = '';
+  var removePieceColorClassName = ''
 
+  //jump to the right
+  if(move.to.x - move.from.x > 0){
+
+    if(move.color == black) {
+      pieceColorClassName = 'div.piece.light';
+      removePieceColorClassName = 'piece light';
+    } else {
+      pieceColorClassName = 'div.piece.dark';
+      removePieceColorClassName = 'piece dark'
+    }
+    
+    var $piece = $(pieceColorClassName).each(function(index,piece) {
+      var position = $(piece).position();
+      var coords = getCoords(position.top, position.left);
+      if((coords.x == move.from.x + 1  && coords.y == move.from.y + 1) || (coords.x == move.from.x + 1  && coords.y == move.from.y - 1)){
+        console.log("found piece to be jumped");
+        $pieceToBeJumped = $(piece);
+      }
+    });
+
+    if ($pieceToBeJumped == undefined){
+      return false; 
+    }
+
+    console.log("the piece to be jumped is:" + $pieceToBeJumped);
+    $pieceToBeJumped.removeClass('piece light');
+
+    $('div.square').removeClass('movable');
+    getMovableSquares().addClass('movable');
+
+    move.isJump = true; 
+    return true;
+
+
+  } else {
+    if(move.color == black) {
+      pieceColorClassName = 'div.piece.light';
+      removePieceColorClassName = 'piece light';
+    } else {
+      pieceColorClassName = 'div.piece.dark';
+      removePieceColorClassName = 'piece dark'
+    }
+    
+    var $piece = $(pieceColorClassName).each(function(index,piece) {
+      var position = $(piece).position();
+      var coords = getCoords(position.top, position.left);
+      if((coords.x == move.from.x - 1  && coords.y == move.from.y + 1) || (coords.x == move.from.x - 1  && coords.y == move.from.y - 1)){
+        console.log("found piece to be jumped");
+        $pieceToBeJumped = $(piece);
+      }
+    });
+      
+    if ($pieceToBeJumped == undefined){
+      return false; 
+    }
+
+    $pieceToBeJumped.removeClass(removePieceColorClassName);
+
+    $('div.square').removeClass('movable');
+    getMovableSquares().addClass('movable');
+
+    move.isJump = true; 
+    return true;
+    
+  }
 }
 
 function gameOver(){
+
+  var opponentPieceColorClass = '';
+
+  var $checkIfPiecesExist = undefined; 
+
+  if (playerColor == red){
+    opponentPieceColorClass = 'div.piece.dark';
+  } else {
+    opponentPieceColorClass = 'div.piece.light';
+  }
+
+  var $opponentPiece = $(opponentPieceColorClass).each(function(index,piece) {
+    $checkIfPiecesExist = $(piece); 
+    return $checkIfPiecesExist; 
+  });
+
+  //console.log("opponent piece (game over test): " + $opponentPiece);
+
+  if ($checkIfPiecesExist != undefined) {
+    return false 
+  } else {
+    return true; 
+  }
 }
 
 //Move's the opponent's piece 
@@ -196,12 +311,13 @@ function moveOpponentsPiece(move){
   } 
 
   if(move.isJump){
-    jump(move);     
+    opponentJump(move);     
   }
 
   toggleSelect($opponentPiece);
   var pixels = getPixels(move.to.x, move.to.y);
-  movePieceTo($opponentPiece, pixels.top, pixels.left);
+  movePieceTo($opponentPiece, pixels.top, pixels.left, move);
+  createKing($opponentPiece, move.to);
   $opponentPiece.removeClass('selected');
       
   //set the new legal moves
@@ -302,7 +418,7 @@ $('document').ready(function() {
 
     //YOUR CODE
     //actually moving the piece to its initial position
-    movePieceTo($(piece), pixelPosition.top, pixelPosition.left);
+    movePieceTo($(piece), pixelPosition.top, pixelPosition.left, null);    
   });
 
   //this loop moves all the dark pieces to their initial positions
@@ -323,7 +439,7 @@ $('document').ready(function() {
     var pixelPosition = getPixels(x, y);
 
     //moving the piece to its initial position
-    movePieceTo($(piece), pixelPosition.top, pixelPosition.left);
+    movePieceTo($(piece), pixelPosition.top, pixelPosition.left, null);
   });
 
   //set up initial squares
@@ -376,7 +492,11 @@ $('document').ready(function() {
         squareToMoveCords.x = x;
         squareToMoveCords.y = y; 
 
-        var move = {from: selectedPieceCords, to:squareToMoveCords, color: null, isJump: false};
+        var move = {from: selectedPieceCords, to:squareToMoveCords, color: null, isJump: false, isKing: false};
+
+        if($selectedPiece.hasClass('king')){
+          move.isKing = true; 
+        }
 
         //Move Dark
         if ($selectedPiece.hasClass('piece dark')) {
@@ -387,22 +507,19 @@ $('document').ready(function() {
             console.log(move);
             movePieceToAcutalMove($selectedPiece, pixels.top, pixels.left, move);
           }
-            
-          // if (y < selectedPieceCords.y) {
-          //   if (Math.abs(y - selectedPieceCords.y) <= 2) {
-          //     move.color = current_move;
-          //     current_move = red;
-          //    movePieceToAcutalMove($selectedPiece, pixels.top, pixels.left, move);
-          //   }
-          // }
-          //Move Light
         } else {
             move.color = current_move;
             if(legalMove(move)){
               current_move = black; 
-              movePieceToAcutalMove($selectedPiece, pixels.top, pixels.left, move);
+              movePieceToAcutalMove($selectedPiece, pixels.top, pixels.left,move);
             }
         }
+
+        //Check if game is over
+        let isGameOver = gameOver();
+
+        console.log("Game is over: " + isGameOver);
+
         //increment the move counter
         incrementMoveCount();
 

@@ -198,7 +198,7 @@ function opponentJump(move){
     var $piece = $(pieceColorClassName).each(function(index,piece) {
       var position = $(piece).position();
       var coords = getCoords(position.top, position.left);
-      if(coords.x == move.from.x + 1  && coords.y == move.from.y + 1){
+      if((coords.x == move.from.x + 1  && coords.y == move.from.y + 1) || (coords.x == move.from.x + 1  && coords.y == move.from.y - 1)){
         console.log("found piece to be jumped");
         $pieceToBeJumped = $(piece);
       }
@@ -208,6 +208,7 @@ function opponentJump(move){
       return false; 
     }
 
+    console.log("the piece to be jumped is:" + $pieceToBeJumped);
     $pieceToBeJumped.removeClass('piece light');
 
     $('div.square').removeClass('movable');
@@ -229,7 +230,7 @@ function opponentJump(move){
     var $piece = $(pieceColorClassName).each(function(index,piece) {
       var position = $(piece).position();
       var coords = getCoords(position.top, position.left);
-      if(coords.x == move.from.x - 1  && coords.y == move.from.y + 1){
+      if((coords.x == move.from.x - 1  && coords.y == move.from.y + 1) || (coords.x == move.from.x - 1  && coords.y == move.from.y - 1)){
         console.log("found piece to be jumped");
         $pieceToBeJumped = $(piece);
       }

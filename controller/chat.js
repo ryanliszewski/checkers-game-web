@@ -31,9 +31,9 @@ module.exports = function(io) {
       console.log('User Disconnected (Server Side - Lobby Chat)');
     });
 
-  });
+  }); // End of Lobby page Connection
 
-  var nsp = io.of('/game');
+  const nsp = io.of('/game');
 
   nsp.on('connection', function(socket) {
     console.log('User Connected to Game Room (Server Side): ', socket.id);
@@ -55,8 +55,8 @@ module.exports = function(io) {
         }
       }); // End of Socket Join
 
-      socket.broadcast.to(params.gameID).emit(params.gameID, `Player ${params.name} has joined.`);
-      socket.broadcast.to(params.gameID).emit(params.gameID, `Player YOUR TURN!`);
+      socket.broadcast.to(params.gameID).emit(params.gameID, `${params.name} has joined.`);
+      socket.broadcast.to(params.gameID).emit(params.gameID, `Your Turn`);
       socket.on(params.gameID, function(msg) {
         nsp.emit(params.gameID, msg);
       });
@@ -75,7 +75,7 @@ module.exports = function(io) {
 
       socket.on('gameMove', function(move) {
         nsp.emit('gameMove', move);
-        socket.broadcast.to(params.gameID).emit(params.gameID, `Player YOUR TURN!`);
+        socket.broadcast.to(params.gameID).emit(params.gameID, `Your Turn`);
       });
 
       socket.on('disconnect', function() {

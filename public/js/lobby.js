@@ -13,12 +13,14 @@ $('document').ready(function() {
     var gameListArray = JSON.parse("[" + temp + "]");
     if (gameListArray[0].length == 0) {
       $('#games').html("");
-    }
-    for (var i = 0; i < gameListArray[0].length; i++) {
-      if (gameListArray[0][i]['isGameFull'] == false) {
-        $('#games').append($('<li>' + gameListArray[0][i]['gameCreator'] + ' <a href="/game?player=2&gameID=' +
-          gameListArray[0][i]['gameId'] + '&isGameFull=true' +
-          '" class="btn btn-lg btn-outline-info pull-right"><i class="fa fa-sign-in"></i>  Join Game </a>'));
+    } else {
+      $('#games').html("");
+      for (var i = 0; i < gameListArray[0].length; i++) {
+        if (gameListArray[0][i]['isGameFull'] == false) {
+          $('#games').append($('<li>' + gameListArray[0][i]['gameCreator'] + ' <a href="/game?player=2&gameID=' +
+            gameListArray[0][i]['gameId'] + '&isGameFull=true' +
+            '" class="btn btn-lg btn-outline-info pull-right"><i class="fa fa-sign-in"></i>  Join Game </a>'));
+        }
       }
     }
   });

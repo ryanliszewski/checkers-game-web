@@ -35,19 +35,12 @@ module.exports = function(io) {
       io.emit('lobbyChat', msgObj.username + ": " + msgObj.message);
     });
 
-    queriesController.ActiveGameList().then(results => {
-      // console.log("dbGameList: ", results )
-      // console.log("Username Creator:", results.gameCreator)
-      socket.emit('gameListActive', JSON.stringify(results));
+    socket.on('gameListActive', function functionName(msg) {
+      console.log("gameListActive CALLED:", msg);
+      queriesController.ActiveGameList().then(results => {
+        socket.emit('gameListActive', JSON.stringify(results));
+      })
     })
-
-    // console.log("dbGameStatus: ", dbGameStatus )
-    // dbGameStatus.then(results => {
-    //   console.log("dbGameStatus: ", results )
-      
-    // })
-    
-    // socket.emit('gameListActive', JSON.stringify(gameArray));
 
     socket.on('disconnect', function() {
       console.log('User Disconnected (Server Side - Lobby Chat)');
@@ -63,9 +56,17 @@ module.exports = function(io) {
 
       socket.join(params.gameID, () => {
         if (params.isGameFull == 'true') {
-          queries.dbGameFull(params)
+          queries.dbGameFull(params).then(data => {
+            return queriesController.ActiveGameList().then(results => {
+              return io.of('/').emit('gameListActive', JSON.stringify(results));
+            })
+          })
         } else {
-          queries.dbCreateGame(params);
+          queries.dbCreateGame(params).then(data => {
+            return queriesController.ActiveGameList().then(results => {
+              return io.of('/').emit('gameListActive', JSON.stringify(results));
+            })
+          })
         }
       }); // End of Socket Join
 
@@ -76,7 +77,7 @@ module.exports = function(io) {
       });
       socket.on('gameStatus', function(gameID) {
         console.log("gameStatus gameID: ", gameID); // FIX THIS NOT GETTING GAME ID SO THEREFORE GAMESTATUS IS NULL
-        
+
         queriesController.GetGameStatus(gameID).then( isFull => {
           console.log("gameStatus send: ", isFull);
           nsp.emit('gameStatus', isFull);
@@ -96,10 +97,25 @@ module.exports = function(io) {
         socket.broadcast.to(params.gameID).emit(params.gameID, `Player YOUR TURN!`);
       });
 
+      // socket.on('leave', function() {
+      //   console.log("LEAVE MESSAGE");
+      //     socket.leave(() => {
+      //       console.log("WITHIN LEAVE FUNCTION");
+      //       queriesController.ActiveGameList().then(results => {
+      //         return io.of('/').emit('gameListActive', JSON.stringify(results));
+      //       })
+      //       console.log("Leaiving leave function");
+      //     });
+      // });
+
       socket.on('disconnect', function() {
         console.log('User Disconnected GAME (Server Side)');
         socket.broadcast.to(params.gameID).emit(params.gameID, `Player has LEFT GAME!`);
-        queries.dbDestroyGame(params);
+        queries.dbDestroyGame(params).then(data => {
+          return queriesController.ActiveGameList().then(results => {
+            return io.of('/').emit('gameListActive', JSON.stringify(results));
+          })
+        })
       });
 
       callback();

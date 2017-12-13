@@ -1,13 +1,20 @@
 <div class="container">
   <div class="row">
     <div class="col-8">
-      <a href="/lobby" class="pull-right btn btn-lg btn-warning" data-original-title="" title=""><i class="fa fa-sign-out" aria-hidden="true"></i>  Leave Game</a>
-      <div class="chat-room">
-        <div id="game">
-          <div id="board"></div>
-          <div id="pieces"></div>
+      <div class = "col-6">
+        
+        <div class="chat-room">
+          <div id="game">
+            <div id="board"></div>
+            <div id="pieces"></div>
+          </div>
         </div>
       </div>
+      
+      <div class ="col-2">
+        <a href="/lobby" class="pull-right btn btn-lg btn-warning" data-original-title="" title=""><i class="fa fa-sign-out" aria-hidden="true"></i>  Leave Game</a>
+      </div>
+
     </div>
 
     <div class="col-4">
@@ -46,6 +53,6 @@
 
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="/js/socket.io.js"></script>
-<script type="text/javascript" src="/js/checkerLogic.js"></script>
+<script type="text/javascript" src="/js/board.js"></script>
 <script type="text/javascript" src="/js/checkers.js"></script>
 <script type="text/javascript" src="/js/game.js"></script>

@@ -1,3 +1,4 @@
+var socket = io();
 function guid() {
   function s4() {
     return Math.floor((1 + Math.random()) * 0x10000)
@@ -8,17 +9,21 @@ function guid() {
 }
 
 document.getElementById("gameGenerate").innerHTML = ' <a href="/game?player=1&gameID=' +
-  guid() + '" class="pull-right btn btn-lg btn-info" data-original-title="" title=""><i class="fa fa-plus-square-o"></i> Create Game</a>';
+  guid() + '" class="pull-right btn btn-lg btn-info"><i class="fa fa-plus-square-o"></i> Create Game</a>';
 
 $('document').ready(function() {
-  var socket = io();
+  socket.emit('gameListActive', "getMe Data!");
   socket.on('gameListActive', function(gameList) {
+    console.log("HERE IS MY MESSAGE", gameList);
     var temp = JSON.parse(gameList);
     if (temp == null) {
       temp = 0;
     }
     var gameListArray = JSON.parse("[" + temp + "]");
-    console.log("Game List Array: ", gameListArray);
+    // console.log("Game List Array: ", gameListArray);
+    if(gameListArray[0].length == 0) {
+      $('#games').html("");
+    }
     for (var i = 0; i < gameListArray[0].length; i++) {
       if (gameListArray[0][i]['isGameFull'] == false) {
         $('#games').append($('<li>' + gameListArray[0][i]['gameCreator'] + ' <a href="/game?player=2&gameID=' +

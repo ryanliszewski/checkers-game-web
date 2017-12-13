@@ -27,6 +27,10 @@ h4 {
   margin: 25px auto;
 }
 
+.chat-room {
+  background-color: #aaaaaa;
+}
+
 form div p {
   color: #767676;
   font-weight: 400;
@@ -84,6 +88,11 @@ form div p span {
   right: 0px;
   float: right;
 }
+.message-box {
+  background-color: #aaaaaa;
+  border: 0;
+}
+
 
 #messages li {
   /* padding: 5px 10px; */
@@ -91,7 +100,7 @@ form div p span {
   position: relative;
   width: auto;
   height: auto;
-  background: #5b8ef9;
+  background: #0072C6;
   -webkit-border-radius: 10px;
   -moz-border-radius: 10px;
   border-radius: 10px;
@@ -101,6 +110,10 @@ form div p span {
 
 #messages li:nth-child(odd) {
   /*background: #eee;*/
+}
+
+.chat-room {
+  background: #aaaaaa;
 }
 
 /* #messages::after{
@@ -119,7 +132,7 @@ form div p span {
 
 #messages {
   list-style-type: none;
-  margin-bottom: 40px;
+  margin-bottom: 60px;
   bottom: 0;
   position: fixed;
   width: 50%;
@@ -135,7 +148,7 @@ form div p span {
   position: fixed;
   left: 0;
   top: 0;
-  width: 300px;
+  width: 600px;
   margin-left: 50px;
   margin-top: 5.5%;
 }
@@ -143,6 +156,7 @@ form div p span {
 .btn {
   border-radius: 2px !important;
 }
+
 
 .game-list ul {
   list-style-type: none;
@@ -183,11 +197,12 @@ form div p span {
 
 .col-4 {
   display: inline-block;
-  margin: 0;
-  padding: 0;
+  margin-right: 5%;
+  padding-right: 2%;
   width: 33%;
   height: 100vh;
   float: right;
+  background-color: #aaaaaa;
 }
 
 .container {

@@ -88,14 +88,13 @@ form div p span {
   right: 0px;
   float: right;
 }
+
 .message-box {
   background-color: #aaaaaa;
   border: 0;
 }
 
-
 #messages li {
-  /* padding: 5px 10px; */
   padding: 7px;
   position: relative;
   width: auto;
@@ -115,20 +114,6 @@ form div p span {
 .chat-room {
   background: #aaaaaa;
 }
-
-/* #messages::after{
-  content: '';
-  position: absolute;
-  border-style: solid;
-  border-width: 15px 15px 15px 0;
-  border-color: transparent #205EE0;
-  display: block;
-  width: 0;
-  z-index: 1;
-  left: -15px;
-  top: 50%;
-  margin-top: -15px;
-} */
 
 #messages {
   list-style-type: none;
@@ -157,14 +142,10 @@ form div p span {
   border-radius: 2px !important;
 }
 
-
 .game-list ul {
   list-style-type: none;
   margin: 0;
   padding: 0;
-  /*  border-style: solid;
-  border-width: 2px;
-  border-color: #000;*/
 }
 
 #games li {
@@ -315,9 +296,9 @@ div.piece.light {
 }
 
 div.piece.king {
-  background-image:url('http://i.imgur.com/HYQkl.png');
-  background-repeat:no-repeat;
-  background-position:center;
+  background-image: url('http://i.imgur.com/HYQkl.png');
+  background-repeat: no-repeat;
+  background-position: center;
 }
 
 div.piece.dark {
@@ -327,4 +308,3 @@ div.piece.dark {
 div#meta {
   float: right;
 }
-

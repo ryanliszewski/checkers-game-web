@@ -1,4 +1,5 @@
 var socket = io();
+
 function guid() {
   function s4() {
     return Math.floor((1 + Math.random()) * 0x10000)
@@ -14,14 +15,12 @@ document.getElementById("gameGenerate").innerHTML = ' <a href="/game?player=1&ga
 $('document').ready(function() {
   socket.emit('gameListActive', "getMe Data!");
   socket.on('gameListActive', function(gameList) {
-    console.log("HERE IS MY MESSAGE", gameList);
     var temp = JSON.parse(gameList);
     if (temp == null) {
       temp = 0;
     }
     var gameListArray = JSON.parse("[" + temp + "]");
-    // console.log("Game List Array: ", gameListArray);
-    if(gameListArray[0].length == 0) {
+    if (gameListArray[0].length == 0) {
       $('#games').html("");
     }
     for (var i = 0; i < gameListArray[0].length; i++) {

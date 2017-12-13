@@ -33,11 +33,7 @@ $('document').ready(function() {
     gameID: gameCode,
     isGameFull: getQueryVariable('isGameFull')
   };
-  console.log('Game Object: ', obj);
   socket.on('connect', function() {
-    console.log("Connected to server!");
-    console.log("Socket ID: ", socket.id);
-    console.log("Game ID", obj.gameID)
     socket.emit('join', obj, function(err) {
       if (err) {
         alert(err);
@@ -45,20 +41,15 @@ $('document').ready(function() {
         console.log('No error');
       }
     });
-
-    // socket.emit('leave', 'leaving game page');
   });
 
   $('form').submit(function() {
     socket.emit(obj.gameID, $('#username-hidden').text() + ": " + $('#input-box').val());
     $('#input-box').val('');
-    console.log("Room : ", obj.gameID);
     return false;
   });
 
   socket.on(obj.gameID, function(msg) {
-    console.log("Message Received:", msg);
-
     if (msg == 'Player YOUR TURN!') {
       $('#messages').append($('<li class="your-turn">').text(msg));
     } else if (msg == 'Player has LEFT GAME!') {

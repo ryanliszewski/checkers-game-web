@@ -45,6 +45,8 @@ $('document').ready(function() {
         console.log('No error');
       }
     });
+
+    // socket.emit('leave', 'leaving game page');
   });
 
   $('form').submit(function() {

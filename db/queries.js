@@ -13,7 +13,7 @@ const dbCreateMessage = (msgObj) => {
 }
 
 const dbCreateGame = (params) => {
-  gameList.findOrCreate({
+  return gameList.findOrCreate({
       where: {
         gameId: params.gameID,
         gameCreator: params.name
@@ -26,7 +26,7 @@ const dbCreateGame = (params) => {
 }
 
 const dbDestroyGame = (params) => {
-  gameList.destroy({
+  return gameList.destroy({
       where: {
         isGameFull: 'false',
         gameId: params.gameID
@@ -82,7 +82,7 @@ const dbGameStatus = (gameID) => {
       isGameFull: true
     }
   }).then(rawData => {
-    console.log("RAW QUERY: ", rawData)    
+    console.log("RAW QUERY: ", rawData)
     return rawData;
   }).catch(err => {
     console.log(err)

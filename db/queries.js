@@ -38,7 +38,7 @@ const dbDestroyGame = (params) => {
 }
 
 const dbGameFull = (params) => {
-  gameList.update({
+  return gameList.update({
       isGameFull: 'true'
     }, {
       where: {

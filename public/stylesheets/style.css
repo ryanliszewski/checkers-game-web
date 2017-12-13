@@ -73,7 +73,8 @@ form div p span {
   position: fixed;
   bottom: 0;
   margin: auto;
-  width: 33%;
+  right: 0px;
+  width: 38%;
 }
 
 .form-chat input {
@@ -128,7 +129,7 @@ ul {
 
 #input-box {
   display: block;
-  width: 350px;
+  width: 190%;
 }
 
 .game-list {

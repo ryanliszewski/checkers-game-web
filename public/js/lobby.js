@@ -1,14 +1,5 @@
 var socket = io();
 
-function guid() {
-  function s4() {
-    return Math.floor((1 + Math.random()) * 0x10000)
-      .toString(16)
-      .substring(1);
-  }
-  return s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4();
-}
-
 document.getElementById("gameGenerate").innerHTML = ' <a href="/game?player=1&gameID=' +
   guid() + '" class="pull-right btn btn-lg btn-info"><i class="fa fa-plus-square-o"></i> Create Game</a>';
 

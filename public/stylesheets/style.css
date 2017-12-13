@@ -1,6 +1,7 @@
 body {
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
   padding-top: 100px;
+  margin: 0;
 }
 
 a {
@@ -94,6 +95,10 @@ form div p span {
   border: 0;
 }
 
+ul {
+  -webkit-padding-start: 0px;
+}
+
 #messages li {
   padding: 7px;
   position: relative;
@@ -111,17 +116,14 @@ form div p span {
   /*background: #eee;*/
 }
 
-.chat-room {
-  background: #aaaaaa;
-}
-
 #messages {
   list-style-type: none;
   margin-bottom: 60px;
   bottom: 0;
   position: fixed;
   width: 50%;
-  padding: ;
+  max-height: 85vh;
+  overflow-y: scroll;
 }
 
 #input-box {
@@ -171,7 +173,7 @@ form div p span {
   position: fixed;
   display: inline-block;
   margin: 0;
-  padding: 50px;
+  padding: 50px 80px 50px 50px;
   width: 66%;
   height: 100vh;
 }
@@ -183,7 +185,6 @@ form div p span {
   width: 33%;
   height: 100vh;
   float: right;
-  background-color: #aaaaaa;
 }
 
 .container {

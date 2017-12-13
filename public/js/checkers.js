@@ -311,12 +311,8 @@ function getMovableSquares() {
   return $out;
 }
 
+//Initializes client side socket's for move and game over
 function initSockets() {
-  socket.emit('gameStatus', gameCode);
-
-  socket.on('gameStatus', function(status) {
-    console.log("game status: ", status);
-  });
 
   socket.on('gameMove', function(move) {
     console.log("RECIEVE MOVE: ", move);

@@ -13,7 +13,7 @@ const dbCreateMessage = (msgObj) => {
 }
 
 const dbCreateGame = (params) => {
-  gameList.findOrCreate({
+  return gameList.findOrCreate({
       where: {
         gameId: params.gameID,
         gameCreator: params.name
@@ -26,7 +26,7 @@ const dbCreateGame = (params) => {
 }
 
 const dbDestroyGame = (params) => {
-  gameList.destroy({
+  return gameList.destroy({
       where: {
         isGameFull: 'false',
         gameId: params.gameID
@@ -38,7 +38,7 @@ const dbDestroyGame = (params) => {
 }
 
 const dbGameFull = (params) => {
-  gameList.update({
+  return gameList.update({
       isGameFull: 'true'
     }, {
       where: {
@@ -51,28 +51,31 @@ const dbGameFull = (params) => {
 }
 
 const dbGameList = () => {
-    return gameList.findAll({
-      where: {isGameFull: 'false'},
+  return gameList.findAll({
+      where: {
+        isGameFull: 'false'
+      },
       attributes: ['gameId', 'isGameFull', 'gameCreator']
-  }).then( rawData => {
-    return rawData;
-  })
-  .catch(err => {
-    console.log(err)
-  });
+    }).then(rawData => {
+      return rawData;
+    })
+    .catch(err => {
+      console.log(err)
+    });
 }
 
 const dbGetMessages = () => {
   return lobbyChat.findAll({
-    order: [ ['id', 'DESC']],
-    limit: 25
-  }).then(data => {
-    // console.log("RAW QUERY: ", data)
-    return data;
-  })
-  .catch(err => {
-    console.log(err)
-  });
+      order: [
+        ['id', 'DESC']
+      ],
+      limit: 25
+    }).then(data => {
+      return data;
+    })
+    .catch(err => {
+      console.log(err)
+    });
 }
 
 const dbGameStatus = (gameID) => {
@@ -82,7 +85,6 @@ const dbGameStatus = (gameID) => {
       isGameFull: true
     }
   }).then(rawData => {
-    console.log("RAW QUERY: ", rawData)    
     return rawData;
   }).catch(err => {
     console.log(err)

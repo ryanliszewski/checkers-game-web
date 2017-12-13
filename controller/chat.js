@@ -2,29 +2,14 @@ const gameList = require('../models').gameList;
 const lobbyChat = require('../models').lobbyChat;
 const sequelize = require('sequelize');
 const queriesController = require('../controller/queriesController')
-
 const queries = require('../db/queries');
-
-// function dbCreateGame(params) {
-//   gameList.findOrCreate({
-//       where: {
-//         gameId: params.gameID,
-//         gameCreator: params.name
-//       }
-//     })
-//     .then(results => {})
-//     .catch(err => {
-//       console.log(err)
-//     })
-// }
-
 
 module.exports = function(io) {
 
   io.on('connection', function(socket) {
     console.log('User Connected (Server Side - Lobby Chat): ', socket.id);
 
-    queriesController.GetMessages().then( data => {
+    queriesController.GetMessages().then(data => {
       for (let i = data.length - 1; i >= 0; i--) {
         io.to(socket.id).emit('lobbyChat', data[i]['dataValues']['username'] + ": " + data[i]['dataValues']['message']);
       }
@@ -35,27 +20,20 @@ module.exports = function(io) {
       io.emit('lobbyChat', msgObj.username + ": " + msgObj.message);
     });
 
-    queriesController.ActiveGameList().then(results => {
-      // console.log("dbGameList: ", results )
-      // console.log("Username Creator:", results.gameCreator)
-      socket.emit('gameListActive', JSON.stringify(results));
+    socket.on('gameListActive', function functionName(msg) {
+      console.log("gameListActive CALLED:", msg);
+      queriesController.ActiveGameList().then(results => {
+        socket.emit('gameListActive', JSON.stringify(results));
+      })
     })
-
-    // console.log("dbGameStatus: ", dbGameStatus )
-    // dbGameStatus.then(results => {
-    //   console.log("dbGameStatus: ", results )
-      
-    // })
-    
-    // socket.emit('gameListActive', JSON.stringify(gameArray));
 
     socket.on('disconnect', function() {
       console.log('User Disconnected (Server Side - Lobby Chat)');
     });
 
-  });
+  }); // End of Lobby page Connection
 
-  var nsp = io.of('/game');
+  const nsp = io.of('/game');
 
   nsp.on('connection', function(socket) {
     console.log('User Connected to Game Room (Server Side): ', socket.id);
@@ -63,43 +41,51 @@ module.exports = function(io) {
 
       socket.join(params.gameID, () => {
         if (params.isGameFull == 'true') {
-          queries.dbGameFull(params)
+          queries.dbGameFull(params).then(data => {
+            return queriesController.ActiveGameList().then(results => {
+              return io.of('/').emit('gameListActive', JSON.stringify(results));
+            })
+          })
         } else {
-          queries.dbCreateGame(params);
+          queries.dbCreateGame(params).then(data => {
+            return queriesController.ActiveGameList().then(results => {
+              return io.of('/').emit('gameListActive', JSON.stringify(results));
+            })
+          })
         }
       }); // End of Socket Join
 
-      socket.broadcast.to(params.gameID).emit(params.gameID, `Player ${params.name} has joined.`);
-      socket.broadcast.to(params.gameID).emit(params.gameID, `Player YOUR TURN!`);
+      socket.broadcast.to(params.gameID).emit(params.gameID, `${params.name} has joined.`);
+      socket.broadcast.to(params.gameID).emit(params.gameID, `Your Turn`);
       socket.on(params.gameID, function(msg) {
         nsp.emit(params.gameID, msg);
       });
-      socket.on('gameStatus', function(gameID) {
-        console.log("gameStatus gameID: ", gameID); // FIX THIS NOT GETTING GAME ID SO THEREFORE GAMESTATUS IS NULL
-        
-        queriesController.GetGameStatus(gameID).then( isFull => {
-          console.log("gameStatus send: ", isFull);
-          nsp.emit('gameStatus', isFull);
-        })
-        .catch(err => {
-          console.log(err)
-        })
 
-        // console.log("gameStatus send: ", isFull);
-        // nsp.emit('gameStatus', isFull);
-        // socket.broadcast.emit('gameStatus', true);
+      socket.on('gameStatus', function(gameID) {
+        console.log("gameStatus gameID: ", gameID);
+
+        queriesController.GetGameStatus(gameID).then(isFull => {
+            console.log("gameStatus send: ", isFull);
+            nsp.emit('gameStatus', isFull);
+          })
+          .catch(err => {
+            console.log(err)
+          })
       });
 
       socket.on('gameMove', function(move) {
-        //console.log("BACKEND MOVE: ", move);
         nsp.emit('gameMove', move);
-        socket.broadcast.to(params.gameID).emit(params.gameID, `Player YOUR TURN!`);
+        socket.broadcast.to(params.gameID).emit(params.gameID, `Your Turn`);
       });
 
       socket.on('disconnect', function() {
         console.log('User Disconnected GAME (Server Side)');
         socket.broadcast.to(params.gameID).emit(params.gameID, `Player has LEFT GAME!`);
-        queries.dbDestroyGame(params);
+        queries.dbDestroyGame(params).then(data => {
+          return queriesController.ActiveGameList().then(results => {
+            return io.of('/').emit('gameListActive', JSON.stringify(results));
+          })
+        })
       });
 
       callback();

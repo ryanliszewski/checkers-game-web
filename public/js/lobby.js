@@ -19,7 +19,7 @@ $('document').ready(function() {
         if (gameListArray[0][i]['isGameFull'] == false) {
           $('#games').append($('<li>' + gameListArray[0][i]['gameCreator'] + ' <a href="/game?player=2&gameID=' +
             gameListArray[0][i]['gameId'] + '&isGameFull=true' +
-            '" class="btn btn-lg btn-outline-info pull-right"><i class="fa fa-sign-in"></i>  Join Game </a>'));
+            '" class="btn btn-outline-info pull-right"><i class="fa fa-sign-in"></i>  Join Game </a>'));
         }
       }
     }

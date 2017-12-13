@@ -29,7 +29,7 @@ $('document').ready(function() {
   });
 
   socket.on(obj.gameID, function(msg) {
-    if (msg == 'Player YOUR TURN!') {
+    if (msg == 'Your Turn') {
       $('#messages').append($('<li class="your-turn">').text(msg));
     } else if (msg == 'Player has LEFT GAME!') {
       $('#messages').append($('<li class="player-exit">').text(msg));

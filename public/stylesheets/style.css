@@ -272,13 +272,9 @@ div.square.movable:hover {
   cursor: pointer;
 }
 
-/* the bottom row */
-
 div.square:nth-last-child(-n + 8) {
   border-bottom-style: none;
 }
-
-/* the sides */
 
 div.square:nth-child(8n) {
   border-right-style: none;

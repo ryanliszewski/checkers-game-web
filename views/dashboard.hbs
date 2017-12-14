@@ -1,16 +1,74 @@
-<div class="container">
-	<div class="dashboard col-6">
 
-		<h1>{{user.firstName}}  {{user.lastName}} </h1>
-		<p><strong>Your email address:</strong> {{user.email}}</p>
-		<p><strong>Your username:</strong> {{user.username}}</p>
+<hr class="">
+<div class="container target">
+    <div class="row">
+        <div class="col-sm-10">
+             <h1 class="">{{user.username}}</h1>
+         
+          <button type="button" class="btn btn-success">Challenge me!</button>  <button type="button" class="btn btn-info">Send me a message</button>
+<br>
+        </div>
+      <div class="col-sm-2"><a href="/users" class="pull-right"><img title="profile image" class="img-circle img-responsive" src="http://www.rlsandbox.com/img/profile.jpg"></a>
 
-	</div>
+        </div>
+    </div>
+  <br>
+    <div class="row">
+        <div class="col-sm-3">
+            <!--left col-->
+            <ul class="list-group">
+                <li class="list-group-item text-muted" contenteditable="false">Profile</li>
+                <li class="list-group-item text-right"><span class="pull-left"><strong class="">Joined</strong></span> 2.13.2014</li>
+                <li class="list-group-item text-right"><span class="pull-left"><strong class="">Last seen</strong></span> Yesterday</li>
+                    <li class="list-group-item text-right"><span class="pull-left"><strong class="">Real name</strong></span> {{user.firstName}}  {{user.lastName}} </li>
+              <li class="list-group-item text-right"><span class="pull-left"><strong class="">Rank: </strong></span> Grand Master <!-- user.rank will be implemented here -->
+               
+                      </li>
+                 <li class="list-group-item text-right"><span class="pull-left"><strong class="">Rating: </strong></span> 2732 <!-- user.rating will be implemented here -->
+               
+                      </li>
+            </ul>
+           <div class="panel panel-default">
+             <div class="panel-heading">Open to challenge?
 
-	<div class="dashboard col-6">
-		<h3>Your Stats</h3>
-		<p><strong>Your rating:</strong> 2732</p>
-		<p><strong>Your win percentage:</strong> 67%</p>
+                </div>
+                <div class="panel-body"><i style="color:green" class="fa fa-check-square"></i> Yes, I am. Bring it on !
 
-	</div>
-</div>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">Website <i class="fa fa-link fa-1x"></i>
+
+                </div>
+                <div class="panel-body"><a href="http://bootply.com" class="">checkers667.herokuapp.com</a>
+
+                </div>
+            </div>
+          
+            <ul class="list-group">
+                <li class="list-group-item text-muted">Activity <i class="fa fa-dashboard fa-1x"></i>
+
+                </li>
+                <li class="list-group-item text-right"><span class="pull-left"><strong class="">Wins</strong></span> 125</li>
+                <li class="list-group-item text-right"><span class="pull-left"><strong class="">Lost</strong></span> 13</li>
+                    <li class="list-group-item text-right"><span class="pull-left"><strong class="">Win Ratio</strong></span> 67%</li>
+                        <li class="list-group-item text-right"><span class="pull-left"><strong class="">Challenges</strong></span> 78</li>
+            </ul>
+            <div class="panel panel-default">
+                <div class="panel-heading">Social Media</div>
+                <div class="panel-body">	<i class="fa fa-facebook fa-2x"></i>  <i class="fa fa-github fa-2x"></i> 
+                    <i class="fa fa-twitter fa-2x"></i> <i class="fa fa-pinterest fa-2x"></i>  <i class="fa fa-google-plus fa-2x"></i>
+
+                </div>
+            </div>
+        </div>
+        <!--/col-3-->
+        <div class="col-sm-9" style="" contenteditable="false">
+            <div class="panel panel-default">
+                <div class="panel-heading">{{user.username}}'s Bio</div>
+                <div class="panel-body"> A long description about me.
+
+                </div>
+            </div>
+
+

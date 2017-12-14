@@ -8,6 +8,8 @@ module.exports = function(io) {
 
   io.on('connection', function(socket) {
     console.log('User Connected (Server Side - Lobby Chat): ', socket.id);
+    console.log("===============================================");
+    console.log(Object.keys(io.sockets.sockets));
 
     queriesController.GetMessages().then(data => {
       for (let i = data.length - 1; i >= 0; i--) {

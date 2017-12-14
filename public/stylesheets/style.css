@@ -116,13 +116,13 @@ ul {
 #messages li {
   width: auto;
   height: auto;
-  background: #0072C6;
+  background: #66aadc;
   -webkit-border-radius: 10px;
   -moz-border-radius: 10px;
   border-radius: 10px;
   margin: 5px;
-  color: #FFF;
-  font-size: 24px;
+  color: #000000;
+  font-size: 16px;
   padding: 10px;
 
 }
@@ -135,15 +135,15 @@ ul {
   margin-left: 12.3%;
   width: 41.5%;
   list-style-type: none;
+  margin-top: 60px;
   margin-bottom: 60px;
   bottom: 0;
   position: fixed; 
-  max-height: 85vh;
   overflow-y: scroll;
-  border-style: solid; 
-  border-radius: 10px;
+  border: 2px solid #aaaaaa;
+  border-radius: 10px; 
   padding: 2px; 
-  border-width: 2px; 
+  height: 81.5%;
 }
 
 #input-box {
@@ -204,7 +204,7 @@ ul {
   display: inline-block;
   margin: 0;
   height: 100%;
-  width: 50%;
+  width: 45%;
 }
 
 .col-4 {
@@ -225,6 +225,7 @@ ul {
 .container {
   margin: 0;
   width: 100%;
+  overflow: scroll;
 }
 
 .btn {

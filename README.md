@@ -49,17 +49,33 @@ Online multiplayer checkers game with an integrated chat system.
 
 ### Extras
 
-- [ ] Add lobby on hompepage
-- [ ] Improve Dashboard
+- [x] Add lobby on hompepage
+- [x] Improve Dashboard
 - [ ] Implement rating and stats
 - [ ] Add a theme for color options in your Dashboard
 - [ ] Implement Clock logic (Based on hourglass - Advice before start)
-- [ ] Implement double jump
+- [ ] Implement multi jump
 - [ ] Implement dragging pieces ( if possible)
 - [ ] Prevent users from sending empty messages
 - [ ] Add support for active game counter
 - [ ] Implement kings can jump back functionality
+- [ ] Change info functionality (Username, password, email)
+- [ ] display game history
+- [ ] Add path for user profile in nav bar
+- [ ] Display all online users 
+- [ ] Invite somebody to a game 
 
+- [ ] FIX MOVE BUG
+- [ ] Save game state 
+- [ ] Make board bigger 
+- [ ] Display player’s name 
+- [ ] Display moves 
+- [ ] Update win/loss for player 
+- [ ] multi jump 
+- [ ] save game results
+
+- [ ] Add rules page
+- [ ] Add friends to player
 
 
 

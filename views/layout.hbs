@@ -26,6 +26,8 @@
             <li><a href="/dashboard"> Welcome, {{user.firstName}}</a></li>
             <li><a href="/lobby">Lobby</a></li>
             <li><a href="/logout">Logout</a></li>
+            {{else}}
+            <li><a href="/lobby">Lobby</a></li>
           {{/if}}
 
         </ul>

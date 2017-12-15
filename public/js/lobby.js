@@ -27,7 +27,7 @@ $('document').ready(function() {
 
   $('form').submit(function() {
     var msgObj = {
-      username: $('#username-hidden').text(),
+      username: username,
       message: $('#input-box').val()
     };
     socket.emit('lobbyChat', msgObj);

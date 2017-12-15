@@ -8,7 +8,7 @@ $('document').ready(function() {
     gameCode = guid();
   }
   obj = {
-    name: $('#username-hidden').text(),
+    name: username,
     gameID: gameCode,
     isGameFull: getQueryVariable('isGameFull')
   };
@@ -23,7 +23,7 @@ $('document').ready(function() {
   });
 
   $('form').submit(function() {
-    socket.emit(obj.gameID, $('#username-hidden').text() + ": " + $('#input-box').val());
+    socket.emit(obj.gameID, obj.name + ": " + $('#input-box').val());
     $('#input-box').val('');
     return false;
   });

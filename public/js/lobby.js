@@ -5,6 +5,9 @@ document.getElementById("gameGenerate").innerHTML = ' <a href="/game?player=1&ga
 
 $('document').ready(function() {
   socket.emit('gameListActive', "getMe Data!");
+  console.log(user);
+  socket.emit('addUser', user); 
+
   socket.on('gameListActive', function(gameList) {
     var temp = JSON.parse(gameList);
     if (temp == null) {
@@ -27,7 +30,7 @@ $('document').ready(function() {
 
   $('form').submit(function() {
     var msgObj = {
-      username: username,
+      username: user,
       message: $('#input-box').val()
     };
     socket.emit('lobbyChat', msgObj);

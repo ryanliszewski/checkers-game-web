@@ -8,7 +8,7 @@ $('document').ready(function() {
     gameCode = guid();
   }
   obj = {
-    name: username,
+    name: user.username,
     gameID: gameCode,
     isGameFull: getQueryVariable('isGameFull')
   };

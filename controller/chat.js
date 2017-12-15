@@ -22,6 +22,12 @@ module.exports = function(io) {
       io.emit('lobbyChat', msgObj.username + ": " + msgObj.message);
     });
 
+    socket.on('addUser', function(user){
+      console.log("ADDED USER TO SOCKET");
+      socket.user = user;
+
+    }); 
+
     socket.on('gameListActive', function functionName(msg) {
       console.log("gameListActive CALLED:", msg);
       queriesController.ActiveGameList().then(results => {

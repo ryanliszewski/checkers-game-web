@@ -76,7 +76,9 @@ module.exports = function(io) {
       });
 
       socket.on('gameMove', function(move) {
-        nsp.emit('gameMove', move);
+        console.log("Chat Channel:", params.gameID);
+        console.log("Move Channel: ", params.moveChannel);
+        nsp.emit(params.moveChannel, move);
         socket.broadcast.to(params.gameID).emit(params.gameID, `Your Turn`);
       });
 

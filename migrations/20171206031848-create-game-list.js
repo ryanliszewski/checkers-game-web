@@ -11,6 +11,9 @@ module.exports = {
       gameId: {
         type: Sequelize.STRING
       },
+      moveChannel: {
+        type: Sequelize.STRING
+      },
       isGameFull: {
         type: Sequelize.BOOLEAN
       },

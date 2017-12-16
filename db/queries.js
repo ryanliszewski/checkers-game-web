@@ -16,6 +16,7 @@ const dbCreateGame = (params) => {
   return gameList.findOrCreate({
       where: {
         gameId: params.gameID,
+        moveChannel: params.moveChannel,
         gameCreator: params.name
       }
     })
@@ -55,7 +56,7 @@ const dbGameList = () => {
       where: {
         isGameFull: 'false'
       },
-      attributes: ['gameId', 'isGameFull', 'gameCreator']
+      attributes: ['gameId', 'moveChannel','isGameFull', 'gameCreator']
     }).then(rawData => {
       return rawData;
     })

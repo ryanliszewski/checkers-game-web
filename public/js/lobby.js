@@ -18,7 +18,7 @@ $('document').ready(function() {
       for (var i = 0; i < gameListArray[0].length; i++) {
         if (gameListArray[0][i]['isGameFull'] == false) {
           $('#games').append($('<li>' + gameListArray[0][i]['gameCreator'] + ' <a href="/game?player=2&gameID=' +
-            gameListArray[0][i]['gameId'] + '&isGameFull=true' +
+            gameListArray[0][i]['gameId'] + '&isGameFull=true' + '&moveChannel=' + gameListArray[0][i]['moveChannel'] +
             '" class="btn btn-outline-info pull-right"><i class="fa fa-sign-in"></i>  Join Game </a>'));
         }
       }

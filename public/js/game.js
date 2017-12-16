@@ -1,14 +1,20 @@
 var socket = io('/game');
 let gameCode;
+let moveChannel;
 var obj;
 
 $('document').ready(function() {
   gameCode = getQueryVariable('gameID');
+  moveChannel = getQueryVariable('moveChannel');
+  if (!moveChannel) {
+    moveChannel = guid();
+  }
   if (!gameCode) {
     gameCode = guid();
   }
   obj = {
     name: username,
+    moveChannel: moveChannel,
     gameID: gameCode,
     isGameFull: getQueryVariable('isGameFull')
   };
@@ -38,5 +44,8 @@ $('document').ready(function() {
     }
     window.scrollTo(0, document.body.scrollHeight);
   });
+
+  console.log("Game Channel:", moveChannel);
+  console.log("Chat Channe:", gameCode);
 
 });

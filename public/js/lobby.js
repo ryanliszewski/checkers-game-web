@@ -1,8 +1,5 @@
 var socket = io();
 
-document.getElementById("gameGenerate").innerHTML = ' <a href="/game?player=1&gameID=' +
-  guid() + '" class="pull-right btn btn-lg btn-info"><i class="fa fa-plus-square-o"></i> Create Game</a>';
-
 $('document').ready(function() {
   socket.emit('gameListActive', "getMe Data!");
   socket.on('gameListActive', function(gameList) {
@@ -17,8 +14,8 @@ $('document').ready(function() {
       $('#games').html("");
       for (var i = 0; i < gameListArray[0].length; i++) {
         if (gameListArray[0][i]['isGameFull'] == false) {
-          $('#games').append($('<li>' + gameListArray[0][i]['gameCreator'] + ' <a href="/game?player=2&gameID=' +
-            gameListArray[0][i]['gameId'] + '&isGameFull=true' +
+          $('#games').append($('<li>' + gameListArray[0][i]['gameCreator'] + ' <a href="/game?player=2&chatChannel=' +
+            gameListArray[0][i]['chatChannel'] + '&isGameFull=true' + '&moveChannel=' + gameListArray[0][i]['moveChannel'] +
             '" class="btn btn-outline-info pull-right"><i class="fa fa-sign-in"></i>  Join Game </a>'));
         }
       }

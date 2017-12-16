@@ -2,7 +2,7 @@
 var width = 44;
 var border = 2;
 
-//checker move from and to 
+//checker move from and to
 var from = getCoords();
 var to = getCoords();
 
@@ -33,12 +33,12 @@ function getCoords(top, left) {
   };
 }
 
-//Return's true or false if move is legal 
+//Return's true or false if move is legal
 function legalMove(move) {
 
   //Can't move backwards and straight up
   if (move.to.y <= move.from.y && move.to.x != move.from.x) {
-    //Single 
+    //Single
     if (Math.abs(move.to.x - move.from.x) == 1 && Math.abs(move.to.y - move.from.y) == 1) {
       return true;
     }
@@ -314,7 +314,7 @@ function getMovableSquares() {
 //Initializes client side socket's for move and game over
 function initSockets() {
 
-  socket.on('gameMove', function(move) {
+  socket.on(moveChannel, function(move) {
     console.log("RECIEVE MOVE: ", move);
     console.log("gameMove Recieved");
 
@@ -412,10 +412,10 @@ $('document').ready(function() {
     if ($this.hasClass('movable')) {
 
       var $selectedPiece = $('div.piece.selected');
-      
+
       //Can only select one piece
       if ($selectedPiece.length == 1) {
-        
+
         var index = $this.prevAll().length;
         var x = index % 8;
         var y = Math.floor(index / 8);

@@ -1,15 +1,21 @@
 var socket = io('/game');
-let gameCode;
 var obj;
+let moveChannel =  getQueryVariable('moveChannel');
 
+function draw(){
+    socket.emit(obj.chatChannel, 'draw');
+}
+function leavePlayer() {
+  socket.emit(obj.chatChannel, 'ForceLeave');
+}
+function drawDenied() {
+  socket.emit(obj.chatChannel, 'Draw Denied');
+}
 $('document').ready(function() {
-  gameCode = getQueryVariable('gameID');
-  if (!gameCode) {
-    gameCode = guid();
-  }
   obj = {
-    name: $('#username-hidden').text(),
-    gameID: gameCode,
+    name: username,
+    moveChannel: getQueryVariable('moveChannel'),
+    chatChannel: getQueryVariable('chatChannel'),
     isGameFull: getQueryVariable('isGameFull')
   };
   socket.on('connect', function() {
@@ -23,16 +29,22 @@ $('document').ready(function() {
   });
 
   $('form').submit(function() {
-    socket.emit(obj.gameID, $('#username-hidden').text() + ": " + $('#input-box').val());
+    socket.emit(obj.chatChannel, obj.name + ": " + $('#input-box').val());
     $('#input-box').val('');
     return false;
   });
-
-  socket.on(obj.gameID, function(msg) {
+  socket.on(obj.chatChannel, function(msg) {
+    console.log(msg);
     if (msg == 'Your Turn') {
-      $('#messages').append($('<li class="your-turn">').text(msg));
+      $('#messages').append($('<li class="your-turn">').text(obj.name + ": "+ msg));
     } else if (msg == 'Player has LEFT GAME!') {
       $('#messages').append($('<li class="player-exit">').text(msg));
+    } else if (msg == 'draw') {
+      $('#drawModal').modal('show');
+    } else if (msg == 'Draw Denied') {
+      $('#messages').append($('<li class="player-exit">').text(msg));
+    } else if (msg == 'ForceLeave') {
+      window.location.href = "/lobby";
     } else {
       $('#messages').append($('<li>').text(msg));
     }

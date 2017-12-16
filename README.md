@@ -36,16 +36,54 @@ Online multiplayer checkers game with an integrated chat system.
 - [x] Create user sessions based on login credentials
 - [x] Create signup flow
 - [x] Add chat functionality
-- [ ] Save/Load previous conversations
-- [ ] Test Chat system
-- [ ] Asset compilation and page speed
-- [ ] Asset bundling
-- [ ] Add --mockdata as a flag during build for people who have no DB connection
-- [ ] Open database api to admin user for easier db testing
-- [ ] Set up basic socket.io framework for chat
-- [ ] Add middleware for handling HTTP response codes (500, 404, etc)
-- [ ] Helper functions
-- [ ] Clean up Routing structure
+- [x] Save/Load previous conversations
+- [x] Test Chat system
+- [x] Asset compilation and page speed
+- [x] Asset bundling
+- [x] Add --mockdata as a flag during build for people who have no DB connection
+- [x] Open database api to admin user for easier db testing
+- [x] Set up basic socket.io framework for chat
+- [x] Add middleware for handling HTTP response codes (500, 404, etc)
+- [x] Helper functions
+- [x] Clean up Routing structure
+
+### Extras
+
+- [x] Add lobby on hompepage
+- [x] Improve Dashboard
+- [ ] Implement rating and stats
+- [ ] Add a theme for color options in your Dashboard
+- [ ] Implement Clock logic (Based on hourglass - Advice before start)
+- [ ] Implement multi jump
+- [ ] Implement dragging pieces ( if possible)
+- [ ] Prevent users from sending empty messages
+- [ ] Add support for active game counter
+- [ ] Implement kings can jump back functionality
+- [ ] Change info functionality (Username, password, email)
+- [ ] display game history
+- [ ] Add path for user profile in nav bar
+- [ ] Display all online users 
+- [ ] Invite somebody to a game 
+
+- [ ] FIX MOVE BUG
+- [ ] Save game state 
+- [ ] Make board bigger 
+- [ ] Display player’s name 
+- [ ] Display moves 
+- [ ] Update win/loss for player 
+- [ ] multi jump 
+- [ ] save game results
+
+- [ ] Add rules page
+- [ ] Add friends to player
+
+
+
+
+
+
+
+
 
 #### GitHUB Repository
 

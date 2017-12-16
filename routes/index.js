@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const passport = require('passport');
 const AuthController = require('../controller/AuthController');
+const uuidv4 = require('uuid/v4');
 
 /* GET home page. */
 router.get('/', function(request, response, next) {
@@ -10,7 +11,10 @@ router.get('/', function(request, response, next) {
 
 /* GET Lobby page. */
 router.get('/lobby', AuthController.isAuthenticated, function(request, response, next) {
-  response.render("lobby", {title: 'Lobby', user: request.user});
+  let chatChannelID = uuidv4();
+  let moveChannelID =  uuidv4();
+
+  response.render("lobby", {title: 'Lobby', user: request.user, chatChannel: chatChannelID, moveChannel: moveChannelID});
 });
 
 /* GET Dashboard page. */
@@ -22,10 +26,6 @@ router.get('/dashboard', AuthController.isAuthenticated, function(request, respo
 router.get('/register', function(request, response, next) {
   response.render("register", {title: 'Registration'});
 });
-
-// router.get('/game', function(request, response, next) {
-//   response.render("game", {title: 'Game'});
-// });
 
 /* POST Sign In page. */
 router.post('/lobby', AuthController.login);

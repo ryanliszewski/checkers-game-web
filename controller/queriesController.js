@@ -1,5 +1,14 @@
 const queries = require('../db/queries');
 
+module.exports.CreatedGame = (params) => {
+  return queries.dbCreateGame(params)
+  .then( queryData => {
+    return JSON.stringify(queryData)    
+  })
+  .catch(err => {
+    console.log(err)
+  })
+}
 
 module.exports.ActiveGameList = () => {
   return queries.dbGameList()
@@ -33,5 +42,12 @@ module.exports.GetGameStatus = (gameId) => {
     })
     .catch(err => {
       console.log(err)
+    })
+}
+
+module.exports.CleanUpLobbyMessages = () => {
+  return queries.dbCleanUpLobbyMessages()
+    .catch(err => {
+      return console.log(err)
     })
 }

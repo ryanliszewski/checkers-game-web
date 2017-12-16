@@ -8,7 +8,10 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      gameId: {
+      chatChannel: {
+        type: Sequelize.STRING
+      },
+      moveChannel: {
         type: Sequelize.STRING
       },
       isGameFull: {

@@ -1,21 +1,21 @@
 var socket = io('/game');
-let gameCode;
+let chatChannel;
 let moveChannel;
 var obj;
 
 $('document').ready(function() {
-  gameCode = getQueryVariable('gameID');
+  chatChannel = getQueryVariable('chatChannel');
   moveChannel = getQueryVariable('moveChannel');
   if (!moveChannel) {
     moveChannel = guid();
   }
-  if (!gameCode) {
-    gameCode = guid();
+  if (!chatChannel) {
+    chatChannel = guid();
   }
   obj = {
     name: username,
     moveChannel: moveChannel,
-    gameID: gameCode,
+    chatChannel: chatChannel,
     isGameFull: getQueryVariable('isGameFull')
   };
   socket.on('connect', function() {
@@ -29,12 +29,12 @@ $('document').ready(function() {
   });
 
   $('form').submit(function() {
-    socket.emit(obj.gameID, obj.name + ": " + $('#input-box').val());
+    socket.emit(obj.chatChannel, obj.name + ": " + $('#input-box').val());
     $('#input-box').val('');
     return false;
   });
 
-  socket.on(obj.gameID, function(msg) {
+  socket.on(obj.chatChannel, function(msg) {
     if (msg == 'Your Turn') {
       $('#messages').append($('<li class="your-turn">').text(msg));
     } else if (msg == 'Player has LEFT GAME!') {
@@ -45,7 +45,7 @@ $('document').ready(function() {
     window.scrollTo(0, document.body.scrollHeight);
   });
 
-  console.log("Game Channel:", moveChannel);
-  console.log("Chat Channe:", gameCode);
+  console.log("Move Channel:", moveChannel);
+  console.log("Chat Channel:", chatChannel);
 
 });

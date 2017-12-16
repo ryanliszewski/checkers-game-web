@@ -15,7 +15,7 @@ const dbCreateMessage = (msgObj) => {
 const dbCreateGame = (params) => {
   return gameList.findOrCreate({
       where: {
-        gameId: params.gameID,
+        chatChannel: params.chatChannel,
         moveChannel: params.moveChannel,
         gameCreator: params.name
       }
@@ -30,7 +30,7 @@ const dbDestroyGame = (params) => {
   return gameList.destroy({
       where: {
         isGameFull: 'false',
-        gameId: params.gameID
+        chatChannel: params.chatChannel
       }
     })
     .catch(err => {
@@ -43,7 +43,7 @@ const dbGameFull = (params) => {
       isGameFull: 'true'
     }, {
       where: {
-        gameId: params.gameID
+        chatChannel: params.chatChannel
       }
     })
     .catch(err => {
@@ -56,7 +56,7 @@ const dbGameList = () => {
       where: {
         isGameFull: 'false'
       },
-      attributes: ['gameId', 'moveChannel','isGameFull', 'gameCreator']
+      attributes: ['chatChannel', 'moveChannel','isGameFull', 'gameCreator']
     }).then(rawData => {
       return rawData;
     })
@@ -79,10 +79,10 @@ const dbGetMessages = () => {
     });
 }
 
-const dbGameStatus = (gameID) => {
+const dbGameStatus = (moveChannel) => {
   return gameList.findOne({
     where: {
-      gameId: gameID,
+      moveChannel: moveChannel,
       isGameFull: true
     }
   }).then(rawData => {

@@ -1,7 +1,7 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
   var gameList = sequelize.define('gameList', {
-    gameId: DataTypes.STRING,
+    chatChannel: DataTypes.STRING,
     moveChannel: DataTypes.STRING,
     isGameFull: { type: DataTypes.BOOLEAN, defaultValue: false },
     gameCreator: DataTypes.STRING

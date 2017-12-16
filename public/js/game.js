@@ -1,21 +1,11 @@
 var socket = io('/game');
-let chatChannel;
-let moveChannel;
 var obj;
 
 $('document').ready(function() {
-  chatChannel = getQueryVariable('chatChannel');
-  moveChannel = getQueryVariable('moveChannel');
-  if (!moveChannel) {
-    moveChannel = guid();
-  }
-  if (!chatChannel) {
-    chatChannel = guid();
-  }
   obj = {
     name: username,
-    moveChannel: moveChannel,
-    chatChannel: chatChannel,
+    moveChannel: getQueryVariable('moveChannel'),
+    chatChannel: getQueryVariable('chatChannel'),
     isGameFull: getQueryVariable('isGameFull')
   };
   socket.on('connect', function() {
@@ -44,8 +34,5 @@ $('document').ready(function() {
     }
     window.scrollTo(0, document.body.scrollHeight);
   });
-
-  console.log("Move Channel:", moveChannel);
-  console.log("Chat Channel:", chatChannel);
 
 });

@@ -1,8 +1,5 @@
 var socket = io();
 
-document.getElementById("gameGenerate").innerHTML = ' <a href="/game?player=1&chatChannel=' +
-  guid() + '" class="pull-right btn btn-lg btn-info"><i class="fa fa-plus-square-o"></i> Create Game</a>';
-
 $('document').ready(function() {
   socket.emit('gameListActive', "getMe Data!");
   socket.on('gameListActive', function(gameList) {

@@ -23,10 +23,6 @@ router.get('/register', function(request, response, next) {
   response.render("register", {title: 'Registration'});
 });
 
-// router.get('/game', function(request, response, next) {
-//   response.render("game", {title: 'Game'});
-// });
-
 /* POST Sign In page. */
 router.post('/lobby', AuthController.login);
 

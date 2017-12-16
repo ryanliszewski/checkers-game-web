@@ -36,7 +36,7 @@ $('document').ready(function() {
 
   socket.on(obj.chatChannel, function(msg) {
     if (msg == 'Your Turn') {
-      $('#messages').append($('<li class="your-turn">').text(msg));
+      $('#messages').append($('<li class="your-turn">').text(obj.name + ": "+ msg));
     } else if (msg == 'Player has LEFT GAME!') {
       $('#messages').append($('<li class="player-exit">').text(msg));
     } else {

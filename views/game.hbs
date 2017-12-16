@@ -10,6 +10,8 @@
     <div class="col-md-auto">
       <a href="/lobby" id="leaveGame" class=" btn btn-lg btn-warning" data-original-title="" title=""><i class="fa fa-sign-out" aria-hidden="true"></i>  Leave Game</a>
 
+      <a onclick="draw()" class=" btn btn-lg btn-warning"> Draw Game</a>
+
       <div class="message-box">
         <ul id="messages"></ul>
       </div>
@@ -39,6 +41,26 @@
         </div>
       </div>
     </div>
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="drawModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel">Draw Options</h4>
+          </div>
+          <div class="modal-body">
+            <h2>Would you like to Draw?</h2>
+            <button formaction="/lobby" type="button" class="btn btn-default" onclick="leavePlayer()">Yes</button>
+            <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="drawDenied()">NO</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
   </div>
 </div>
 
@@ -46,7 +68,7 @@
   const username = '{{user.username}}';
 </script>
 
-<scriptsrc="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="/js/socket.io.js"></script>
 <script type="text/javascript" src="/js/functions.js"></script>
 <script type="text/javascript" src="/js/game.js"></script>

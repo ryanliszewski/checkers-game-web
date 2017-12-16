@@ -28,7 +28,11 @@ const nsp = io.of('/game');
       socket.broadcast.to(params.chatChannel).emit(params.chatChannel, `${params.name} has joined.`);
       socket.broadcast.to(params.chatChannel).emit(params.chatChannel, `Your Turn`);
       socket.on(params.chatChannel, function(msg) {
-        nsp.emit(params.chatChannel, msg);
+        if(msg == 'draw') {
+          socket.broadcast.to(params.chatChannel).emit(params.chatChannel, 'draw');
+        } else {
+          nsp.emit(params.chatChannel, msg);
+        }
       });
 
       socket.on('gameStatus', function(chatChannel) {

@@ -1,8 +1,7 @@
 var socket = io('/game');
 let obj;
 let moveChannel =  getQueryVariable('moveChannel');
-let opponent;
-let owner;
+
 
 function draw(){
     socket.emit(obj.chatChannel, 'draw');
@@ -35,20 +34,20 @@ $('document').ready(function() {
     var gameListArray = JSON.parse("[" + temp + "]");
     for(var i = 0; i < gameListArray[0].length; i++) {
       if(gameListArray[0][i]['moveChannel'] == obj.moveChannel) {
-          oppponent = gameListArray[0][i]['opponent'];
+          opponent = gameListArray[0][i]['opponent'];
           owner = gameListArray[0][i]['gameCreator'];
               $('#gameOpponent').html("");
               $('#gameOwner').html("");
 
-           if ( (username == oppponent)){
+           if ( (username == opponent)){
               $('#gameOpponent').append($('<h1>' + owner + '</h1>'));
-              $('#gameOwner').append($('<h1>' + oppponent + '</h1>'));
+              $('#gameOwner').append($('<h1>' + opponent + '</h1>'));
 
           }else {
-            if ( !oppponent ) {
+            if ( !opponent ) {
               $('#gameOpponent').append($('<h3>' + "Waiting for Opponent" + '</h3>'));
               }else{
-              $('#gameOpponent').append($('<h1>' + oppponent + '</h1>'));
+              $('#gameOpponent').append($('<h1>' + opponent + '</h1>'));
               }
 
             $('#gameOwner').append($('<h1>' + owner + '</h1>'));

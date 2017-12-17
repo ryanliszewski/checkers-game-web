@@ -27,7 +27,9 @@ $('document').ready(function() {
       username: username,
       message: $('#input-box').val()
     };
-    socket.emit('lobbyChat', msgObj);
+    if(!(msgObj.message == '')) {
+      socket.emit('lobbyChat', msgObj);  
+    }
     $('#input-box').val('');
     return false;
   });

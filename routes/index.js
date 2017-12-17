@@ -22,6 +22,11 @@ router.get('/dashboard', AuthController.isAuthenticated, function(request, respo
   response.render("dashboard", {title: 'Dashboard', user: request.user});
 });
 
+/* GET Rules page. */
+router.get('/rules', AuthController.isAuthenticated, function(request, response, next) {
+  response.render("rules", {title: 'Rules', user: request.user});
+});
+
 /* GET Sign Up page. */
 router.get('/register', function(request, response, next) {
   response.render("register", {title: 'Registration'});

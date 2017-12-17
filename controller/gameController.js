@@ -30,6 +30,7 @@ const nsp = io.of('/game');
       socket.on(params.chatChannel, function(msg) {
         if(msg == 'draw') {
           socket.broadcast.to(params.chatChannel).emit(params.chatChannel, 'draw');
+          nsp.emit(params.chatChannel, 'Draw Offered!');
         } else {
           nsp.emit(params.chatChannel, msg);
         }

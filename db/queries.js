@@ -40,7 +40,8 @@ const dbDestroyGame = (params) => {
 
 const dbGameFull = (params) => {
   return gameList.update({
-      isGameFull: 'true'
+      isGameFull: 'true',
+      opponent: params.opponent
     }, {
       where: {
         chatChannel: params.chatChannel
@@ -52,11 +53,11 @@ const dbGameFull = (params) => {
 }
 
 const dbGameList = () => {
-  return gameList.findAll({
-      where: {
-        isGameFull: 'false'
-      },
-      attributes: ['chatChannel', 'moveChannel','isGameFull', 'gameCreator']
+  return gameList.all({
+      // where: {
+      //   isGameFull: 'false'
+      // },
+      attributes: ['chatChannel', 'moveChannel','isGameFull', 'gameCreator', 'opponent']
     }).then(rawData => {
       return rawData;
     })

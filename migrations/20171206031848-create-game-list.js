@@ -20,6 +20,9 @@ module.exports = {
       gameCreator: {
         type: Sequelize.STRING
       },
+      opponent: {
+        type: Sequelize.STRING
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

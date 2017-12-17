@@ -53,11 +53,11 @@ const dbGameFull = (params) => {
 }
 
 const dbGameList = () => {
-  return gameList.findAll({
-      where: {
-        isGameFull: 'false'
-      },
-      attributes: ['chatChannel', 'moveChannel','isGameFull', 'gameCreator']
+  return gameList.all({
+      // where: {
+      //   isGameFull: 'false'
+      // },
+      attributes: ['chatChannel', 'moveChannel','isGameFull', 'gameCreator', 'opponent']
     }).then(rawData => {
       return rawData;
     })

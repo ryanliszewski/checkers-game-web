@@ -56,25 +56,25 @@ Online multiplayer checkers game with an integrated chat system.
 - [ ] Implement Clock logic (Based on hourglass - Advice before start)
 - [ ] Implement multi jump
 - [ ] Implement dragging pieces ( if possible)
-- [ ] Prevent users from sending empty messages
+- [x] Prevent users from sending empty messages
 - [ ] Add support for active game counter
-- [ ] Implement kings can jump back functionality
+- [x] Implement kings can jump back functionality
 - [ ] Change info functionality (Username, password, email)
 - [ ] display game history
-- [ ] Add path for user profile in nav bar
+- [x] Add path for user profile in nav bar
 - [ ] Display all online users
 - [ ] Invite somebody to a game
 
 - [x] FIX MOVE BUG
 - [ ] Save game state
 - [ ] Make board bigger
-- [ ] Display player’s name
+- [x] Display player’s name
 - [ ] Display moves
 - [ ] Update win/loss for player
 - [ ] multi jump
 - [ ] save game results
 
-- [ ] Add rules page
+- [x] Add rules page
 - [ ] Add friends to player
 
 

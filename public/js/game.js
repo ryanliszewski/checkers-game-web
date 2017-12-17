@@ -16,7 +16,8 @@ $('document').ready(function() {
     name: username,
     moveChannel: getQueryVariable('moveChannel'),
     chatChannel: getQueryVariable('chatChannel'),
-    isGameFull: getQueryVariable('isGameFull')
+    isGameFull: getQueryVariable('isGameFull'),
+    opponent: getQueryVariable('opponent')
   };
   socket.on('connect', function() {
     socket.emit('join', obj, function(err) {

@@ -4,7 +4,8 @@ module.exports = (sequelize, DataTypes) => {
     chatChannel: DataTypes.STRING,
     moveChannel: DataTypes.STRING,
     isGameFull: { type: DataTypes.BOOLEAN, defaultValue: false },
-    gameCreator: DataTypes.STRING
+    gameCreator: DataTypes.STRING,
+    opponent: DataTypes.STRING
   }, {
     classMethods: {
       associate: function(models) {

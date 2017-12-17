@@ -17,8 +17,70 @@ $('document').ready(function() {
     moveChannel: getQueryVariable('moveChannel'),
     chatChannel: getQueryVariable('chatChannel'),
     isGameFull: getQueryVariable('isGameFull'),
-    opponent: getQueryVariable('opponent')
+    opponent: getQueryVariable('opponent'),
+    gameOwner: getQueryVariable('gameCreator')
   };
+
+    var opp;
+    var owner; 
+// TEST
+  io('/').emit('gameListActive', "getMe Data!");
+  io('/').on('gameListActive', function(gameList) {
+    var temp = JSON.parse(gameList);
+    if (temp == null) {
+      temp = 0;
+    }
+
+    var gameListArray = JSON.parse("[" + temp + "]");
+    console.log("what is this!!!", gameListArray);
+    for(var i = 0; i < gameListArray[0].length; i++) {
+      if(gameListArray[0][i]['moveChannel'] == obj.moveChannel) {
+        console.log("Local Move moveChannel", obj.moveChannel);
+        console.log("DB Move moveChannel", gameListArray[0][i]['moveChannel']);
+          opp = gameListArray[0][i]['opponent'];
+          owner = gameListArray[0][i]['gameCreator'];
+          console.log(opp);
+          console.log(owner);
+          if(owner && opp && (username == opp)) {
+             $('#gameOpponent').html("");
+             $('#gameOwner').html("");
+              $('#gameOpponent').append($('<h1>' + owner + '</h1>'));
+     $('#gameOwner').append($('<h1>' + opp + '</h1>'));
+} else {
+     $('#gameOpponent').html("");
+             $('#gameOwner').html("");
+  $('#gameOpponent').append($('<h1>' + opp + '</h1>'));
+   $('#gameOwner').append($('<h1>' + owner + '</h1>'));
+}
+
+      }
+    }
+    // if (gameListArray[0].length == 0) {
+    //   $('#games').html("");
+    // } else {
+    //   $('#games').html("");
+    //   for (var i = 0; i < gameListArray[0].length; i++) {
+    //     if (gameListArray[0][i]['isGameFull'] == false) {
+    //       $('#games').append($('<li>' + gameListArray[0][i]['gameCreator'] + ' <a href="/game?player=2&chatChannel=' +
+    //         gameListArray[0][i]['chatChannel'] + '&isGameFull=true' + '&opponent=' + username + '&gameOwner=' + gameListArray[0][i]['gameCreator'] +  '&moveChannel=' + gameListArray[0][i]['moveChannel'] +
+    //         '" class="btn btn-outline-info pull-right"><i class="fa fa-sign-in"></i>  Join Game </a>'));
+    //     }
+    //   }
+    // }
+  });
+// TEST
+
+
+  // if (username == opp){
+  //   $('#gameOpponent').append($('<h1>' + owner + '</h1>'));
+  //   $('#gameOwner').append($('<h1>' + username + '</h1>'));
+  // } else {
+  //   $('#gameOpponent').append($('<h1>' + opp + '</h1>'));
+  //   $('#gameOwner').append($('<h1>' + username + '</h1>'));
+  // }
+  
+
+
   socket.on('connect', function() {
     socket.emit('join', obj, function(err) {
       if (err) {
@@ -37,6 +99,7 @@ $('document').ready(function() {
     $('#input-box').val('');
     return false;
   });
+
   socket.on(obj.chatChannel, function(msg) {
     console.log(msg);
     if (msg == 'Your Turn') {

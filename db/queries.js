@@ -40,7 +40,8 @@ const dbDestroyGame = (params) => {
 
 const dbGameFull = (params) => {
   return gameList.update({
-      isGameFull: 'true'
+      isGameFull: 'true',
+      opponent: params.opponent
     }, {
       where: {
         chatChannel: params.chatChannel

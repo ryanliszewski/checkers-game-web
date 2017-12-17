@@ -46,7 +46,7 @@ $('document').ready(function() {
 
           }else {
             if ( !oppponent ) {
-              $('#gameOpponent').append($('<h1>' + "Waiting for Opponent" + '</h1>'));
+              $('#gameOpponent').append($('<h3>' + "Waiting for Opponent" + '</h3>'));
               }else{
               $('#gameOpponent').append($('<h1>' + oppponent + '</h1>'));
               }

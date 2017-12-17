@@ -1,4 +1,4 @@
-# checkers667 
+# checkers667
 
 Online multiplayer checkers game with an integrated chat system.
 **View the live heroku site** [here](https://checkers667.herokuapp.com/)
@@ -62,16 +62,16 @@ Online multiplayer checkers game with an integrated chat system.
 - [ ] Change info functionality (Username, password, email)
 - [ ] display game history
 - [ ] Add path for user profile in nav bar
-- [ ] Display all online users 
-- [ ] Invite somebody to a game 
+- [ ] Display all online users
+- [ ] Invite somebody to a game
 
-- [ ] FIX MOVE BUG
-- [ ] Save game state 
-- [ ] Make board bigger 
-- [ ] Display player’s name 
-- [ ] Display moves 
-- [ ] Update win/loss for player 
-- [ ] multi jump 
+- [x] FIX MOVE BUG
+- [ ] Save game state
+- [ ] Make board bigger
+- [ ] Display player’s name
+- [ ] Display moves
+- [ ] Update win/loss for player
+- [ ] multi jump
 - [ ] save game results
 
 - [ ] Add rules page
@@ -88,4 +88,3 @@ Online multiplayer checkers game with an integrated chat system.
 #### GitHUB Repository
 
 [GitHUB Repository](https://github.com/sfsu-csc-667-fall-2017/term-project-fall-2017-teamD-checkers)
-

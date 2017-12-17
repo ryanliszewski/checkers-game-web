@@ -29,7 +29,10 @@ $('document').ready(function() {
   });
 
   $('form').submit(function() {
-    socket.emit(obj.chatChannel, obj.name + ": " + $('#input-box').val());
+    var msg = $('#input-box').val();
+    if(!(msg == '')) {
+      socket.emit(obj.chatChannel, obj.name + ": " + msg);
+    }
     $('#input-box').val('');
     return false;
   });

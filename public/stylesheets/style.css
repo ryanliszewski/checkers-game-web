@@ -27,6 +27,19 @@ body {
   margin-right: 20%;
 }
 
+#gameOwner {
+  padding-top: 380px;
+  padding-left: 120px;
+  position: absolute;
+  text-transform: capitalize;
+}
+
+#gameOpponent {
+  /*text-align: center;*/
+  padding-left: 120px;
+  text-transform: capitalize;
+}
+
 h4 {
   text-align: center;
   font-weight: bold;

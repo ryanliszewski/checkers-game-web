@@ -1,6 +1,8 @@
 var socket = io('/game');
-var obj;
+let obj;
 let moveChannel =  getQueryVariable('moveChannel');
+let opponent;
+let owner;
 
 function draw(){
     socket.emit(obj.chatChannel, 'draw');
@@ -21,9 +23,8 @@ $('document').ready(function() {
     gameOwner: getQueryVariable('gameCreator')
   };
 
-    var opp;
-    var owner; 
-// TEST
+     
+
   io('/').emit('gameListActive', "getMe Data!");
   io('/').on('gameListActive', function(gameList) {
     var temp = JSON.parse(gameList);
@@ -32,53 +33,31 @@ $('document').ready(function() {
     }
 
     var gameListArray = JSON.parse("[" + temp + "]");
-    console.log("what is this!!!", gameListArray);
     for(var i = 0; i < gameListArray[0].length; i++) {
       if(gameListArray[0][i]['moveChannel'] == obj.moveChannel) {
-        console.log("Local Move moveChannel", obj.moveChannel);
-        console.log("DB Move moveChannel", gameListArray[0][i]['moveChannel']);
-          opp = gameListArray[0][i]['opponent'];
+          oppponent = gameListArray[0][i]['opponent'];
           owner = gameListArray[0][i]['gameCreator'];
-          console.log(opp);
-          console.log(owner);
-          if(owner && opp && (username == opp)) {
-             $('#gameOpponent').html("");
-             $('#gameOwner').html("");
-              $('#gameOpponent').append($('<h1>' + owner + '</h1>'));
-     $('#gameOwner').append($('<h1>' + opp + '</h1>'));
-} else {
-     $('#gameOpponent').html("");
-             $('#gameOwner').html("");
-  $('#gameOpponent').append($('<h1>' + opp + '</h1>'));
-   $('#gameOwner').append($('<h1>' + owner + '</h1>'));
-}
+              $('#gameOpponent').html("");
+              $('#gameOwner').html("");
 
+           if ( (username == oppponent)){
+              $('#gameOpponent').append($('<h1>' + owner + '</h1>'));
+              $('#gameOwner').append($('<h1>' + oppponent + '</h1>'));
+
+          }else {
+            if ( !oppponent ) {
+              $('#gameOpponent').append($('<h1>' + "Waiting for Opponent" + '</h1>'));
+              }else{
+              $('#gameOpponent').append($('<h1>' + oppponent + '</h1>'));
+              }
+
+            $('#gameOwner').append($('<h1>' + owner + '</h1>'));
+
+            }
       }
     }
-    // if (gameListArray[0].length == 0) {
-    //   $('#games').html("");
-    // } else {
-    //   $('#games').html("");
-    //   for (var i = 0; i < gameListArray[0].length; i++) {
-    //     if (gameListArray[0][i]['isGameFull'] == false) {
-    //       $('#games').append($('<li>' + gameListArray[0][i]['gameCreator'] + ' <a href="/game?player=2&chatChannel=' +
-    //         gameListArray[0][i]['chatChannel'] + '&isGameFull=true' + '&opponent=' + username + '&gameOwner=' + gameListArray[0][i]['gameCreator'] +  '&moveChannel=' + gameListArray[0][i]['moveChannel'] +
-    //         '" class="btn btn-outline-info pull-right"><i class="fa fa-sign-in"></i>  Join Game </a>'));
-    //     }
-    //   }
-    // }
+
   });
-// TEST
-
-
-  // if (username == opp){
-  //   $('#gameOpponent').append($('<h1>' + owner + '</h1>'));
-  //   $('#gameOwner').append($('<h1>' + username + '</h1>'));
-  // } else {
-  //   $('#gameOpponent').append($('<h1>' + opp + '</h1>'));
-  //   $('#gameOwner').append($('<h1>' + username + '</h1>'));
-  // }
-  
 
 
   socket.on('connect', function() {

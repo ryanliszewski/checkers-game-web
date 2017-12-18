@@ -11,7 +11,7 @@ function getQueryVariable(variable) {
 }
 
 //WARNING VALIDATOR FOR LOGIN PAGE - FRONT END ONLY
- close = document.getElementById("warning");
- close.addEventListener('click', function() {
-   close.style.display = 'none';
- }, false);
+function hide(){
+ document.getElementById("warning").style.display = 'none';
+ return true;  
+}

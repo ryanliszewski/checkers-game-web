@@ -98,6 +98,29 @@ form div p span {
   margin-right: 4px;
 }
 
+span#sizing-addon2.input-group-addon{
+  width: 10%;
+}
+
+div.form-group.input-group.has-feedback{
+  width: 100%;
+}
+
+#warning {
+  position: absolute;
+  z-index: 101;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: #fde073;
+  text-align: center;
+  line-height: 2.5;
+  overflow: hidden; 
+  -webkit-box-shadow: 0 0 5px black;
+  -moz-box-shadow:    0 0 5px black;
+  box-shadow:         0 0 5px black;
+}
+
 .navbar {
   z-index: 1;
 }
@@ -115,8 +138,8 @@ form div p span {
   border-width: 1px;
   padding: 10px;
   border-radius: 5px;
-  margin: 10px;
   margin-left: 30px;
+  margin-top: 10px;
 }
 
 .form-chat button {
@@ -169,8 +192,7 @@ ul {
 }
 
 #input-box {
-  display: block;
-  width: 215%;
+  width: 80%;
 }
 
 .game-list {

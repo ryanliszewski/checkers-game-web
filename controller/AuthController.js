@@ -55,7 +55,7 @@ module.exports.create = function(request, response) {
 module.exports.login = function(request, response, next) {
   passport.authenticate('local', {
     successRedirect: '/lobby',
-    failureRedirect: '/'
+    failureRedirect: '/login'
   })(request, response, next);
 };
 

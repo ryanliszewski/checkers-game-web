@@ -98,6 +98,14 @@ form div p span {
   margin-right: 4px;
 }
 
+span#sizing-addon2.input-group-addon{
+  width: 10%;
+}
+
+div.form-group.input-group.has-feedback{
+  width: 100%;
+}
+
 .navbar {
   z-index: 1;
 }
@@ -115,8 +123,8 @@ form div p span {
   border-width: 1px;
   padding: 10px;
   border-radius: 5px;
-  margin: 10px;
   margin-left: 30px;
+  margin-top: 10px;
 }
 
 .form-chat button {
@@ -169,8 +177,7 @@ ul {
 }
 
 #input-box {
-  display: block;
-  width: 215%;
+  width: 80%;
 }
 
 .game-list {

@@ -9,6 +9,11 @@ router.get('/', function(request, response, next) {
   response.render("home", {title: 'Checkers667'});
 });
 
+/* GET home page if not verified. */
+router.get('/login', function(request, response, next) {
+  response.render("login", {title: 'Checkers667'});
+});
+
 /* GET Lobby page. */
 router.get('/lobby', AuthController.isAuthenticated, function(request, response, next) {
   let chatChannelID = uuidv4();

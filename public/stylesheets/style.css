@@ -125,11 +125,10 @@ form div p span {
 
 .form-chat button {
   border: none;
-  border-radius: 2px;
+  border-radius: 5px;
   padding: 10px;
   float: right;
   margin: 10px; 
-  border-radius: 10px;
 }
 
 .message-box {

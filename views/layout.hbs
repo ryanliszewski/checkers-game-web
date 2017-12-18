@@ -3,25 +3,27 @@
 
 <head>
   <title>{{title}}</title>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-<script src="https://use.fontawesome.com/343e81c7d2.js"></script>
-<link rel="stylesheet" href="https://use.fontawesome.com/343e81c7d2.css">
-   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery.bootstrapvalidator/0.5.3/css/bootstrapValidator.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery.bootstrapvalidator/0.5.3/css/bootstrapValidator.min.css" />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+  <link rel="stylesheet" href="/stylesheets/style.css" />
   <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.1.js"></script>
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.bootstrapvalidator/0.5.3/js/bootstrapValidator.min.js"></script>
-  <link rel='stylesheet' href='/stylesheets/style.css' />
 </head>
 
 <body>
   <nav class="navbar navbar-default navbar-fixed-top">
     <div class="container-fluid">
+
       <div class="navbar-header">
         <i class="fa fa-delicious" aria-hidden="true"></i>
         <a href="/"class="navbar-brand">checkers667</a>
-
       </div>
+
       <div id="username-hidden" style="display: none;">{{user.firstName}}</div>
+
       <div class="collapse navbar-collapse">
+
         <ul class="nav navbar-nav navbar-right">
           {{#if user}}
             <li><a href="#">Welcome, {{user.firstName}}</a></li>
@@ -30,8 +32,8 @@
             <li><a href="/dashboard">Profile</a></li>
             <li><a href="/logout">Logout</a></li>
           {{/if}}
-
         </ul>
+
       </div>
     </div>
   </nav>

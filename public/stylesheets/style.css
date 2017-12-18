@@ -3,7 +3,9 @@ body {
   padding-top: 100px;
   margin: 0;
 }
-
+.gameArea {
+  margin-left: 20%;
+}
 
 #gameGenerate {
   color: #00B7FF;
@@ -14,7 +16,12 @@ body {
 #leaveGame {
   float: left; 
   margin-top: -50px;
-  width: 155px;
+  width: 165px;
+}
+
+#drawGame {
+  width: 165px;
+  padding-left: 5px;
 }
 
 
@@ -109,20 +116,19 @@ form div p span {
 
 .form-chat input {
   border-style: solid;
-  border-width: 2px;
+  border-width: 1px;
   padding: 10px;
-  border-radius: 10px;
+  border-radius: 5px;
   margin: 10px;
   margin-left: 30px;  
 }
 
 .form-chat button {
   border: none;
-  border-radius: 2px;
+  border-radius: 5px;
   padding: 10px;
   float: right;
   margin: 10px; 
-  border-radius: 10px;
 }
 
 .message-box {
@@ -138,12 +144,12 @@ ul {
   width: auto;
   height: auto;
   background: #66aadc;
-  -webkit-border-radius: 10px;
-  -moz-border-radius: 10px;
-  border-radius: 10px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5  px;
   margin: 5px;
   color: #000000;
-  font-size: 16px;
+  font-size: 12px;
   padding: 10px;
 
 }
@@ -161,8 +167,8 @@ ul {
   bottom: 0;
   position: fixed; 
   overflow-y: scroll;
-  border: 2px solid #aaaaaa;
-  border-radius: 10px; 
+  border: 1px solid #aaaaaa;
+  border-radius: 5px; 
   padding: 2px; 
   height: 81.5%;
 }

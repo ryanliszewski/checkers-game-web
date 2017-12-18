@@ -45,7 +45,7 @@ $('document').ready(function() {
 
           }else {
             if ( !opponent ) {
-              $('#gameOpponent').append($('<h3>' + "Waiting for Opponent" + '</h3>'));
+              $('#gameOpponent').append($('<p><i class="fa fa-spinner fa-spin" aria-hidden="true"></i> Waiting for Opponent</p3>'));
               }else{
               $('#gameOpponent').append($('<h1>' + opponent + '</h1>'));
               }

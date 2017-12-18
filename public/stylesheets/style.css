@@ -116,7 +116,7 @@ form div p span {
 
 .form-chat input {
   border-style: solid;
-  border-width: 2px;
+  border-width: 1px;
   padding: 10px;
   border-radius: 5px;
   margin: 10px;
@@ -167,7 +167,7 @@ ul {
   bottom: 0;
   position: fixed; 
   overflow-y: scroll;
-  border: 2px solid #aaaaaa;
+  border: 1px solid #aaaaaa;
   border-radius: 5px; 
   padding: 2px; 
   height: 81.5%;

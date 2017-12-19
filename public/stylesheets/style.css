@@ -5,7 +5,7 @@ body {
 }
 
 #gameGenerate {
-  color: #00B7FF;
+  color: #4BB543;
   float: left;
   margin-top: -50px;
 }
@@ -13,12 +13,14 @@ body {
 #leaveGame {
   float: left;
   margin-top: -50px;
+  margin-left: 15px;  
   width: 165px;
 }
 
 #drawGame {
   width: 165px;
   padding-left: 5px;
+  margin-left: 15px; 
 }
 
 .form-control, .btn {
@@ -31,16 +33,23 @@ body {
 }
 
 #gameOwner {
-  margin-top: 400px;
-  padding-left: 34%;
+  margin-top: 410px;
+  margin-left: 10px;
+  padding-left: 38%;
   text-transform: capitalize;
-  background-color: #e7e7e7
+  border: 1px solid #e7e7e7;
+  border-radius: 10px; 
+  background-color: #e7e7e7;
 }
 
 #gameOpponent {
-  padding-left: 34%;
+  padding-left: 38%;
+  margin-bottom: 10px; 
+  margin-left: 10px; 
   text-transform: capitalize;
-  background-color: #e7e7e7
+  border: 1px solid #e7e7e7;
+  border-radius: 10px; 
+  background-color: #D5DDE6;
 }
 
 #info-body {
@@ -190,7 +199,7 @@ ul {
   border: 1px solid #aaaaaa;
   border-radius: 5px;
   padding: 2px;
-  height: 81.5%;
+  height: 82.3%;
 }
 
 #input-box {
@@ -225,7 +234,7 @@ ul {
 }
 
 #game {
-  left: 20%; 
+  left: 23%; 
 }
 
 #games li {

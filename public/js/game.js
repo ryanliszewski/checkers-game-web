@@ -22,8 +22,6 @@ $('document').ready(function() {
     gameOwner: getQueryVariable('gameCreator')
   };
 
-     
-
   io('/').emit('gameListActive', "getMe Data!");
   io('/').on('gameListActive', function(gameList) {
     var temp = JSON.parse(gameList);
@@ -40,17 +38,18 @@ $('document').ready(function() {
               $('#gameOwner').html("");
 
            if ( (username == opponent)){
-              $('#gameOpponent').append($('<h1>' + owner + '</h1>'));
-              $('#gameOwner').append($('<h1>' + opponent + '</h1>'));
+              $('#gameOpponent').append($('<h3>' + owner + '</h3>'));
+              $('#gameOwner').append($('<h3>' + opponent + '</h3>'));
 
           }else {
             if ( !opponent ) {
               $('#gameOpponent').append($('<p><i class="fa fa-spinner fa-spin" aria-hidden="true"></i> Waiting for Opponent</p3>'));
               }else{
-              $('#gameOpponent').append($('<h1>' + opponent + '</h1>'));
+              $('#gameOpponent').append($('<h3>' + opponent + '</h3>'));
               }
 
-            $('#gameOwner').append($('<h1>' + owner + '</h1>'));
+            $('#gameOwner').append($('<h3>' + owner + '</h3>'));
+
 
             }
       }

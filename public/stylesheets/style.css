@@ -32,7 +32,7 @@ body {
 
 #gameOwner {
   padding-top: 380px;
-  padding-left: 120px;
+  padding-left: 31%;
   text-transform: capitalize;
 }
 
@@ -219,6 +219,12 @@ ul {
   vertical-align: middle;
   padding: 8px 10px 10px 10px;
 }
+
+#game {
+  left: 20%; 
+}
+
+
 
 #games li {
   background: #f1f1f1;

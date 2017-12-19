@@ -144,7 +144,7 @@ function backwardsJump(move) {
 
   var $pieceToBeJumped;
   var pieceColorClassName = '';
-  var removePieceColorClassName = ''
+  var removePieceColorClassName = '';
 
   //jump to the right
   if (move.to.x - move.from.x > 0) {
@@ -229,8 +229,6 @@ function gameOver() {
     $checkIfPiecesExist = $(piece);
     return $checkIfPiecesExist;
   });
-
-  //console.log("opponent piece (game over test): " + $opponentPiece);
 
   if ($checkIfPiecesExist != undefined) {
     return false

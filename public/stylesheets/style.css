@@ -37,7 +37,7 @@ body {
 }
 
 #gameOpponent {
-  padding-left: 120px;
+  padding-left: 31%;
   text-transform: capitalize;
 }
 
@@ -202,7 +202,9 @@ ul {
   width: 600px;
   margin-top: 50px;
   margin-left: 10px;
+  height: 50%;
 }
+
 
 .btn {
   border-radius: 2px !important;
@@ -223,8 +225,6 @@ ul {
 #game {
   left: 20%; 
 }
-
-
 
 #games li {
   background: #f1f1f1;

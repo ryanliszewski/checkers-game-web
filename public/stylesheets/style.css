@@ -31,14 +31,16 @@ body {
 }
 
 #gameOwner {
-  padding-top: 380px;
+  margin-top: 400px;
   padding-left: 34%;
   text-transform: capitalize;
+  background-color: #e7e7e7
 }
 
 #gameOpponent {
   padding-left: 34%;
   text-transform: capitalize;
+  background-color: #e7e7e7
 }
 
 #info-body {

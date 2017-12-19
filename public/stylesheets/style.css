@@ -149,7 +149,7 @@ div.form-group.input-group.has-feedback{
   border-width: 1px;
   padding: 10px;
   border-radius: 5px;
-  margin-left: 30px;
+  margin-left: 32px;
   margin-top: 10px;
 }
 
@@ -203,7 +203,7 @@ ul {
 }
 
 #input-box {
-  width: 80%;
+  width: 84.5%;
 }
 
 .game-list {
@@ -215,7 +215,6 @@ ul {
   margin-left: 10px;
   height: 50%;
 }
-
 
 .btn {
   border-radius: 2px !important;

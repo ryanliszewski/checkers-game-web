@@ -43,7 +43,7 @@ $('document').ready(function() {
 
           }else {
             if ( !opponent ) {
-              $('#gameOpponent').append($('<p><i class="fa fa-spinner fa-spin" aria-hidden="true"></i> Waiting for Opponent</p3>'));
+              $('#gameOpponent').append($('<p><i class="fa fa-spinner fa-spin" aria-hidden="true"></i> Waiting for Opponent</p>'));
               }else{
               $('#gameOpponent').append($('<h3>' + opponent + '</h3>'));
               }
@@ -93,6 +93,9 @@ $('document').ready(function() {
       $('#messages').append($('<li>').text(msg));
     }
     window.scrollTo(0, document.body.scrollHeight);
+    $('#messages').animate({
+      scrollTop: $('#messages').prop("scrollHeight")
+    }, 500);
   });
 
 });

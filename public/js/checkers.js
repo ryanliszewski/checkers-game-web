@@ -28,8 +28,8 @@ function getPixels(x, y) {
 //into the x,y coordinate of a square on the board
 function getCoords(top, left) {
   return {
-    'x': left / (width + border),
-    'y': top / (width + border)
+    'x': Math.round(left / (width + border)),
+    'y': Math.round(top / (width + border))
   };
 }
 
@@ -99,7 +99,12 @@ function forwardJump(move) {
       return false;
     }
 
-    $pieceToBeJumped.removeClass('piece light');
+    $pieceToBeJumped.removeClass(removePieceColorClassName
+    );
+
+    if($pieceToBeJumped.hasClass('king')){
+      $pieceToBeJumped.removeClass('king');
+    }
 
     $('div.square').removeClass('movable');
     getMovableSquares().addClass('movable');
@@ -171,7 +176,11 @@ function backwardsJump(move) {
     }
 
     console.log("the piece to be jumped is:" + $pieceToBeJumped);
-    $pieceToBeJumped.removeClass('piece light');
+    $pieceToBeJumped.removeClass(removePieceColorClassName);
+
+    if($pieceToBeJumped.hasClass('king')){
+      $pieceToBeJumped.removeClass('king');
+    }
 
     $('div.square').removeClass('movable');
     getMovableSquares().addClass('movable');
@@ -203,6 +212,10 @@ function backwardsJump(move) {
     }
 
     $pieceToBeJumped.removeClass(removePieceColorClassName);
+
+    if($pieceToBeJumped.hasClass('king')){
+      $pieceToBeJumped.removeClass('king');
+    }
 
     $('div.square').removeClass('movable');
     getMovableSquares().addClass('movable');

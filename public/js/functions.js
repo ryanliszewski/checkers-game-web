@@ -9,3 +9,9 @@ function getQueryVariable(variable) {
   }
   return (false);
 }
+
+//WARNING VALIDATOR FOR LOGIN PAGE - FRONT END ONLY
+function hide(){
+ document.getElementById("warning").style.display = 'none';
+ return true;  
+}

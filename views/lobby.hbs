@@ -1,27 +1,26 @@
-<div class="container">
-  <div class="row">
-    <div class="col">
-      <div class="game-list">
-        <h3>Games</h3>
-        <ul id="games"></ul>
-      </div>
-    </div>
 
-    <div class="col-md-auto">
-      <div id="gameGenerate">
+<div class="game-list-container">
+  <h3>Games</h3>
+  <ul id="games"></ul>
+</div>
+
+<div class="create-game-container">
+   <div id="gameGenerate">
         <a href="/game?player=1&chatChannel={{chatChannel}}&moveChannel={{moveChannel}}" class="pull-right btn btn-sm btn-info"><i class="fa fa-plus-square-o"></i> Create Game</a>
       </div>
-      <div class="message-box">
-        <ul id="messages"></ul>
-      </div>
-
-      <form class="form-chat form-inline" action="">
-          <input id="input-box" class="form-control input-lg" autocomplete="off" />
-        <button class="btn-lg btn-info">Send</button>
-      </form>
-    </div>
-  </div>
 </div>
+
+<div class="chat-room-container">
+   <div class="message-box">
+        <ul id="messages"></ul>
+    </div>
+
+    <form class="chat-form-container" action="">
+        <input  id="input-box" class="input-field" autocomplete="off" />
+      <button class="btn-lg btn-info">Send</button>
+    </form>
+</div>
+
 
 <script type="text/javascript">
   const username = '{{user.username}}';

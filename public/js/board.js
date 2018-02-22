@@ -12,7 +12,6 @@ function setUpPieces() {
 }
 
 function movePieceTo($piece, newTop, newLeft) {
-
   $piece.css('top', newTop);
   $piece.css('left', newLeft);
 }

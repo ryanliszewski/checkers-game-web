@@ -1,16 +1,21 @@
 <div class="main-container">
   <div class="game-list-container">
-    <h3>Games</h3>
+    <h3 class="game-list-title">Games</h3>
     <ul id="games"></ul>
+    <div class="create-game-button-container">
+          <a href="/game?player=1&chatChannel={{chatChannel}}&moveChannel={{moveChannel}}" class="btn btn-sm btn-info generate-game-button"><i class="fa fa-plus-square-o"></i> Create Game</a>
+      </div>
   </div>
 
-  <div class="create-game-container">
+  {{!-- <div class="create-game-container">
     <div id="gameGenerate">
           <a href="/game?player=1&chatChannel={{chatChannel}}&moveChannel={{moveChannel}}" class="pull-right btn btn-sm btn-info"><i class="fa fa-plus-square-o"></i> Create Game</a>
         </div>
-  </div>
+  </div> --}}
 
   <div class="chat-room-container">
+
+    <h3 class="lobby-chat-title"> Lobby Chat</h3>
     <div class="message-box">
           <ul id="messages"></ul>
       </div>

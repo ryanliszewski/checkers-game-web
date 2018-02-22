@@ -9,10 +9,6 @@ body {
   display: flex;
 }
 
-.game-list-container {
-  padding-top: 50px;
-}
-
 .login-container {
   padding-top: 50;
   flex-direction: row;
